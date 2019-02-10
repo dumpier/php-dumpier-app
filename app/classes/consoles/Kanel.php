@@ -10,6 +10,7 @@ class Kanel
         'facade'=>\Presto\Consoles\FacadeCommand::class,
         'migrate'=>\Presto\Consoles\MigrateCommand::class,
         'seed'=>\Presto\Consoles\SeedCommand::class,
+        'model'=>\Presto\Consoles\GenerateModelCommand::class,
     ];
 
 
