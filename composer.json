@@ -1,0 +1,41 @@
+{
+    "name": "dumpier/php-presto-app",
+    "keywords": [ "framework", "presto", "app" ],
+    "description": "The Presto Application.",
+
+    "require": {
+        "php": "^7.2",
+        "dumpier/php-presto-framework": "dev-master"
+    },
+
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "license": "MIT",
+
+    "autoload":{
+        "files": [
+            "helpers.php",
+            "facade.php"
+        ],
+        "psr-4": {
+            "Presto\\": "packages/presto/src/",
+            "App\\": "app/classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+
+    "prefer-stable": true,
+    "scripts": {
+        "post-update-cmd": [
+            "composer dump-autoload -o",
+            "@php presto helper helper"
+        ]
+    }
+}
