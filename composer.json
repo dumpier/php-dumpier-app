@@ -17,7 +17,6 @@
 
     "autoload":{
         "files": [
-            "helpers.php",
             "facade.php"
         ],
         "psr-4": {
@@ -35,7 +34,7 @@
     "scripts": {
         "post-update-cmd": [
             "composer dump-autoload -o",
-            "@php presto helper helper"
+            "@php presto facade"
         ]
     }
 }

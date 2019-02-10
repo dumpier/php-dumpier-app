@@ -4,20 +4,27 @@ namespace App\Consoles;
 class Kanel
 {
     protected $commands = [
-        'db'=>\App\Consoles\Commands\DatabaseCommand::class,
-        'facade'=>\App\Consoles\Commands\FacadeCommand::class,
-        'migrate'=>\App\Consoles\Commands\MigrateCommand::class,
-        'seed'=>\App\Consoles\Commands\SeedCommand::class,
+        'sample'=>\App\Consoles\Commands\SampleCommand::class,
+
+        'db'=>\Presto\Consoles\Commands\DatabaseCommand::class,
+        'facade'=>\Presto\Consoles\Commands\FacadeCommand::class,
+        'migrate'=>\Presto\Consoles\Commands\MigrateCommand::class,
+        'seed'=>\Presto\Consoles\Commands\SeedCommand::class,
     ];
+
 
     /** 実行したShellファイル */
     protected $shell;
+
     /** 実行したフォルダ */
     protected $workDir;
+
     /** コマンド名 */
     protected $signature;
+
     /** コマンドへの引数 */
     protected $arguments;
+
 
     public function __construct(array $args)
     {

@@ -3,7 +3,7 @@ namespace App\Consoles\Commands;
 
 use App\Services\TestService;
 
-class DatabaseCommand extends \Command
+class SampleCommand extends \Command
 {
     protected $services = [
         TestService::class,
