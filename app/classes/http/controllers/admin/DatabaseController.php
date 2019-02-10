@@ -5,8 +5,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
 {
     public function index()
     {
-        $databases = config("database");
-        unset($databases["default"]);
+        $databases = config("database", "connections");
 
         $this->setContent("databases", $databases);
         return $this->response();
