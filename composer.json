@@ -2,6 +2,7 @@
     "name": "dumpier/php-presto-app",
     "keywords": [ "framework", "presto", "app" ],
     "description": "The Presto Application.",
+    "license": "MIT",
 
     "require": {
         "php": "^7.2",
@@ -13,7 +14,6 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "license": "MIT",
 
     "autoload":{
         "files": [

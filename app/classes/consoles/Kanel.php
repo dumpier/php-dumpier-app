@@ -6,10 +6,10 @@ class Kanel
     protected $commands = [
         'sample'=>\App\Consoles\Commands\SampleCommand::class,
 
-        'db'=>\Presto\Consoles\Commands\DatabaseCommand::class,
-        'facade'=>\Presto\Consoles\Commands\FacadeCommand::class,
-        'migrate'=>\Presto\Consoles\Commands\MigrateCommand::class,
-        'seed'=>\Presto\Consoles\Commands\SeedCommand::class,
+        'db'=>\Presto\Consoles\DatabaseCommand::class,
+        'facade'=>\Presto\Consoles\FacadeCommand::class,
+        'migrate'=>\Presto\Consoles\MigrateCommand::class,
+        'seed'=>\Presto\Consoles\SeedCommand::class,
     ];
 
 
