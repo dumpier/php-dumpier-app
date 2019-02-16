@@ -7,7 +7,7 @@
  * @property \App\Models\Repositories\Player\PlayerWeaponRepository $playerWeapon
  * @property \App\Models\Repositories\PlayerManage\PlayerManageRepository $playerManage
  */
-class Controller extends \Presto\Mvc\Controller {}
+class Controller extends \Presto\Controller {}
 
 /**
  * @property \App\Services\TestService $testService

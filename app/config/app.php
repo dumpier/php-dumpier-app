@@ -1,9 +1,16 @@
 <?php
 return [
-    'namespace'=>'App',
-    'classes'=>'app/classes',
-    'view_extension'=>'phtml',
+    // Appのネームスペース
+    "namespace"=>"App",
+    // クラスフォルダ
+    "classes"=>"app/classes",
+    // Viewファイルの拡張子
+    "view_extension"=>"phtml",
 
-    'timezone'=>'',
+    // タイムゾーン
+    "timezone" => "Asia/Tokyo",
+
+    // ベースURL
+    "baseurl" => "",
 
 ];

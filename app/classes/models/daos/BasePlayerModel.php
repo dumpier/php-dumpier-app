@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Daos;
 
-use Presto\Mvc\Model\Model;
+use Presto\Model\Model;
 
 class BaseMasterModel extends Model
 {

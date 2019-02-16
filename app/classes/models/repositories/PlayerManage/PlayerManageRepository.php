@@ -2,7 +2,7 @@
 namespace App\Models\Repositories\PlayerManage;
 
 use App\Models\Daos\PlayerManage\PlayerManageModel;
-use Presto\Mvc\Model\Repository;
+use Presto\Model\Repository;
 
 class PlayerManageRepository extends Repository
 {
