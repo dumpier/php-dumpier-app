@@ -9,6 +9,10 @@
         "dumpier/php-presto-framework": "dev-master"
     },
 
+    "repositories":[
+        {"type": "vcs", "url": "https://github.com/dumpier/php-presto-framework.git"}
+    ],
+
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

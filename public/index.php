@@ -3,7 +3,7 @@ require_once '../vendor/autoload.php';
 timelines("auto load completed !");
 
 try{
-    $routings = require_once '../app/routes/game.php';
+    $routings = require_once '../app/routes/default.php';
     timelines("routing completed !");
 
     // カーネルの作成
