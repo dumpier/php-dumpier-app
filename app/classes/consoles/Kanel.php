@@ -7,7 +7,7 @@ class Kanel
         'sample'=>\App\Consoles\Commands\SampleCommand::class,
 
         'db'=>\Presto\Consoles\DatabaseCommand::class,
-        'facade'=>\Presto\Consoles\FacadeCommand::class,
+        'helper'=>\Presto\Consoles\HelperCommand::class,
         'migrate'=>\Presto\Consoles\MigrateCommand::class,
         'seed'=>\Presto\Consoles\SeedCommand::class,
         'model'=>\Presto\Consoles\GenerateModelCommand::class,

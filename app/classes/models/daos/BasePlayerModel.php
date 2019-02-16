@@ -3,7 +3,7 @@ namespace App\Models\Daos;
 
 use Presto\Model\Model;
 
-class BaseMasterModel extends Model
+class BasePlayerModel extends Model
 {
-    protected $connection = 'master';
+    protected $connection = 'player_shard_01';
 }

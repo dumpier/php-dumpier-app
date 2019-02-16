@@ -5,14 +5,14 @@ class Kanel
 {
     public function __construct(array $routings)
     {
-        routing()->getInstance()->routings = $routings;
+        routing()->routings($routings);
     }
 
 
     public function run()
     {
         // Routing
-        list($controller, $action, $parameters) = routing()->getRouting();
+        list($controller, $action, $parameters) = routing()->get();
 
         timelines("Before action !");
 
