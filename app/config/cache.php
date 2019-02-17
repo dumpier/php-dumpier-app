@@ -1,7 +1,10 @@
 <?php
 return [
     'views'=>[
-        'enable'=>true,
+        // キャッシュの有効、無効
+        'enable'=>false,
+
+        // TODO
         'path'=>null,
     ],
 ];

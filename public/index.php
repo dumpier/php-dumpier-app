@@ -18,4 +18,4 @@ try{
 
 timelines("completed all !");
 
-echo view()->render(debugbar()->all(), "html/pages/others/debugbar", "html/layouts/empty");
+debugbar()->render();

@@ -10,7 +10,7 @@ return [
     // タイムゾーン
     "timezone" => "Asia/Tokyo",
 
-    // ベースURL
-    "baseurl" => "",
+    // ベースURI
+    "baseuri" => "",
 
 ];
