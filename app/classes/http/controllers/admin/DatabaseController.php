@@ -7,7 +7,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
     {
         $databases = config("database", "connections");
 
-        $this->setContent("databases", $databases);
+        $this->content("databases", $databases);
         return $this->response();
     }
 
@@ -18,8 +18,8 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
 
         $tables = database($conn)->tables();
 
-        $this->setContent("conn", $conn);
-        $this->setContent("tables", $tables);
+        $this->content("conn", $conn);
+        $this->content("tables", $tables);
         return $this->response();
     }
 
@@ -33,7 +33,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
 
         $rows = database($conn)->paging($table);
 
-        $this->setContent("rows", $rows);
+        $this->content("rows", $rows);
         return $this->response();
     }
 

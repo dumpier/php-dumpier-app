@@ -5,7 +5,7 @@ class TopController extends \App\Http\Controllers\Game\Controller
 {
     public function index()
     {
-        $this->setContent('test', 'aaaaaaa');
+        $this->content('test', 'aaaaaaa');
         return $this->response();
     }
 }

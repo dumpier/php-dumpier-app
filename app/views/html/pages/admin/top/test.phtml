@@ -103,7 +103,7 @@ $conds = [
 
 foreach ($conds as $cond)
 {
-    $result = collection($rows)->where($cond);
+    $result = collection($rows)->condition($cond);
     var_dump($result->all());
 }
 
