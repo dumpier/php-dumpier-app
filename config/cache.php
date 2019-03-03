@@ -1,6 +1,6 @@
 <?php
 return [
-    'views'=>[
+    'templates'=>[
         // キャッシュの有効、無効
         'enable'=>false,
 

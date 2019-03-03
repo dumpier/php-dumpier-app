@@ -3,6 +3,11 @@ namespace App\Http\Controllers\Admin;
 
 class DatabaseController extends \App\Http\Controllers\Admin\Controller
 {
+    protected static $breadcrumb = [
+        ["name"=>"管理者TOP", "url"=>"/admin/",],
+        ["name"=>"DB一覧", "url"=>"/admin/database/",],
+    ];
+
     public function index()
     {
         $databases = config("database", "connections");
@@ -14,11 +19,12 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
 
     public function tables()
     {
-        $conn = input("conn", "default");
+        $connection = input("conn", "default");
+        $this->breadcrumb("テーブル一覧::{$connection}");
 
-        $tables = database($conn)->tables();
+        $tables = database($connection)->tables();
 
-        $this->content("conn", $conn);
+        $this->content("conn", $connection);
         $this->content("tables", $tables);
         return $this->response();
     }
@@ -28,10 +34,10 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
     {
         $this->layout = "html/layouts/empty";
 
-        $conn = input("conn");
+        $connection = input("conn");
         $table = input("table");
 
-        $rows = database($conn)->paging($table);
+        $rows = database($connection)->paging($table);
 
         $this->content("rows", $rows);
         return $this->response();
@@ -41,7 +47,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
     // csvアップロード
     public function upload()
     {
-        $conn = input("conn");
+        $connection = input("conn");
         $table = input("table");
         $csvfile = input("csvfile");
 
@@ -52,7 +58,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
     // csv出力
     public function download()
     {
-        $conn = input("conn");
+        $connection = input("conn");
         $table = input("table");
 
     }
