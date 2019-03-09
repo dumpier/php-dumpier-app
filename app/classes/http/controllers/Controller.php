@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use Presto\View;
+use Presto\Views\View;
 
 class Controller extends \Controller
 {

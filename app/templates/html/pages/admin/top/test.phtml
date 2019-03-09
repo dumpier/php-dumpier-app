@@ -6,7 +6,19 @@ $validates = [
     "name"=>"require",
 ];
 
-var_dump(validator()->case("aaaa", "require"));
-var_dump(validator()->case(1, "<", 2));
+var_dump(validator()->case(5, "require|alpha,between(1~10)"));
 
+
+// var_dump(validator()->eval(5, "between", 1, 2));
+
+// var_dump(validator()->evalCaseExpression(5, "between(1)"));
+// var_dump(validator()->evalCaseExpression(5, "between(1~)"));
+// var_dump(validator()->evalCaseExpression(5, "between(~4)"));
+// var_dump(validator()->evalCaseExpression(5, "between(1~4)"));
+// var_dump(validator()->evalCaseExpression(5, "between(4~10)"));
+
+// var_dump(validator()->evalCaseExpression("12345678990", "length(2~3)"));
+// var_dump(validator()->evalCaseExpression("12345678990", "length(5~11)"));
+// var_dump(validator()->evalCaseExpression("12345678990", "length(15~21)"));
+// var_dump(validator()->evalCaseExpression("123", "length(3)"));
 ?>

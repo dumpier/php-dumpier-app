@@ -19,9 +19,9 @@ class TopController extends \App\Http\Controllers\Admin\Controller
     {
         $cond = [];
         // $cond["conditions"]["player_id"] = 1;
-        $playerDecks = $this->playerDeck->find($cond, $recursion=1);
+        // $playerDecks = $this->playerDeck->find($cond, $recursion=1);
 
-        $this->content("playerDecks", $playerDecks);
+        //$this->content("playerDecks", $playerDecks);
         return $this->response();
     }
 }
