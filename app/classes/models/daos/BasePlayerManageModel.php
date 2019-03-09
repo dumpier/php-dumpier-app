@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Daos;
 
-use Presto\Model\Model;
+use Presto\Databases\Model\Model;
 
 class BasePlayerManageModel extends Model
 {

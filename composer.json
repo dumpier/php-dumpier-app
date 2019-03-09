@@ -6,8 +6,15 @@
 
     "require": {
         "php": "^7.2",
-        "dumpier/php-presto-framework": "dev-master"
+        "dumpier/php-presto-framework": "dev-master",
+        "monolog/monolog": "^1.24"
     },
+    
+    "require-dev": {
+        "phpstan/phpstan": "^0.11.2",
+        "phpunit/phpunit": "^8.0"
+    },
+
 
     "repositories":[
         {"type": "vcs", "url": "https://github.com/dumpier/php-presto-framework.git"}

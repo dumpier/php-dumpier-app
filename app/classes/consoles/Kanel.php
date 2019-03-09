@@ -52,10 +52,9 @@ class Kanel
             throw new \Exception("不明コマンド[{$signature}]". $this->getCommandListToString());
         }
 
-        /* @var $class \Command */
-        $class = app($this->commands[$signature]);
-
-        $class->handler($arguments);
+        /* @var \Command $command */
+        $command = app($this->commands[$signature]);
+        $command->handler($arguments);
     }
 
 
