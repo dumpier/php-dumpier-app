@@ -1,5 +1,8 @@
 <?php
+$time_start = microtime(true);
 require_once '../vendor/autoload.php';
+debugbar()->unshift($time_start);
+
 timelines("auto load completed !");
 
 try{
@@ -13,7 +16,7 @@ try{
     // アクションの実行
     $kanel->run();
 }catch (\Exception $e){
-    handler()->report($e);
+    var_dump($e);
 }
 
 timelines("completed all !");

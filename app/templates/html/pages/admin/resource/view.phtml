@@ -24,7 +24,7 @@ $(function(){
           <tr>
             @foreach ($fields as $col=>$field)
             <?php $val = isset($parameters['conditions'][$field]) ? $parameters['conditions'][$field] : "";?>
-            <th><textarea class="form-control" name="parameters[conditions][{{ $field }}]" placeholder="{{ $field }}">{{ $val }}</textarea></th>
+            <th><textarea class="form-control" name="parameters[conditions][{{ $field }}]" placeholder="{{ $field }}" style="min-height: 50px; min-width: 80px;">{{ $val }}</textarea></th>
             @endforeach
           </tr>
         </tbody>
