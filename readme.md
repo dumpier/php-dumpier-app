@@ -1,7 +1,6 @@
 # PHP Presto Application
 ```
-軽い、速い、簡潔、開発効率がいいを目指す。
-最速のPHPフレームワークを目指す。
+軽い、速い、簡潔
 ```
 
 <img src=https://i.imgur.com/jBI5uyT.png>
