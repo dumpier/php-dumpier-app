@@ -7,7 +7,7 @@
  * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
  * @property \AppModels\Repositories\\PlayerManage\PlayerManageRepository $playerManage
  */
-class Controller extends \Presto\Controller {}
+class Controller extends \Presto\Core\Controller {}
 
 /**
  * @property \AppServices\\TestService $testService
@@ -17,7 +17,7 @@ class Controller extends \Presto\Controller {}
  * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
  * @property \AppModels\Repositories\\PlayerManage\PlayerManageRepository $playerManage
  */
-class Service extends \Presto\Service {}
+class Service extends \Presto\Core\Service {}
 
 /**
  * @property \AppServices\\TestService $testService
@@ -27,4 +27,4 @@ class Service extends \Presto\Service {}
  * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
  * @property \AppModels\Repositories\\PlayerManage\PlayerManageRepository $playerManage
  */
-class Command extends \Presto\Consoles\Command {}
+class Command extends \Presto\Core\Consoles\Command {}
