@@ -1,8 +1,8 @@
 <?php
 namespace App\Models\Repositories\Player;
 
-use Presto\Databases\Model\Repository;
-use Presto\Databases\Model\Model;
+use Presto\Core\Databases\Model\Repository;
+use Presto\Core\Databases\Model\Model;
 use App\Models\Daos\Player\PlayerDeckModel;
 
 class PlayerDeckRepository extends Repository

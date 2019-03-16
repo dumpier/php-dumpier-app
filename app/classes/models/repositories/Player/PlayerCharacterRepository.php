@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Repositories\Player;
 
-use Presto\Databases\Model\Repository;
+use Presto\Core\Databases\Model\Repository;
 use App\Models\Daos\Player\PlayerCharacterModel;
 
 class PlayerCharacterRepository extends Repository

@@ -1,7 +1,7 @@
 <?php
 namespace App\Exceptions;
 
-use Presto\Traits\Singletonable;
+use Presto\Core\Traits\Singletonable;
 
 class Handler
 {

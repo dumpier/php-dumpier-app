@@ -6,11 +6,11 @@ class Kanel
     protected $commands = [
         'sample'=>\App\Consoles\Commands\SampleCommand::class,
 
-        'db'=>\Presto\Consoles\DatabaseCommand::class,
-        'helper'=>\Presto\Consoles\HelperCommand::class,
-        'migrate'=>\Presto\Consoles\MigrateCommand::class,
-        'seed'=>\Presto\Consoles\SeedCommand::class,
-        'model'=>\Presto\Consoles\GenerateModelCommand::class,
+        'db'=>\Presto\Core\Consoles\DatabaseCommand::class,
+        'helper'=>\Presto\Core\Consoles\HelperCommand::class,
+        'migrate'=>\Presto\Core\Consoles\MigrateCommand::class,
+        'seed'=>\Presto\Core\Consoles\SeedCommand::class,
+        'model'=>\Presto\Core\Consoles\GenerateModelCommand::class,
     ];
 
 

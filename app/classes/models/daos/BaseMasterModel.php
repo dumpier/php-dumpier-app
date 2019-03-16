@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\Daos;
 
-use Presto\Databases\Model\Model;
+use Presto\Core\Databases\Model\Model;
 
 class BaseMasterModel extends Model
 {
