@@ -3,12 +3,6 @@ namespace App\Http;
 
 class Kanel
 {
-    public function __construct(array $routings)
-    {
-        routing()->routings($routings);
-    }
-
-
     public function run()
     {
         // Routing

@@ -50,9 +50,10 @@ class AdminAuthService extends \Service
                 break;
 
             case AUTH::DEFAULT:
-                if( $Admin->password !== encrypter($password))
+                if( $Admin["password"] !== encrypter()->password($password))
                 {
-                    throw new AppException("ログインエラー");
+                    // TODO Model化、パスワードチェック
+                    // throw new AppException("ログインエラー");
                 }
 
                 break;

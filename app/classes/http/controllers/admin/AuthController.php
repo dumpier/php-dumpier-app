@@ -2,11 +2,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Defines\AUTH;
+use App\Services\Admin\AdminAuthService;
 
 class AuthController extends \App\Http\Controllers\Admin\Controller
 {
+    protected $services = [
+        AdminAuthService::class,
+    ];
+
     protected $repositories = [];
-    protected $services = [];
 
 
     // ログイン画面
