@@ -84,8 +84,10 @@ class BuffManageEntity
         return ! $this->isUnactable();
     }
 
+
     /**
      * 動けないかの判定
+     *      TODO 動けない、凍結、麻痺。。。
      * @return boolean
      */
     public function isUnactable()
