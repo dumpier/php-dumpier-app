@@ -13,6 +13,9 @@ class ActorEntity
     /** @var StatusManageEntity ステータス管理 */
     public $statusManage;
 
+    /** @var SkillManageEntity 状態異常の管理 */
+    public $skillManage;
+
     /** @var BuffManageEntity 状態異常の管理 */
     public $buffManage;
 
@@ -27,5 +30,19 @@ class ActorEntity
     public function isActable()
     {
         return $this->statusManage->isAlive() && $this->buffManage->isActable();
+    }
+
+
+    public function getSkill()
+    {
+        $skill = $this->skillManage->getSkill();
+
+        // スキルポイントが足りない場合、通常攻撃にする
+        if ( $this->statusManage->status->mp < $skill->use_mp )
+        {
+            return new SkillEntity();
+        }
+
+        return $skill;
     }
 }

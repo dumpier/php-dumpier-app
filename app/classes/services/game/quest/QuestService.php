@@ -3,8 +3,11 @@ namespace App\Services\Game\Quest;
 
 class QuestService extends \Service
 {
-    public function getAllyDeck(int $player_id)
+
+
+    public function getPlayerDeck(int $player_id)
     {
+        // $PlayerDeck = $this->playerDeck->getDefault($player_id);
 
     }
 
