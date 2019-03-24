@@ -2,8 +2,9 @@
 $time_start = microtime(true);
 require_once '../vendor/autoload.php';
 debugbar()->unshift($time_start);
-
 timelines("auto load completed !");
+
+session_start();
 
 try{
     $routings = require_once '../app/routes/default.php';

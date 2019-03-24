@@ -1,27 +1,29 @@
 
 <div class="container">
     <div class="row justify-content-center align-items-center">
-        <div class="col-md-6" style="border: solid 1px #bbb; background:#eee;">
+        <div class="col-md-5 col-sm-8" style="border: solid 1px #bbb; background:#eee;">
+          <form method=POST action="/admin/auth/login/">
           <table class="table">
             <tr>
-              <td colspan=2 align=center><b>LOGIN FORM</b></td>
+              <td align=center><b>LOGIN FORM</b></td>
             </tr>
 
             <tr>
-              <th>Email</th>
-              <td><input type="text" name="email" id="email" class="form-control"></td>
+              <td>Email<br><input type="text" name="email" id="email" class="form-control"></td>
             </tr>
 
             <tr>
-              <th>Password</th>
-              <td><input type="text" name="password" id="password" class="form-control"></td>
+              <td>Password<br><input type="password" name="password" id="password" class="form-control"></td>
             </tr>
 
             <tr>
-              <td align=left><a class="btn btn-info" href="/admin/auth/google/">Login With Google</a></td>
-              <td align=right><a class="btn btn-warning" href="javascript:void(0);">LOGIN</a></td>
+              <td>
+                <a class="btn btn-warning btn-block" href="javascript:void(0);">LOGIN</a>
+                <a class="btn btn-info btn-block" href="{@ echo oauth('google')->get_auth_url() }">Login With Google</a>
+              </td>
             </tr>
           </table>
+          </form>
         </div>
     </div>
 </div>
