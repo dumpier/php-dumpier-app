@@ -40,4 +40,12 @@ class PlayerDeckRepository extends Repository
         ],
     ];
 
+
+    public function getDefault(int $player_id)
+    {
+        $cond = [];
+        $cond["condition"]["player_id"] = $player_id;
+
+        return $this->findFirst($cond);
+    }
 }

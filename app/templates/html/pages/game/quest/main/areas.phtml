@@ -5,6 +5,6 @@ ul.game-quest-list li a span.fa { padding:0px 10px; font-size:20px; }
 
 <ul class="game-quest-list">
 	@foreach($areas as $area)
-	<li><a href="/game/quest/main/area?area_id={{$area['id']}}"><span class="fa fa-area"></span><span>{{$area['name']}}</span></a></li>
+	<li><a href="/game/quest/main/area?area_id={{$area['id']}}"><span class="fa fa-map"></span><span>{{$area['name']}}</span></a></li>
 	@endforeach
 </ul>

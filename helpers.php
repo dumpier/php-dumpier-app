@@ -1,4 +1,6 @@
 <?php
+use App\Helpers\CharacterHelper;
+
 class Controller extends \Presto\Core\Controller implements InjectableInterface {}
 class Service extends \Presto\Core\Service implements InjectableInterface {}
 class Command extends \Presto\Core\Consoles\Command implements InjectableInterface {}
@@ -23,3 +25,6 @@ class Command extends \Presto\Core\Consoles\Command implements InjectableInterfa
  * @property \App\Models\Repositories\PlayerManage\PlayerManageRepository $PlayerManage
  */
 interface InjectableInterface {}
+
+
+if(! function_exists("character")) { /** @return string */ function character() { return CharacterHelper::instance(); } }

@@ -25,27 +25,8 @@ class BattleService extends \Service
             // ラウンド開始
             $this->roundStart($battleEntity);
 
-            // 行動順番通りに行動する
-            foreach ($battleEntity->actors as $actor)
-            {
-                if ( ! $actor->isActable() )
-                {
-                    // 行動不能な場合、TODO 行動不能ログを記録する
-                    continue;
-                }
-
-                // 行動者を決める
-                $battleEntity->setActor($actor);
-
-                // ターゲットを決める
-                $this->targeting($battleEntity, $actor);
-
-                // ゲーム終了判定
-                if($battleEntity->isGameOver())
-                {
-                    break;
-                }
-            }
+            // ラウンド処理
+            $this->round($battleEntity);
 
             // ラウンド終了
             $this->roundEnd($battleEntity);
@@ -63,20 +44,13 @@ class BattleService extends \Service
      * 開幕処理
      * @param BattleEntity $battleEntity
      */
-    private function opening(BattleEntity $battleEntity)
-    {
-
-    }
+    private function opening(BattleEntity $battleEntity) { }
 
     /**
      * 閉幕処理
      * @param BattleEntity $battleEntity
      */
-    private function ending(BattleEntity $battleEntity)
-    {
-
-    }
-
+    private function ending(BattleEntity $battleEntity) { }
 
     /**
      * ラウンド開始
@@ -92,15 +66,40 @@ class BattleService extends \Service
         $battleEntity->turn = 0;
     }
 
-
     /**
      * ラウンド終了
      *  - 片方全滅判定を行うなど
      * @param BattleEntity $battleEntity
      */
-    private function roundEnd(BattleEntity $battleEntity)
-    {
+    private function roundEnd(BattleEntity $battleEntity) { }
 
+    /**
+     * ラウンド実行
+     * @param BattleEntity $battleEntity
+     */
+    private function round(BattleEntity $battleEntity)
+    {
+        // 行動順番通りに行動する
+        foreach ($battleEntity->actors as $actor)
+        {
+            if ( ! $actor->isActable() )
+            {
+                // 行動不能な場合、TODO 行動不能ログを記録する
+                continue;
+            }
+
+            // 行動者を決める
+            $battleEntity->setActor($actor);
+
+            // ターゲットを決める
+            $this->targeting($battleEntity, $actor);
+
+            // ゲーム終了判定
+            if($battleEntity->isGameOver())
+            {
+                break;
+            }
+        }
     }
 
 
@@ -143,13 +142,13 @@ class BattleService extends \Service
         }
     }
 
-
     // 行動処理
     private function actions(BattleEntity $battleEntity)
     {
         $skill = $battleEntity->actor->skillManage->getSkill();
         $action_count = $skill->getActionCount();
 
+        // 行動回数分ループ
         for ( $i=0; $i <= $action_count; $i++ )
         {
             $this->action($battleEntity);
@@ -160,7 +159,6 @@ class BattleService extends \Service
             }
         }
     }
-
 
     // 単体行動処理
     private function action(BattleEntity $battleEntity)

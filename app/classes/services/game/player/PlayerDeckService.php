@@ -5,7 +5,7 @@ class PlayerDeckService extends \Service
 {
     public function get(int $player_id, int $deck_id=0)
     {
-        // $PlayerDeck = $this->playerDeck->getDefault($player_id);
+        $PlayerDeck = $this->PlayerDeck->getDefault($player_id);
 
     }
 }
