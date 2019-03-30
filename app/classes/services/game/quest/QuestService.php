@@ -1,19 +1,20 @@
 <?php
 namespace App\Services\Game\Quest;
 
+use App\Models\Entities\Battle\BattleEntity;
+
 class QuestService extends \Service
 {
 
-
-    public function getPlayerDeck(int $player_id)
-    {
-        // $PlayerDeck = $this->playerDeck->getDefault($player_id);
-
-    }
-
-
-    public function getEnemyDeck(int $stage_id, int $is_boss=FALSE)
+    public function getPlayerQuest(int $player_id, int $area_id=0)
     {
 
     }
+
+
+    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $battle)
+    {
+
+    }
+
 }

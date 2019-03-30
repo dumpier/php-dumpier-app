@@ -1,31 +1,25 @@
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript" charset="utf-8" async="async"></script>
-<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
 
 <style>
 * { margin: 0px; padding: 0px; font-size:9pt; }
+ul { list-style: none; margin: 0px; font-size:0px; }
 #game-wrapper { width:400px; height:100vh; position:relative; background:#f9f9f9; margin-left: auto; margin-right: auto; }
 #game-header { display:block; height:50px; background:#eee; }
+#game-content { overflow: hidden; }
 
-div#game-footer { position: absolute; width:100%; bottom: 0px; height:54px; background:#eee; }
-ul#game-menu { list-style: none; margin: 0px; font-size:0px; text-align:right; }
-ul#game-menu li { display: inline-block; margin:2px; }
-ul#game-menu li a { display: block; width:53px; text-align:center; height:50px; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
-ul#game-menu li a span { line-height:20px; }
-ul#game-menu li a span.fa { line-height:30px; font-size:20px; }
-ul#game-menu li a.menu { background:#ffc107;}
+/** ------------- menu ---------------- */
+/** ------------- menu ---------------- */
+div.game-menu { position: absolute; right:0px; bottom: 0px; background:#eee; }
+div.game-menu ul { text-align:left; }
+div.game-menu ul li { display: inline-block; margin:2px; }
+div.game-menu ul li a { display: block; width:53px; text-align:center; height:50px; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
+div.game-menu ul li a span { line-height:20px; }
+div.game-menu ul li a span.fa { line-height:30px; font-size:20px; }
+div.game-menu ul li a.menu { background:#fd7e14;}
 
-div#game-menu-panel { display: none; position: absolute; width:100%; bottom: 55px; background:#eee; }
-ul#game-menu-list { list-style: none; margin: 0px; font-size:0px; text-align:right; }
-ul#game-menu-list li { display: inline-block; margin:2px; }
-ul#game-menu-list li a { display: block; width:53px; text-align:center; height:50px; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
-ul#game-menu-list li a span { line-height:20px; }
-ul#game-menu-list li a span.fa { line-height:30px; font-size:20px; }
-ul#game-menu-list li a.menu { background:#ffc107;}
+div#game-menu { right:1px; }
+div#game-menu-panel { display: none; width:100%; }
+/** ------------- menu ---------------- */
 
 </style>
 
@@ -47,16 +41,21 @@ ul#game-menu-list li a.menu { background:#ffc107;}
 	</div>
 
 
-	<div id="game-menu-panel">
-		<ul id="game-menu-list">
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+	<div id="game-content"></div>
+
+
+	<div id="game-menu-panel" class="game-menu">
+		<ul>
+			<li><a href=""><span class="fa fa-angle-down"></span><br><span>HELP</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>課金</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>SHOP</span></a></li>
+		</ul>
 
+		<ul>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
@@ -64,7 +63,9 @@ ul#game-menu-list li a.menu { background:#ffc107;}
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>DEFENDER</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>HERO</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>基地</span></a></li>
+		</ul>
 
+		<ul>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
@@ -73,17 +74,20 @@ ul#game-menu-list li a.menu { background:#ffc107;}
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>ITEM</span></a></li>
 			<li><a href=""><span class="fa fa-angle-down"></span><br><span>STORE</span></a></li>
 		</ul>
-	</div>
 
-	<div id="game-footer">
-		<ul id="game-menu">
+		<ul class="main">
 			<li><a href=""><span class="fa fa-bell"></span><br><span>EVENT</span></a></li>
 			<li><a href=""><span class="fa fa-gift"></span><br><span>SHOP</span></a></li>
-			<li><a href=""><span class="fa fa-map"></span><br><span>QUEST</span></a></li>
+			<li><a href="/game/quest/top/"><span class="fa fa-map"></span><br><span>QUEST</span></a></li>
 			<li><a href=""><span class="fa fa-chess-knight"></span><br><span>DECK</span></a></li>
 			<li><a href=""><span class="fa fa-chess"></span><br><span>CRAFT</span></a></li>
-			<li><a href=""><span class="fa fa-chess-rook"></span><br><span>HOME</span></a></li>
-			<li><a href="javascript: void(0);" onclick="$('div#game-menu-panel').toggle();" class=menu><span class="fa fa-bars"></span><br><span>MENU</span></a></li>
+			<li><a href="/game/home/"><span class="fa fa-chess-rook"></span><br><span>HOME</span></a></li>
+		</ul>
+	</div>
+
+	<div id="game-menu" class="game-menu">
+		<ul>
+			<li><a href="" onclick="$('div#game-menu-panel').toggle();" class=menu><span class="fa fa-bars"></span><br><span>MENU</span></a></li>
 		</ul>
 	</div>
 </div>

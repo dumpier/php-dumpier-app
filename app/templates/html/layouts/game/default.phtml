@@ -1,4 +1,63 @@
-<script Language="JavaScript">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript" charset="utf-8" async="async"></script>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+
+<script>
 // window.resizeBy(520,480);
+$(function(){
+	$('a').click(function(event){
+		event.preventDefault();
+	});
+});
 </script>
+
+<script>
+var presto = class Presto {
+	// ローディング効果の表示
+	static loading(target){
+		if(! $(`${target} div.game-loading`).length ){
+			$(target).prepend("<div class='game-loading' style='text-align:center; width:100%; height:100%;'><img src='/res/icons/loading.gif'></div>");
+		}
+	}
+
+	// ローディング効果の終了
+	static loadingCompleted(target){
+		$(`${target} div.game-loading`).remove();
+	}
+
+	// コンテンツのロード
+	static load(target, url, params) {
+		this.loading(target);
+		$(target).load(url, params);
+		this.loadingCompleted(target);
+	}
+
+}
+
+$(function(){
+	// リンクのクリックアクション
+	$("a").on("click", function(){
+		let url = $(this).attr("href");
+		let target = $(this).attr("target-element");
+		let parameter = $(this).attr("parameter");
+
+		if(! $(this).attr("href")) {
+			console.log(`no action`);
+			return false;
+		}
+
+		console.log(`load content. url:${url}, target:${target}`);
+		if(target){
+			presto.load(target, url, parameter);
+		}else{
+			presto.load("#game-content", url, parameter);
+		}
+	});
+
+});
+</script>
+
 @content
