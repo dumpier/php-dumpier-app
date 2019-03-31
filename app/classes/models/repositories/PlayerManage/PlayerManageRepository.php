@@ -17,4 +17,16 @@ class PlayerManageRepository extends Repository
     {
         return $this->findByPk($player_id);
     }
+
+
+    /**
+     * ページング取得
+     * @return \Presto\Core\Utilities\Paginator
+     */
+    public function pagingDummy()
+    {
+        $cond = [];
+        $cond["condition"]["type"] = "dummy";
+        return $this->paging();
+    }
 }

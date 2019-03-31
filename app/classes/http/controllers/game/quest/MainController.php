@@ -1,10 +1,20 @@
 <?php
 namespace App\Http\Controllers\Game\Quest;
 
-use App\Models\Entities\Battle\BattleEntity;
+use App\Services\Game\Player\PlayerDeckService;
+use App\Services\Game\Master\MasterDeckService;
+use App\Services\Game\Battle\BattleService;
+use App\Services\Game\Quest\QuestService;
 
 class MainController extends \App\Http\Controllers\Game\Controller
 {
+    protected $services = [
+        PlayerDeckService::class,
+        MasterDeckService::class,
+        BattleService::class,
+        QuestService::class,
+    ];
+
     // メインクエストトップ（マップ一覧）
     public function index()
     {

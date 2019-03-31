@@ -1,0 +1,6 @@
+<div class=" thrones-box thrones-padding">
+	<span class="d-block p-2 rounded text-white bg-info"><span class="fa fa-info-circle"></span>DUMMYアカウント一覧</span>
+
+	{@ html()->table($playerPaginate->all()) }
+	{@ paging()->html($playerPaginate->count()) }
+</div>

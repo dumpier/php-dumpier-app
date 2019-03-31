@@ -5,98 +5,59 @@
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
-<script>
-// window.resizeBy(520,480);
-</script>
+@include('html/partials/js/presto')
 
 <script>
-var presto = class Presto {
-	// コンテンツのロード
-	static load(target, url, params) {
-		console.log(`load content. url:${url}, target:${target}`);
-
-		this.loading(target);
-		$(target).load(url, params);
-		//this.loadingCompleted(target);
-	}
-
-
-	// ローディング効果の表示
-	static loading(target){
-		if(! $(`${target} div.game-loading`).length ){
-			$(target).prepend("<div class='game-loading' style='text-align:center; width:100%; height:100%;'><img src='/res/icons/loading.colorful.gif' width=100%></div>");
-		}
-	}
-
-	// ローディング効果の終了
-	static loadingCompleted(target){
-		$(`${target} div.game-loading`).remove();
-	}
-}
-
-
-$(function(){
-	// リンクを押下した際
-	$("body").on("click", "a", function(event){
-		// リンクの直接遷移を無効化
-		event.preventDefault();
-
-		console.log(`is clicked !`);
-
-		let url = $(this).attr("href");
-		let target = $(this).attr("target-element");
-		let parameter = $(this).attr("parameter");
-
-		if(! $(this).attr("href")) {
-			console.log(`no action to do !`);
-			return false;
-		}
-
-		if(target){
-			presto.load(target, url, parameter);
-		}else{
-			presto.load("#game-content-panel", url, parameter);
-		}
-	});
-});
+//window.resizeBy(520,480);
 </script>
 
 
 <style>
 * { margin: 0px; padding: 0px; font-size:9pt; }
 ul { list-style: none; margin: 0px; font-size:0px; }
-#game-wrapper { width:400px; height:100vh; position:relative; background:#f9f9f9; margin-left: auto; margin-right: auto; }
-#game-header { display:block; height:50px; background:#eee; }
-#game-content { overflow: hidden; }
+
+div#game-wrapper { width:400px; height:100vh; position:relative; background:#f9f9f9; margin-left: auto; margin-right: auto;
+    background-image: url("/res/images/bg/home/pipo-battlebg003.jpg");
+    background-repeat: no-repeat;
+    background-size:auto 100%;
+    background-position:center top;
+}
+
+#game-header { height:50px; background:#ffc107; margin-bottom: 5px; }
+#game-content-panel { overflow: hidden;  }
+
+
 
 /** ------------- menu ---------------- */
 /** ------------- menu ---------------- */
-div.game-menu { position: absolute; right:0px; bottom: 0px; background:#eee; }
+div.game-menu { position: absolute; right:0px; bottom: 0px;}
 div.game-menu ul { text-align:left; }
 div.game-menu ul li { display: inline-block; margin:2px; }
-div.game-menu ul li a { display: block; width:53px; text-align:center; height:50px; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
+div.game-menu ul li a { display: block; width:53px;height:50px;  text-align:center; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
 div.game-menu ul li a span { line-height:20px; }
 div.game-menu ul li a span.fa { line-height:30px; font-size:20px; }
 div.game-menu ul li a.menu { background:#fd7e14;}
 
 div#game-menu { right:1px; }
-div#game-menu-panel { display: none; width:100%; }
+div#game-menu-panel { display: none; }
 /** ------------- menu ---------------- */
+
+ul.game-block-list li a { display: block; height:60px; line-height:60px; margin: 5px 0px; background: #fd7e14; color:#fafafa; }
+ul.game-block-list li a span.fa { padding:0px 10px; font-size:20px; }
+
 
 </style>
 
 <div id="game-wrapper">
 	<div id="game-header">
-		<div style="float: left;">
-			<div style="width: 50px; height:50px; border:solid 3px #777;border-radius: 0px 10px 10px 0px;">ICON</div>
-		</div>
+		<div style="float: left;">{@ echo character()->size(1) } </div>
 
 		<div style="float: left; margin-left:10px;">
 			<div>Lv</div>
 			<div>Exp</div>
 		</div>
 
-		<div style="float: right;">
+		<div style="float: right; margin-right:10px; ">
 			<div>Stone</div>
 			<div>Coin</div>
 		</div>
@@ -108,48 +69,48 @@ div#game-menu-panel { display: none; width:100%; }
 
 	<div id="game-menu-panel" class="game-menu">
 		<ul>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>HELP</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>課金</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>SHOP</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>HELP</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-cogs"></span><br><span>設定</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-university"></span><br><span>遊び方</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>課金</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>SHOP</span></a></li>
 		</ul>
 
 		<ul>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>SURVIVOR</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>DEFENDER</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>HERO</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>基地</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-mask"></span><br><span>アサシン</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>SURVIVOR</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>DEFENDER</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>HERO</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>基地</span></a></li>
 		</ul>
 
 		<ul>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>素材</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>EQUIP</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>ITEM</span></a></li>
-			<li><a href=""><span class="fa fa-angle-down"></span><br><span>STORE</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>-</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>素材</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>EQUIP</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>ITEM</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-angle-down"></span><br><span>STORE</span></a></li>
 		</ul>
 
 		<ul class="main">
-			<li><a href=""><span class="fa fa-bell"></span><br><span>EVENT</span></a></li>
-			<li><a href=""><span class="fa fa-gift"></span><br><span>SHOP</span></a></li>
-			<li><a href="/game/quest/top/"><span class="fa fa-map"></span><br><span>QUEST</span></a></li>
-			<li><a href=""><span class="fa fa-chess-knight"></span><br><span>DECK</span></a></li>
-			<li><a href=""><span class="fa fa-chess"></span><br><span>CRAFT</span></a></li>
-			<li><a href="/game/home/"><span class="fa fa-chess-rook"></span><br><span>HOME</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-chess-rook"></span><br><span>EVENT</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-gift"></span><br><span>SHOP</span></a></li>
+			<li><a class="presto-get" href="/game/quest/top/"><span class="fa fa-map"></span><br><span>QUEST</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-chess-knight"></span><br><span>DECK</span></a></li>
+			<li><a class="presto-get" href=""><span class="fa fa-chess"></span><br><span>CRAFT</span></a></li>
 		</ul>
 	</div>
 
 	<div id="game-menu" class="game-menu">
 		<ul>
-			<li><a href="" onclick="$('div#game-menu-panel').toggle();" class=menu><span class="fa fa-bars"></span><br><span>MENU</span></a></li>
+			<li><a class="presto-get" href="/game/home/"><span class="fa fa-chess-queen"></span><br><span>HOME</span></a></li>
+			<li><a class="presto-get menu" href="" onclick="$('div#game-menu-panel').toggle();"><span class="fa fa-bars"></span><br><span>MENU</span></a></li>
 		</ul>
 	</div>
 </div>
