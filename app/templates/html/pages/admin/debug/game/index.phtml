@@ -1,31 +1,37 @@
-<div class="col-md-4"><div class=" thrones-box thrones-padding">
-  <form method="POST" action="/admin/auth/login/">
-    <table class="table">
-      <tbody>
-        <tr>
-          <td align="center" colspan=2><b>LOGIN FORM</b></td>
-        </tr>
-
-        <tr>
-          <td>Email</td><td><input type="text" name="email" id="email" class="form-control"></td>
-        </tr>
-        <tr>
-          <td>Password</td><td><input type="password" name="password" id="password" class="form-control"></td>
-        </tr>
-
-        <tr>
-          <td colspan=2>
-            <a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">LOGIN</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
+<div class="col-md-5"><div class=" thrones-box thrones-padding">
+<pre><br><br><br><br><br></pre>
 </div></div>
 
 
-<div class="col-md-8">
+<div class="col-md-7">
 	<div class=" thrones-box thrones-padding">
-aaaaaaaaa
+		<span class="d-block p-2 rounded text-white bg-info"><span class="fa fa-info-circle"></span>GAME LOGIN</span>
+		<form method="POST" action="/admin/auth/login/">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>EMAIL</td>
+						<td><input type="text" name="email" id="email" class="form-control"></td>
+						<td></td>
+					</tr>
+
+					<tr>
+						<td>PW</td>
+						<td><input type="password" name="password" id="password" class="form-control"></td>
+						<td><a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">GAME LOGIN</a></td>
+					</tr>
+
+					<tr>
+						<td><a class="btn btn-info presto-get" p-target="#admin-dummy-list" href="/admin/debug/game/account/">ダミーアカウント一覧</a></td>
+						<td colspan=2>
+							<div style="float: right;"><a class="btn btn-success presto-get" p-target="#admin-dummy-list" href="/admin/debug/game/regist/">ダミーアカウント作成</a></div>
+							<div style="float: right; margin-right:5px;">{@ html()->select("count", "作成個数を選択", range(1,10)) }</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
 	</div>
+
+	<div id="admin-dummy-list"></div>
 </div>
