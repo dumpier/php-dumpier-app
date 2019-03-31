@@ -1,22 +1,22 @@
 <style>
-div.game-block { height:66px; }
+div.game-block { background: #eee; opacity: 0.8; border: solid 3px #fd7e14; padding:5px 5px; margin-bottom: 10px; }
 div.game-block .game-left { float: left; margin: 0px 2px; }
-div.game-block .game-right { float:right; }
+div.game-block .game-right { float:right;  margin: 0px 2px; }
 </style>
 
 
 <div>
 	<div class="game-block">
-		<div class="game-left">{@ echo character()->size(6, 60) }</div>
-		<div class="game-left">{@ echo character()->size(16, 60) }</div>
-		<div class="game-left">{@ echo character()->size(26, 60) }</div>
+		<div class="game-left">{@ echo character()->size(6, 40, 1) }</div>
+		<div class="game-left">{@ echo character()->size(16, 40, 1) }</div>
+		<div class="game-left">{@ echo character()->size(26, 40, 1) }</div>
 		<div class="game-right"><a class="btn btn-sm btn-success" href="/game/quest/main/battle?area_id={{$area['id']}}"><span class="fa fa-area"></span><span>バトル</span></a></div>
 		<br style="clear: both;">
 	</div>
 
 	<div class="game-block">
-		<div class="game-left">{@ echo character()->size(9, 60) }</div>
-		<div class="game-left">{@ echo character()->size(19, 60) }</div>
+		<div class="game-left">{@ echo character()->size(9, 40, 1) }</div>
+		<div class="game-left">{@ echo character()->size(19, 40, 1) }</div>
 		<div class="game-right"><a class="btn btn-sm btn-danger" href="/game/quest/main/battle?area_id={{$area['id']}}&is_boss=1"><span class="fa fa-area"></span><span>ボスバトル</span></a></div>
 		<br style="clear: both;">
 	</div>

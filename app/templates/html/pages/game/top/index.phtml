@@ -6,10 +6,8 @@
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
 <script>
-// window.resizeBy(520,480);
-</script>
+//window.resizeBy(520,480);
 
-<script>
 var presto = class Presto {
 	// コンテンツのロード
 	static load(target, url, params) {
@@ -63,6 +61,9 @@ $(function(){
 
 
 <style>
+* { margin: 0px; padding: 0px; font-size:9pt; }
+ul { list-style: none; margin: 0px; font-size:0px; }
+
 div#game-wrapper { width:400px; height:100vh; position:relative; background:#f9f9f9; margin-left: auto; margin-right: auto;
     background-image: url("/res/images/bg/home/pipo-battlebg003.jpg");
     background-repeat: no-repeat;
@@ -70,7 +71,7 @@ div#game-wrapper { width:400px; height:100vh; position:relative; background:#f9f
     background-position:center top;
 }
 
-#game-header { display:block; height:50px; background:#ffc107; margin-bottom: 5px; }
+#game-header { height:50px; background:#ffc107; margin-bottom: 5px; }
 #game-content-panel { overflow: hidden;  }
 
 
@@ -80,14 +81,18 @@ div#game-wrapper { width:400px; height:100vh; position:relative; background:#f9f
 div.game-menu { position: absolute; right:0px; bottom: 0px;}
 div.game-menu ul { text-align:left; }
 div.game-menu ul li { display: inline-block; margin:2px; }
-div.game-menu ul li a { display: block; width:53px; text-align:center; height:50px; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
+div.game-menu ul li a { display: block; width:53px;height:50px;  text-align:center; text-decoration: none; background:#17a2b8; color:#f9f9f9; }
 div.game-menu ul li a span { line-height:20px; }
 div.game-menu ul li a span.fa { line-height:30px; font-size:20px; }
 div.game-menu ul li a.menu { background:#fd7e14;}
 
 div#game-menu { right:1px; }
-div#game-menu-panel { display: none; width:100%; }
+div#game-menu-panel { display: none; }
 /** ------------- menu ---------------- */
+
+ul.game-block-list li a { display: block; height:60px; line-height:60px; margin: 5px 0px; background: #fd7e14; color:#fafafa; }
+ul.game-block-list li a span.fa { padding:0px 10px; font-size:20px; }
+
 
 </style>
 
