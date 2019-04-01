@@ -3,6 +3,7 @@ namespace App\Models\Repositories\Player\Manage;
 
 use Presto\Core\Databases\Model\Repository;
 use App\Models\Daos\Player\Manage\PlayerManageModel;
+use App\Defines\Game\PLAYER;
 
 class PlayerManageRepository extends Repository
 {
@@ -23,10 +24,13 @@ class PlayerManageRepository extends Repository
      * ページング取得
      * @return \Presto\Core\Utilities\Paginator
      */
-    public function pagingDummy()
+    public function pagingDummy($sort=SORT_ASC)
     {
         $cond = [];
-        $cond["condition"]["type"] = "dummy";
-        return $this->paging();
+        $cond["condition"]["type"] = PLAYER::TYPE_DUMMY;
+
+        // TODO order by
+        $cond["order"][] = "player_id DESC";
+        return $this->paging($cond);
     }
 }
