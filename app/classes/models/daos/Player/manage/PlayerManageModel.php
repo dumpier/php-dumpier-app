@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Daos\PlayerManage;
+namespace App\Models\Daos\Player\Manage;
 
 
 use App\Models\Daos\BasePlayerManageModel;

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers\Admin\Debug;
 
-use App\Models\Repositories\PlayerManage\PlayerManageRepository;
+use App\Models\Repositories\Player\Manage\PlayerManageRepository;
 
 class GameController extends \App\Http\Controllers\Admin\Controller
 {
@@ -15,6 +15,7 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     ];
 
 
+    // ゲームデバッグ起動画面
     public function index()
     {
 
@@ -38,6 +39,8 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     {
         $this->layout = "html/layouts/empty";
         $count = (int)input("count", 1);
+
+
 
 
         return $this->response();

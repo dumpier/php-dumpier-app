@@ -1,8 +1,8 @@
 <?php
-namespace App\Models\Repositories\PlayerManage;
+namespace App\Models\Repositories\Player\Manage;
 
 use Presto\Core\Databases\Model\Repository;
-use App\Models\Daos\PlayerManage\PlayerManageModel;
+use App\Models\Daos\Player\Manage\PlayerManageModel;
 
 class PlayerManageRepository extends Repository
 {
