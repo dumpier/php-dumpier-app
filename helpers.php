@@ -6,23 +6,39 @@ class Service extends \Presto\Core\Service implements InjectableInterface {}
 class Command extends \Presto\Core\Consoles\Command implements InjectableInterface {}
 
 /**
- * @property \App\Services\TestService $testService
+ *
+ * ******************************************
+ * Services
+ * ******************************************
+ * Admin
  * @property \App\Services\Admin\AdminAuthService $AdminAuthService
  *
- * @property \App\Services\Game\Master\MasterDeckService $masterDeckService
- * @property \App\Services\Game\Player\PlayerDeckService $playerDeckService
- * @property \App\Services\Game\Battle\BattleService $battleService
- * @property \App\Services\Game\Battle\SkillService $skillService
- * @property \App\Services\Game\Quest\QuestService $questService
+ * Master
+ * @property \App\Services\Game\Master\MasterDeckService $MasterDeckService
+ *
+ * PlayerManage
+ * @property \App\Services\Game\Player\Manage\PlayerManageService $PlayerManageService
+ *
+ * Player
+ * @property \App\Services\Game\Player\PlayerDeckService $PlayerDeckService
+ * @property \App\Services\Game\Battle\BattleService $BattleService
+ * @property \App\Services\Game\Battle\SkillService $SkillService
+ * @property \App\Services\Game\Quest\QuestService $QuestService
  *
  *
+ * ******************************************
+ * Repository
+ * ******************************************
+ * Admin
  * @property \App\Models\Repositories\Admin\AdminRepository $Admin
  *
+ * PlayerManage
+ * @property \App\Models\Repositories\Player\Manage\PlayerManageRepository $PlayerManage
  *
+ * Player
  * @property \App\Models\Repositories\Player\PlayerCharacterRepository $PlayerCharacter
  * @property \App\Models\Repositories\Player\PlayerDeckRepository $PlayerDeck
  * @property \App\Models\Repositories\Player\PlayerWeaponRepository $PlayerWeapon
- * @property \App\Models\Repositories\PlayerManage\PlayerManageRepository $PlayerManage
  */
 interface InjectableInterface {}
 
