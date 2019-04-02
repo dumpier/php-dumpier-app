@@ -3,7 +3,7 @@ $input = [];
 $input["name"] = "name";
 
 $validates = [
-    "name"=>"require",
+		"name"=>"require",
 ];
 
 var_dump(validator()->case(5, "require|alpha,between(1~10)"));
