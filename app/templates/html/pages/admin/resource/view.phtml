@@ -1,59 +1,58 @@
 <script type="text/javascript">
 $(function(){
-  $("ul.presto-search-button li a").click(function(){
-    $("#search-type").val($(this).attr("search-type"));
-    let parameters = $("form#presto-search-form").serializeArray();
-    console.log(parameters);
-    $("div.modal-body").html("<div style='margin: auto; text-align:center; vetical-align=middle;'><img src='/res/icons/loading.gif'></div>");
-    // $("div.modal-body").load("{@ echo paging()->baseurl() }", parameters);
-    $.ajax({type: "GET", url: "{@ echo paging()->baseurl() }", data: parameters,
-       success: function(html){ $("div.modal-body").html(html); }
-    });
-  });
+	$("ul.presto-search-button li a").click(function(){
+		$("#search-type").val($(this).attr("search-type"));
+		let parameters = $("form#presto-search-form").serializeArray();
+		console.log(parameters);
+		$("div.modal-body").html("<div style='margin: auto; text-align:center; vetical-align=middle;'><img src='/res/icons/loading.gif'></div>");
+		$.ajax({type: "GET", url: "<?php echo html()->paging()->baseurl();?>", data: parameters,
+			 success: function(html){ $("div.modal-body").html(html); }
+		});
+	});
 });
 </script>
 
 
 
 <div class="row">
-  <div class="col-md-11">
-    <di class="table-responsive form-group">
-      <form id="presto-search-form"><table class='table'>
-        <input type=hidden name=parameters[type] id=search-type value="like">
-        <tbody>
-          <tr>
-            @foreach ($fields as $col=>$field)
-            <?php $val = isset($parameters['conditions'][$field]) ? $parameters['conditions'][$field] : "";?>
-            <th><textarea class="form-control" name="parameters[conditions][{{ $field }}]" placeholder="{{ $field }}" style="min-height: 50px; min-width: 80px;">{{ $val }}</textarea></th>
-            @endforeach
-          </tr>
-        </tbody>
-      </table></form>
-    </di>
-  </div>
-  <div class="col-md-1 text-right">
-    <style>ul.presto-search-button li { margin-bottom: 2px; }</style>
-    <ul class="presto-search-button list-unstyled">
-      <li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-info" search-type="like">類似検索</a></li>
-      <li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-success" search-type="strict">厳密検索</a></li>
-      <li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-warning" search-type="reset">RESET</a></li>
-    </ul>
-  </div>
+	<div class="col-md-11">
+		<di class="table-responsive form-group">
+			<form id="presto-search-form"><table class='table'>
+				<input type=hidden name=parameters[type] id=search-type value="like">
+				<tbody>
+					<tr>
+						@foreach ($fields as $col=>$field)
+						<?php $val = isset($parameters['conditions'][$field]) ? $parameters['conditions'][$field] : "";?>
+						<th><textarea class="form-control" name="parameters[conditions][{{ $field }}]" placeholder="{{ $field }}" style="min-height: 50px; min-width: 80px;">{{ $val }}</textarea></th>
+						@endforeach
+					</tr>
+				</tbody>
+			</table></form>
+		</di>
+	</div>
+	<div class="col-md-1 text-right">
+		<style>ul.presto-search-button li { margin-bottom: 2px; }</style>
+		<ul class="presto-search-button list-unstyled">
+			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-info" search-type="like">類似検索</a></li>
+			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-success" search-type="strict">厳密検索</a></li>
+			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-warning" search-type="reset">RESET</a></li>
+		</ul>
+	</div>
 </div>
 
 
 <div class='table-responsive' style="max-height:60vh; overflow: scroll; margin:10px 0px;">
-  <table class='table table-counter table-striped table-bordered table-hover'>
-    <thead class="thead-light">
-      <tr>@foreach ($fields as $col=>$field) <th>{{ $field }}</th> @endforeach</tr>
-    </thead>
+	<table class='table table-counter table-striped table-bordered table-hover'>
+		<thead class="thead-light">
+			<tr>@foreach ($fields as $col=>$field) <th>{{ $field }}</th> @endforeach</tr>
+		</thead>
 
-    <tbody>
-    @foreach ($rows as $line=>$row)
-      <tr>@foreach ($row as $key=>$val) <td>{{ $val }}</td> @endforeach</tr>
-    @endforeach
-    </tbody>
-  </table>
+		<tbody>
+		@foreach ($rows as $line=>$row)
+			<tr>@foreach ($row as $key=>$val) <td>{{ $val }}</td> @endforeach</tr>
+		@endforeach
+		</tbody>
+	</table>
 </div>
 
-<div>{@ paging()->html($count) }</div>
+<div>{@ html()->paging()->render($count) }</div>

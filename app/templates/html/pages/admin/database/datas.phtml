@@ -1,2 +1,2 @@
-{@ html()->table($rows->all()) }
-{@ paging()->html($rows->count()) }
+{@ html()->table()->render($rows->all()) }
+{@ html()->paging()->target("div.modal-body")->css("presto-get")->render($rows->count()) }
