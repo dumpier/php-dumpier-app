@@ -55,4 +55,4 @@ $(function(){
 	</table>
 </div>
 
-<div>{@ html()->paging()->render($count) }</div>
+<div>{@ html()->paging()->target("div.modal-body")->render($count) }</div>

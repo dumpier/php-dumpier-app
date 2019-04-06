@@ -14,7 +14,7 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
         $this->addPathBreadcrumb($path);
         // $this->breadcrumb("path::{$path}", "/admin/resource/index/?path={$path}");
 
-        list($directories, $files) = directory()->list(resource_path(), $path);
+        list($directories, $files) = directory()->list(path()->resource(), $path);
 
         $this->content('directories', $directories);
         $this->content('files', $files);
@@ -32,7 +32,7 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
 
         $this->breadcrumb($path, "/admin/resource/view/?path={$path}");
 
-        $full_path = resource_path($path);
+        $full_path = path()->resource($path);
 
         if(! csv()->isCsv($full_path))
         {

@@ -6,9 +6,9 @@ class Kanel
     public function run()
     {
         // Routing
-        list($controller, $action, $parameters) = routing()->get();
+        list($controller, $action, $parameters) = presto()->routing()->get();
 
-        timelines("Before action !");
+        debugbar()->timelines("Before action !");
 
         // ControllerのActionを実施し、レスポンスを送る
         app($controller)->{$action}($parameters);
