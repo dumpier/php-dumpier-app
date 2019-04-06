@@ -64,16 +64,16 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $is_boss = (int)input("is_boss", 0);
 
         // プレイヤーデッキの抽出
-        $allies = $this->playerDeckService->get($this->player_id);
+        $allies = $this->PlayerDeckService->get($this->player_id);
 
         // 対戦デッキの抽出
-        $oppenents = $this->masterDeckService->get($area_id, $is_boss);
+        $oppenents = $this->MasterDeckService->get($area_id, $is_boss);
 
         // バトルの実施
-        $battle = $this->battleService->battle($allies, $oppenents);
+        $battle = $this->BattleService->battle($allies, $oppenents);
 
         // 結果の更新
-        $quest = $this->questService->result($this->player_id, $area_id, $is_boss, $battle);
+        $quest = $this->QuestService->result($this->player_id, $area_id, $is_boss, $battle);
 
         $this->content("is_boss", $is_boss);
         $this->content("battle", $battle);

@@ -26,8 +26,12 @@
 					<tr>
 						<td><a class="btn btn-info presto-get" p-target="#admin-dummy-list" href="/admin/debug/game/account/">ダミーアカウント一覧</a></td>
 						<td colspan=2>
-							<div style="float: right;"><a class="btn btn-success presto-get" p-target="#admin-dummy-list" href="/admin/debug/game/regist/">ダミーアカウント作成</a></div>
-							<div style="float: right; margin-right:5px;">{@ html()->select()->render("count", range(1,10), 0, "作成個数を選択", " 個") }</div>
+							<div style="float: right;">
+								<a class="btn btn-success presto-get" p-target="#admin-dummy-list" p-ref='{"count":{"el":"#admin-regist-count"}}' href="/admin/debug/game/regist/">ダミーアカウント作成</a>
+							</div>
+							<div style="float: right; margin-right:5px;">
+								{@ html()->select()->tagid("admin-regist-count")->title("作成個数を選択")->append(" 個")->render("count", range(1,10) ) }
+							</div>
 						</td>
 					</tr>
 				</tbody>
