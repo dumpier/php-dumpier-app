@@ -5,5 +5,5 @@ use Presto\Core\Databases\Model\Model;
 
 class BaseAdminModel extends Model
 {
-    protected $connection = 'admin';
+    protected $connection = "admin";
 }

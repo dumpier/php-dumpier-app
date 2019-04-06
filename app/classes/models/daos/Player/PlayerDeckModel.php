@@ -5,7 +5,7 @@ use App\Models\Daos\BasePlayerModel;
 
 class PlayerDeckModel extends BasePlayerModel
 {
-    protected $table = 'player_deck';
+    protected $table = "player_deck";
 
     const PLAYER_CHARACTER_ID_COUNT = 6;
 }
