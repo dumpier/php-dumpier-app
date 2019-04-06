@@ -1,14 +1,14 @@
 <?php
 /**
- * @property \AppServices\\Admin\AdminAuthService $AdminAuthService
- * @property \AppServices\\Game\Battle\BattleService $BattleService
- * @property \AppServices\\Game\Battle\SkillService $SkillService
- * @property \AppServices\\Game\Master\MasterDeckService $MasterDeckService
- * @property \AppServices\\Game\Player\PlayerDeckService $PlayerDeckService
- * @property \AppServices\\Game\Player\PlayerRegistService $PlayerRegistService
- * @property \AppServices\\Game\Player\PlayerTutorialService $PlayerTutorialService
- * @property \AppServices\\Game\Player\Manage\PlayerManageService $PlayerManageService
- * @property \AppServices\\Game\Quest\QuestService $QuestService
+ * @property \AppServices\Admin\AdminAuthService $AdminAuthService
+ * @property \AppServices\Game\Battle\BattleService $BattleService
+ * @property \AppServices\Game\Battle\SkillService $SkillService
+ * @property \AppServices\Game\Master\MasterDeckService $MasterDeckService
+ * @property \AppServices\Game\Player\PlayerDeckService $PlayerDeckService
+ * @property \AppServices\Game\Player\PlayerRegistService $PlayerRegistService
+ * @property \AppServices\Game\Player\PlayerTutorialService $PlayerTutorialService
+ * @property \AppServices\Game\Player\Manage\PlayerManageService $PlayerManageService
+ * @property \AppServices\Game\Quest\QuestService $QuestService
  *
  * @property \AppModels\Repositories\\Admin\AdminRepository $Admin
  * @property \AppModels\Repositories\\Master\MasterCharacterOriginalRepository $MasterCharacterOriginal

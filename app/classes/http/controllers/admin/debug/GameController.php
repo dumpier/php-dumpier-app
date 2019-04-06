@@ -14,12 +14,12 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     ];
 
     protected $repositories = [
-        PlayerRegistService::class,
         PlayerManageRepository::class,
 
     ];
 
     protected $services = [
+        PlayerRegistService::class,
         PlayerManageService::class,
     ];
 
