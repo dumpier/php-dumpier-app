@@ -20,9 +20,10 @@ class PlayerManageModel extends BasePlayerManageModel
      * @param int $type
      * @return \App\Models\Daos\Player\Manage\PlayerManageModel
      */
-    public function regist(string $uuid, string $device_id, int $type)
+    public static function regist(string $uuid, string $device_id, int $type)
     {
-        $self = PlayerManageModel::instance();
+        $self = static::instance();
+
         $self->uuid = $uuid;
         $self->device_id = $device_id;
         $self->public_id = encrypter()->random(PLAYER::PUBLIC_ID_LENGTH);

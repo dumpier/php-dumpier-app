@@ -1,23 +1,24 @@
 <?php
 /**
- * @property \AppServices\Admin\AdminAuthService $AdminAuthService
- * @property \AppServices\Game\Battle\BattleService $BattleService
- * @property \AppServices\Game\Battle\SkillService $SkillService
- * @property \AppServices\Game\Master\MasterDeckService $MasterDeckService
- * @property \AppServices\Game\Player\PlayerDeckService $PlayerDeckService
- * @property \AppServices\Game\Player\PlayerRegistService $PlayerRegistService
- * @property \AppServices\Game\Player\PlayerTutorialService $PlayerTutorialService
- * @property \AppServices\Game\Player\Manage\PlayerManageService $PlayerManageService
- * @property \AppServices\Game\Quest\QuestService $QuestService
+ * @property \App\Services\Admin\AdminAuthService $AdminAuthService
+ * @property \App\Services\Game\Battle\BattleService $BattleService
+ * @property \App\Services\Game\Battle\SkillService $SkillService
+ * @property \App\Services\Game\Master\MasterDeckService $MasterDeckService
+ * @property \App\Services\Game\Player\PlayerCharacterService $PlayerCharacterService
+ * @property \App\Services\Game\Player\PlayerDeckService $PlayerDeckService
+ * @property \App\Services\Game\Player\PlayerRegistService $PlayerRegistService
+ * @property \App\Services\Game\Player\PlayerTutorialService $PlayerTutorialService
+ * @property \App\Services\Game\Player\Manage\PlayerManageService $PlayerManageService
+ * @property \App\Services\Game\Quest\QuestService $QuestService
  *
- * @property \AppModels\Repositories\\Admin\AdminRepository $Admin
- * @property \AppModels\Repositories\\Master\MasterCharacterOriginalRepository $MasterCharacterOriginal
- * @property \AppModels\Repositories\\Master\MasterCharacterRepository $MasterCharacter
- * @property \AppModels\Repositories\\Master\MasterTutorialCharacterRepository $MasterTutorialCharacter
- * @property \AppModels\Repositories\\Player\PlayerCharacterRepository $PlayerCharacter
- * @property \AppModels\Repositories\\Player\PlayerDeckRepository $PlayerDeck
- * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $PlayerWeapon
- * @property \AppModels\Repositories\\Player\Manage\PlayerManageRepository $PlayerManage
+ * @property \App\Models\Repositories\Admin\AdminRepository $Admin
+ * @property \App\Models\Repositories\Master\MasterCharacterOriginalRepository $MasterCharacterOriginal
+ * @property \App\Models\Repositories\Master\MasterCharacterRepository $MasterCharacter
+ * @property \App\Models\Repositories\Master\MasterTutorialCharacterRepository $MasterTutorialCharacter
+ * @property \App\Models\Repositories\Player\PlayerCharacterRepository $PlayerCharacter
+ * @property \App\Models\Repositories\Player\PlayerDeckRepository $PlayerDeck
+ * @property \App\Models\Repositories\Player\PlayerWeaponRepository $PlayerWeapon
+ * @property \App\Models\Repositories\Player\Manage\PlayerManageRepository $PlayerManage
  */
 interface InjectableInterface {}
 

@@ -9,4 +9,26 @@ class PlayerDeckModel extends BasePlayerModel
     use PlayerDeckDocTrait;
 
     const PLAYER_CHARACTER_ID_COUNT = 6;
+
+
+
+    /**
+     * 新規作成
+     * @param int $player_id
+     * @param int $deck_id
+     * @param int $level
+     * @return \App\Models\Daos\Player\PlayerDeckModel
+     */
+    public static function regist(int $player_id, int $deck_id, int $slot_count=1)
+    {
+        $self = static::instance();
+
+        $self->player_id = $player_id;
+        $self->deck_id = $deck_id;
+        $self->slot_count = $slot_count;
+
+        $self->save();
+
+        return $self;
+    }
 }

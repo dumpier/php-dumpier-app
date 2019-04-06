@@ -48,15 +48,15 @@ trait PlayerManageDocTrait
     public $logincount_today = 0;
 
     /** @var string  */
-    public $logintime_last = "";
+    public $logintime_last = NULL;
 
     /** @var string  */
-    public $logintime_pre = "";
+    public $logintime_pre = NULL;
 
     /** @var string  */
-    public $modified = "";
+    public $modified = NULL;
 
     /** @var string  */
-    public $created = "";
+    public $created = NULL;
 
 }

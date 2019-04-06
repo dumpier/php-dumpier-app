@@ -68,9 +68,9 @@ trait PlayerDeckDocTrait
     public $player_character_id_10 = 0;
 
     /** @var string  */
-    public $created = "CURRENT_TIMESTAMP";
+    public $created = NULL;
 
     /** @var string  */
-    public $modified = "CURRENT_TIMESTAMP";
+    public $modified = NULL;
 
 }
