@@ -5,6 +5,6 @@ class Controller extends \App\Http\Controllers\Controller
 {
     public $layout = 'html/layouts/game/default';
 
-    protected $player_id = 0;
+    protected $player_id = 1;
 
 }

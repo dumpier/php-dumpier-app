@@ -10,6 +10,9 @@ class PlayerCharacterModel extends BasePlayerModel
 
     const PLAYER_WEAPON_ID_COUNT = 6;
 
+    /** テーブル名 */
+    protected $table = "player_character";
+
 
     /**
      * 新規作成

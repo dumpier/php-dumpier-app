@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Master;
  */
 trait MasterEquipDocTrait
 {
-    /** テーブル名 */
-    protected $table = "master_equip";
-
     /** 項目一覧 */
     protected $properties = [
         "id",

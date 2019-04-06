@@ -57,9 +57,10 @@ class PlayerRegistService extends \Service
     {
         // ドロップ可能なキャラ一覧
         $characters = $this->MasterTutorialCharacter->find();
+        $character = lottery()->drop($characters);
 
         // TODO drop
-        $character_id = 100101001;
+        $character_id = $character["character_id"];
         $MasterCharacter = $this->MasterCharacter->getById($character_id);
 
         return $MasterCharacter;

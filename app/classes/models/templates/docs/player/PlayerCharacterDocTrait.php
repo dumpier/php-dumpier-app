@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Player;
  */
 trait PlayerCharacterDocTrait
 {
-    /** テーブル名 */
-    protected $table = "player_character";
-
     /** 項目一覧 */
     protected $properties = [
         "id",

@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Admin;
  */
 trait AdminDocTrait
 {
-    /** テーブル名 */
-    protected $table = "admin";
-
     /** 項目一覧 */
     protected $properties = [
         "id",

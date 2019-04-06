@@ -5,8 +5,7 @@ namespace App\Models\Templates\Docs\Player\Manage;
  */
 trait PlayerManageDocTrait
 {
-    protected $table = "player_manage";
-
+    /** 項目一覧 */
     protected $properties = [
         "player_id",
         "type",

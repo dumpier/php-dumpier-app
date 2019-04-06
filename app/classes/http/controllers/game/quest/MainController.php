@@ -4,26 +4,21 @@ namespace App\Http\Controllers\Game\Quest;
 use App\Services\Game\Player\PlayerDeckService;
 use App\Services\Game\Master\MasterDeckService;
 use App\Services\Game\Battle\BattleService;
-use App\Services\Game\Quest\QuestService;
+use App\Services\Game\Player\Quest\PlayerMainQuestService;
 
 class MainController extends \App\Http\Controllers\Game\Controller
 {
     protected $services = [
+        PlayerMainQuestService::class,
         PlayerDeckService::class,
         MasterDeckService::class,
         BattleService::class,
-        QuestService::class,
     ];
 
     // メインクエストトップ（マップ一覧）
     public function index()
     {
-        $maps = [
-            ["id"=>1, "name"=>"MAP#1", ],
-            ["id"=>2, "name"=>"MAP#2", ],
-            ["id"=>3, "name"=>"MAP#3", ],
-            ["id"=>4, "name"=>"MAP#4", ],
-        ];
+        $maps = $this->PlayerMainQuestService->maps($this->player_id);
 
         $this->content("maps", $maps);
         return $this->response();
@@ -33,13 +28,8 @@ class MainController extends \App\Http\Controllers\Game\Controller
     // 指定マップのエリア一覧
     public function areas()
     {
-        $areas = [
-            ["id"=>1, "name"=>"AREA#1", ],
-            ["id"=>2, "name"=>"AREA#2", ],
-            ["id"=>3, "name"=>"AREA#3", ],
-            ["id"=>4, "name"=>"AREA#4", ],
-            ["id"=>5, "name"=>"AREA#5", ],
-        ];
+        $map_id = request()->input("map_id");
+        $areas = $this->PlayerMainQuestService->areas($this->player_id, $map_id);
 
         $this->content("areas", $areas);
 
@@ -64,16 +54,16 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $is_boss = (int)input("is_boss", 0);
 
         // プレイヤーデッキの抽出
-        $allies = $this->playerDeckService->get($this->player_id);
+        $allies = $this->PlayerDeckService->get($this->player_id);
 
         // 対戦デッキの抽出
-        $oppenents = $this->masterDeckService->get($area_id, $is_boss);
+        $oppenents = $this->MasterDeckService->get($area_id, $is_boss);
 
         // バトルの実施
-        $battle = $this->battleService->battle($allies, $oppenents);
+        $battle = $this->BattleService->battle($allies, $oppenents);
 
         // 結果の更新
-        $quest = $this->questService->result($this->player_id, $area_id, $is_boss, $battle);
+        $quest = $this->PlayerMainQuestService->result($this->player_id, $area_id, $is_boss, $battle);
 
         $this->content("is_boss", $is_boss);
         $this->content("battle", $battle);

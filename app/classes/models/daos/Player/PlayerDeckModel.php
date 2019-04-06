@@ -10,6 +10,8 @@ class PlayerDeckModel extends BasePlayerModel
 
     const PLAYER_CHARACTER_ID_COUNT = 6;
 
+    /** テーブル名 */
+    protected $table = "player_deck";
 
 
     /**

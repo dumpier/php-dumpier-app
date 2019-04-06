@@ -10,4 +10,8 @@ class MasterCharacterModel extends BaseMasterModel
 
     const PRIMARY_KEY = "character_id";
 
+    /** テーブル名 */
+    protected $table = "master_character";
+
+
 }

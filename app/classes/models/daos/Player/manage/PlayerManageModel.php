@@ -12,6 +12,8 @@ class PlayerManageModel extends BasePlayerManageModel
 
     const PRIMARY_KEY = "player_id";
 
+    protected $table = "player_manage";
+
 
     /**
      * プレイヤーマネージデータの作成

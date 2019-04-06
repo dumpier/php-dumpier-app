@@ -27,6 +27,7 @@ if(! function_exists("condition")) { /** @return \Presto\Core\Utilities\Filterin
 if(! function_exists("parameter")) { /** @return \Presto\Core\Utilities\FilteringParameter */ function parameter(array $parameter=[]) { return new \Presto\Core\Utilities\FilteringParameter($parameter); }}
 if(! function_exists("breadcrumb")) { /** @return \Presto\Core\Utilities\Breadcrumb */ function breadcrumb(array $rows=[]) { return \Presto\Core\Utilities\Breadcrumb::instance()->adds($rows); }}
 if(! function_exists("debugbar")) { /** @return \Presto\Core\Utilities\Debugbar */ function debugbar() { return \Presto\Core\Utilities\Debugbar::instance(); }}
+if(! function_exists("lottery")) { /** @return \Presto\Core\Utilities\Lottery */ function lottery() { return \Presto\Core\Utilities\Lottery::instance(); }}
 
 
 // files

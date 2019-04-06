@@ -26,4 +26,4 @@ try{
 
 debugbar()->timelines("completed all !");
 
-debugbar()->render();
+// debugbar()->render();

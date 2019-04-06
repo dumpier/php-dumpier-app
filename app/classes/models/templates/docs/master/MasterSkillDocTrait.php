@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Master;
  */
 trait MasterSkillDocTrait
 {
-    /** テーブル名 */
-    protected $table = "master_skill";
-
     /** 項目一覧 */
     protected $properties = [
         "id",
