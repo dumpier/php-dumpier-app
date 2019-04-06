@@ -1,51 +1,27 @@
 <?php
 /**
- * @property \AppServices\\Admin\AdminAuthService $adminAuthService
- * @property \AppServices\\Game\Battle\BattleService $battleService
- * @property \AppServices\\Game\Battle\SkillService $skillService
- * @property \AppServices\\Game\Master\MasterDeckService $masterDeckService
- * @property \AppServices\\Game\Player\PlayerDeckService $playerDeckService
- * @property \AppServices\\Game\Player\Manage\PlayerManageService $playerManageService
- * @property \AppServices\\Game\Quest\QuestService $questService
+ * @property \App\Services\Admin\AdminAuthService $AdminAuthService
+ * @property \App\Services\Game\Battle\BattleService $BattleService
+ * @property \App\Services\Game\Battle\SkillService $SkillService
+ * @property \App\Services\Game\Master\MasterDeckService $MasterDeckService
+ * @property \App\Services\Game\Player\PlayerCharacterService $PlayerCharacterService
+ * @property \App\Services\Game\Player\PlayerDeckService $PlayerDeckService
+ * @property \App\Services\Game\Player\PlayerRegistService $PlayerRegistService
+ * @property \App\Services\Game\Player\PlayerTutorialService $PlayerTutorialService
+ * @property \App\Services\Game\Player\Manage\PlayerManageService $PlayerManageService
+ * @property \App\Services\Game\Quest\QuestService $QuestService
  *
- * @property \AppModels\Repositories\\Admin\AdminRepository $admin
- * @property \AppModels\Repositories\\Player\PlayerCharacterRepository $playerCharacter
- * @property \AppModels\Repositories\\Player\PlayerDeckRepository $playerDeck
- * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
- * @property \AppModels\Repositories\\Player\Manage\PlayerManageRepository $playerManage
+ * @property \App\Models\Repositories\Admin\AdminRepository $Admin
+ * @property \App\Models\Repositories\Master\MasterCharacterOriginalRepository $MasterCharacterOriginal
+ * @property \App\Models\Repositories\Master\MasterCharacterRepository $MasterCharacter
+ * @property \App\Models\Repositories\Master\MasterTutorialCharacterRepository $MasterTutorialCharacter
+ * @property \App\Models\Repositories\Player\PlayerCharacterRepository $PlayerCharacter
+ * @property \App\Models\Repositories\Player\PlayerDeckRepository $PlayerDeck
+ * @property \App\Models\Repositories\Player\PlayerWeaponRepository $PlayerWeapon
+ * @property \App\Models\Repositories\Player\Manage\PlayerManageRepository $PlayerManage
  */
-class Controller extends \Presto\Core\Controller {}
+interface InjectableInterface {}
 
-/**
- * @property \AppServices\\Admin\AdminAuthService $adminAuthService
- * @property \AppServices\\Game\Battle\BattleService $battleService
- * @property \AppServices\\Game\Battle\SkillService $skillService
- * @property \AppServices\\Game\Master\MasterDeckService $masterDeckService
- * @property \AppServices\\Game\Player\PlayerDeckService $playerDeckService
- * @property \AppServices\\Game\Player\Manage\PlayerManageService $playerManageService
- * @property \AppServices\\Game\Quest\QuestService $questService
- *
- * @property \AppModels\Repositories\\Admin\AdminRepository $admin
- * @property \AppModels\Repositories\\Player\PlayerCharacterRepository $playerCharacter
- * @property \AppModels\Repositories\\Player\PlayerDeckRepository $playerDeck
- * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
- * @property \AppModels\Repositories\\Player\Manage\PlayerManageRepository $playerManage
- */
-class Service extends \Presto\Core\Service {}
-
-/**
- * @property \AppServices\\Admin\AdminAuthService $adminAuthService
- * @property \AppServices\\Game\Battle\BattleService $battleService
- * @property \AppServices\\Game\Battle\SkillService $skillService
- * @property \AppServices\\Game\Master\MasterDeckService $masterDeckService
- * @property \AppServices\\Game\Player\PlayerDeckService $playerDeckService
- * @property \AppServices\\Game\Player\Manage\PlayerManageService $playerManageService
- * @property \AppServices\\Game\Quest\QuestService $questService
- *
- * @property \AppModels\Repositories\\Admin\AdminRepository $admin
- * @property \AppModels\Repositories\\Player\PlayerCharacterRepository $playerCharacter
- * @property \AppModels\Repositories\\Player\PlayerDeckRepository $playerDeck
- * @property \AppModels\Repositories\\Player\PlayerWeaponRepository $playerWeapon
- * @property \AppModels\Repositories\\Player\Manage\PlayerManageRepository $playerManage
- */
-class Command extends \Presto\Core\Consoles\Command {}
+class Controller extends \Presto\Core\Controller implements InjectableInterface {}
+class Service extends \Presto\Core\Service implements InjectableInterface {}
+class Command extends \Presto\Core\Consoles\Command implements InjectableInterface {}

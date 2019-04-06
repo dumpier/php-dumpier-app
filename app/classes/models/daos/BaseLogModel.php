@@ -3,7 +3,7 @@ namespace App\Models\Daos;
 
 use Presto\Core\Databases\Model\Model;
 
-class BaseAdminModel extends Model
+class BaseLogModel extends Model
 {
-    protected $connection = "admin";
+    protected $connection = "log_01";
 }

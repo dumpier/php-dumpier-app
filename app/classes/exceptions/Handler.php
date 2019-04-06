@@ -24,6 +24,7 @@ class Handler
 
         echo $e->getCode();
         echo $e->getMessage();
+        var_dump($e);
     }
 
 

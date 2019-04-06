@@ -5,5 +5,5 @@ use Presto\Core\Databases\Model\Model;
 
 class BasePlayerModel extends Model
 {
-    protected $connection = 'player_shard_01';
+    protected $connection = "player";
 }
