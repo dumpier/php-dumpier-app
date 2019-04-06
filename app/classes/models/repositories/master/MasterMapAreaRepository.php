@@ -9,5 +9,19 @@ use App\Models\Daos\Master\MasterMapAreaModel;
  */
 class MasterMapAreaRepository extends Repository
 {
-    protected $model = MasterMapAreaModel::class;
+    protected $class = MasterMapAreaModel::class;
+
+
+    /**
+     * 指定マップIDのエリア一覧の取得
+     * @param int $map_id
+     * @return array|mixed
+     */
+    public function getListByMapId(int $map_id)
+    {
+        $cond = [];
+        $cond["condition"]["map_id"] = $map_id;
+
+        return $this->find($cond);
+    }
 }

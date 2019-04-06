@@ -9,11 +9,13 @@
  * @property \App\Services\Game\Player\PlayerRegistService $PlayerRegistService
  * @property \App\Services\Game\Player\PlayerTutorialService $PlayerTutorialService
  * @property \App\Services\Game\Player\Manage\PlayerManageService $PlayerManageService
- * @property \App\Services\Game\Quest\QuestService $QuestService
+ * @property \App\Services\Game\Player\Quest\PlayerMainQuestService $PlayerMainQuestService
  *
  * @property \App\Models\Repositories\Admin\AdminRepository $Admin
  * @property \App\Models\Repositories\Master\MasterCharacterOriginalRepository $MasterCharacterOriginal
  * @property \App\Models\Repositories\Master\MasterCharacterRepository $MasterCharacter
+ * @property \App\Models\Repositories\Master\MasterMapAreaRepository $MasterMapArea
+ * @property \App\Models\Repositories\Master\MasterMapRepository $MasterMap
  * @property \App\Models\Repositories\Master\MasterTutorialCharacterRepository $MasterTutorialCharacter
  * @property \App\Models\Repositories\Player\PlayerCharacterRepository $PlayerCharacter
  * @property \App\Models\Repositories\Player\PlayerDeckRepository $PlayerDeck

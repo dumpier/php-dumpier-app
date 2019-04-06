@@ -9,5 +9,5 @@ use App\Models\Daos\Master\MasterMapModel;
  */
 class MasterMapRepository extends Repository
 {
-    protected $model = MasterMapModel::class;
+    protected $class = MasterMapModel::class;
 }
