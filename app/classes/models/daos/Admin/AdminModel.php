@@ -2,9 +2,10 @@
 namespace App\Models\Daos\Admin;
 
 use App\Models\Daos\BaseAdminModel;
+use App\Models\Templates\Docs\Admin\AdminDocTrait;
 
 class AdminModel extends BaseAdminModel
 {
-    protected $table = "admin";
+    use AdminDocTrait;
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Debug;
 use App\Models\Repositories\Player\Manage\PlayerManageRepository;
 use App\Defines\Game\PLAYER;
 use App\Services\Game\Player\Manage\PlayerManageService;
+use App\Services\Game\Player\PlayerRegistService;
 
 class GameController extends \App\Http\Controllers\Admin\Controller
 {
@@ -13,7 +14,9 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     ];
 
     protected $repositories = [
+        PlayerRegistService::class,
         PlayerManageRepository::class,
+
     ];
 
     protected $services = [
@@ -55,7 +58,7 @@ class GameController extends \App\Http\Controllers\Admin\Controller
         {
             $uuid = encrypter()->random(32);
             $device_id = encrypter()->random(32);
-            $PlayerManage = $this->PlayerManageService->regist($uuid, $device_id, PLAYER::TYPE_DUMMY);
+            $PlayerManage = $this->PlayerRegistService->regist($uuid, $device_id, PLAYER::TYPE_DUMMY);
 
             $playerManages[] = $PlayerManage->toArray();
         }

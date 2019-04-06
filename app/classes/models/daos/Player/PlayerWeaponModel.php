@@ -2,9 +2,10 @@
 namespace App\Models\Daos\Player;
 
 use App\Models\Daos\BasePlayerModel;
+use App\Models\Templates\Docs\PlayerShard\PlayerWeaponDocTrait;
 
 class PlayerWeaponModel extends BasePlayerModel
 {
-    protected $table = "player_weapon";
+    use PlayerWeaponDocTrait;
 
 }
