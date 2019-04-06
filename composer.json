@@ -29,7 +29,8 @@
 
     "autoload":{
         "files": [
-            "helpers.php"
+            "helpers.php",
+            "helpers_presto.php"
         ],
         "psr-4": {
             "Presto\\": "packages/presto/src/",
