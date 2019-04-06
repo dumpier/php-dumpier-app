@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Master;
  */
 trait MasterMaterialLevelDocTrait
 {
-    /** テーブル名 */
-    protected $table = "master_material_level";
-
     /** 項目一覧 */
     protected $properties = [
         "id",

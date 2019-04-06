@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Master;
  */
 trait MasterEquipLevelDocTrait
 {
-    /** テーブル名 */
-    protected $table = "master_equip_level";
-
     /** 項目一覧 */
     protected $properties = [
         "id",

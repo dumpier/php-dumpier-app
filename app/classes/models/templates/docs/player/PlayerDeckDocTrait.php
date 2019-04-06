@@ -5,14 +5,12 @@ namespace App\Models\Templates\Docs\Player;
  */
 trait PlayerDeckDocTrait
 {
-    /** テーブル名 */
-    protected $table = "player_deck";
-
     /** 項目一覧 */
     protected $properties = [
         "id",
         "player_id",
         "deck_id",
+        "slot_count",
         "player_character_id_1",
         "player_character_id_2",
         "player_character_id_3",
@@ -36,6 +34,9 @@ trait PlayerDeckDocTrait
 
     /** @var int  */
     public $deck_id = 0;
+
+    /** @var int 解放されたSLOT数 */
+    public $slot_count = 0;
 
     /** @var int  */
     public $player_character_id_1 = 0;

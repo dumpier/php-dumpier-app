@@ -5,9 +5,6 @@ namespace App\Models\Templates\Docs\Master;
  */
 trait MasterCharacterOriginalDocTrait
 {
-    /** テーブル名 */
-    protected $table = "master_character_original";
-
     /** 項目一覧 */
     protected $properties = [
         "character_original_id",

@@ -8,4 +8,7 @@ class AdminModel extends BaseAdminModel
 {
     use AdminDocTrait;
 
+    /** テーブル名 */
+    protected $table = "admin";
+
 }
