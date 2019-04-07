@@ -4,8 +4,8 @@ namespace App\Services\Game\Player;
 use App\Models\Daos\Player\Manage\PlayerManageModel;
 use App\Models\Repositories\Player\PlayerDeckRepository;
 use App\Models\Repositories\Master\MasterTutorialCharacterRepository;
-use App\Models\Daos\Player\MasterCharacterModel;
 use App\Models\Repositories\Master\MasterCharacterRepository;
+use App\Models\Daos\Master\MasterCharacterModel;
 
 class PlayerRegistService extends \Service
 {

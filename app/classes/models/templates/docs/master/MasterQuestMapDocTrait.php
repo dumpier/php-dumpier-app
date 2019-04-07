@@ -3,7 +3,7 @@ namespace App\Models\Templates\Docs\Master;
 
 /**
  */
-trait MasterMapDocTrait
+trait MasterQuestMapDocTrait
 {
     /** 項目一覧 */
     protected $properties = [

@@ -29,9 +29,9 @@ trait MasterTutorialCharacterDocTrait
     public $weight = 0;
 
     /** @var string  */
-    public $created = "";
+    public $created = NULL;
 
     /** @var string  */
-    public $modified = "";
+    public $modified = NULL;
 
 }

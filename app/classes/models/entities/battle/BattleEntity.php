@@ -5,13 +5,11 @@ namespace App\Models\Entities\Battle;
 use App\Models\Entities\Battle\Log\BattleLogManageEntity;
 use Presto\Core\Traits\Instanceable;
 use Presto\Core\Utilities\Collection;
+use App\Defines\Game\BATTLE;
 
 class BattleEntity
 {
     use Instanceable;
-
-    /** 最大ラウンド数 */
-    const ROUND_MAX = 30;
 
 
     /** @var DeckEntity 味方デッキ */
@@ -41,9 +39,10 @@ class BattleEntity
     public $total_turn = 0;
 
 
-    public function __construct(DeckEntity $ally, DeckEntity $oppenent)
+    public function __construct(Collection $allies, Collection $oppenents)
     {
-
+        $this->ally = new DeckEntity($allies);
+        $this->oppenent = new DeckEntity($oppenents);
     }
 
 
@@ -86,7 +85,7 @@ class BattleEntity
         }
 
         // ラウンドMAXを超えたら、ゲーム終了
-        if ( $this->round > self::ROUND_MAX )
+        if ( $this->round > BATTLE::ROUND_MAX )
         {
             return true;
         }

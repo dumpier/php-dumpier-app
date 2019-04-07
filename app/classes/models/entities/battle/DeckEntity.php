@@ -7,7 +7,7 @@ use Presto\Core\Utilities\Collection;
 class DeckEntity
 {
     /** @var Collection|ActorEntity[] */
-    public $characters;
+    public $actors;
 
     /** @var int 現在行動中のキャラー */
     public $actor_id = 0;
@@ -20,6 +20,15 @@ class DeckEntity
 
     /** @var bool HP合計の再計算フラグ */
     public $recalculate_total_hp = true;
+
+
+    public function __construct(Collection $characters)
+    {
+        foreach ($characters as $character)
+        {
+            $this->actors->put(new ActorEntity($character));
+        }
+    }
 
     /**
      * 全滅判定
