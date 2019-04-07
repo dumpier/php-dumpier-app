@@ -12,20 +12,18 @@ class MasterQuestMapRepository extends Repository
     protected $class = MasterQuestMapModel::class;
 
 
-
-
     /**
-     * エリアの取得
-     * @param int $area_id
-     * @return MasterQuestMapModel|NULL
+     *
+     * @param int $map_id
+     * @return array|MasterQuestMapModel[]
      */
-    public function getByAreaId(int $area_id)
+    public function getListByMapId(int $map_id)
     {
-        $row = $this->findByPk($area_id);
+        $cond = [];
+        $cond["condition"]["map_id"]["<="] = $map_id;
 
-        return $row;
+        return $this->find($cond);
     }
-
 
 
 

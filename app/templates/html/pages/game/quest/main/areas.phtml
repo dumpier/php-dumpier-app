@@ -1,5 +1,5 @@
 <ul class="game-block-list">
 	@foreach($areas as $area)
-	<li><a class="presto-get" href="/game/quest/main/area?area_id={{$area['map_id']}}"><span class="fa fa-map"></span><span>{{$area['name']}}</span></a></li>
+	<li><a class="presto-get" href="/game/quest/main/area?area_id={{$area['area_id']}}"><span class="fa fa-map"></span><span>{{$area['name']}}</span></a></li>
 	@endforeach
 </ul>

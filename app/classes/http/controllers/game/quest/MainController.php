@@ -32,7 +32,6 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $areas = $this->PlayerQuestService->getAreaList($this->player_id, $map_id);
 
         $this->content("areas", $areas);
-
         return $this->response();
     }
 
@@ -43,7 +42,7 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $area_id = input("area_id");
         $area =$this->PlayerQuestService->getArea($this->player_id, $area_id);
 
-        $this->content("area", $area);
+        $this->content("area", $area->toArray());
         return $this->response();
     }
 

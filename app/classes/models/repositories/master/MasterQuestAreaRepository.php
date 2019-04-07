@@ -11,6 +11,17 @@ class MasterQuestAreaRepository extends Repository
 {
     protected $class = MasterQuestAreaModel::class;
 
+    /**
+     * 最初のエリアの取得
+     * @return MasterQuestAreaModel|NULL
+     */
+    public function getFirstArea()
+    {
+        $row = $this->findFirst();
+
+        return $row;
+    }
+
 
     /**
      * 指定マップIDのエリア一覧の取得
