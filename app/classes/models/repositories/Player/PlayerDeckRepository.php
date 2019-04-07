@@ -74,7 +74,7 @@ class PlayerDeckRepository extends Repository
 
         if(empty($row))
         {
-            throw new AppException("デッキが見つからない[deck_id:{$deck_id}]");
+            throw new AppException("デッキが見つからない[player_id:{$player_id}, deck_id:{$deck_id}]");
         }
 
         return $row;

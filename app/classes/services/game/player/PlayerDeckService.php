@@ -3,11 +3,13 @@ namespace App\Services\Game\Player;
 
 use App\Models\Repositories\Player\PlayerDeckRepository;
 use App\Models\Daos\Player\PlayerDeckModel;
+use App\Models\Repositories\Player\PlayerCharacterRepository;
 
 class PlayerDeckService extends \Service
 {
     protected $repositories = [
         PlayerDeckRepository::class,
+        PlayerCharacterRepository::class,
     ];
 
 
@@ -28,10 +30,20 @@ class PlayerDeckService extends \Service
     }
 
 
+    /**
+     * プレイヤーデッキ
+     * @param int $player_id
+     * @param int $deck_id
+     * @return array|\App\Models\Daos\Player\PlayerDeckModel
+     */
     public function getPlayerDeck(int $player_id, int $deck_id=1)
     {
         $PlayerDeck = $this->PlayerDeck->getPlayerDeck($player_id, $deck_id);
 
+        // TODO キャラ一覧
+        $CharacterCollection = $this->PlayerCharacter->getPlayerCharacterList($player_id);
+
+var_dump($CharacterCollection);
         return $PlayerDeck;
     }
 

@@ -42,6 +42,7 @@ class PlayerRegistService extends \Service
         $PlayerDeck = $this->PlayerDeckService->regist($PlayerManage->player_id);
         // デッキキャラの設定
         $PlayerDeck->player_character_id_1 = $PlayerCharacter->id;
+        $PlayerDeck->slot_count = 1;
         $PlayerDeck->save();
 
         return $PlayerManage;
@@ -61,7 +62,7 @@ class PlayerRegistService extends \Service
 
         // TODO drop
         $character_id = $character["character_id"];
-        $MasterCharacter = $this->MasterCharacter->getById($character_id);
+        $MasterCharacter = $this->MasterCharacter->getByCharacterId($character_id);
 
         return $MasterCharacter;
     }

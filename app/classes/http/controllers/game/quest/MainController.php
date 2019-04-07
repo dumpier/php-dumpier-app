@@ -29,6 +29,7 @@ class MainController extends \App\Http\Controllers\Game\Controller
     public function areas()
     {
         $map_id = input("map_id");
+
         $areas = $this->PlayerQuestService->getAreaList($this->player_id, $map_id);
 
         $this->content("areas", $areas);
@@ -40,7 +41,8 @@ class MainController extends \App\Http\Controllers\Game\Controller
     public function area()
     {
         $area_id = input("area_id");
-        $area =$this->PlayerQuestService->getArea($this->player_id, $area_id);
+
+        $area = $this->PlayerQuestService->getArea($this->player_id, $area_id);
 
         $this->content("area", $area->toArray());
         return $this->response();
@@ -53,6 +55,7 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $area_id = (int)input("area_id", 0);
         $is_boss = (int)input("is_boss", 0);
 
+        // 指定クエストの取得
         $quest = $this->PlayerQuestService->getPlayerQuest($this->player_id, $area_id);
 
         // プレイヤーデッキの抽出
