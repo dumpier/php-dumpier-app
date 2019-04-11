@@ -4,6 +4,8 @@ namespace App\Models\Repositories\Player;
 use Presto\Core\Databases\Model\Repository;
 use Presto\Core\Databases\Model\Model;
 use App\Models\Daos\Player\PlayerDeckModel;
+use App\Exceptions\AppException;
+use Presto\Core\Utilities\Collection;
 
 class PlayerDeckRepository extends Repository
 {
@@ -41,11 +43,40 @@ class PlayerDeckRepository extends Repository
     ];
 
 
-    public function getDefault(int $player_id)
+    /**
+     * プレイヤーデッキ一覧の取得
+     * @param int $player_id
+     * @return array|Collection|PlayerDeckModel[]
+     */
+    public function getPlayerDeckList(int $player_id)
     {
         $cond = [];
         $cond["condition"]["player_id"] = $player_id;
 
-        return $this->findFirst($cond);
+        return $this->find($cond);
+    }
+
+
+    /**
+     * プレイヤーデッキの取得
+     * @param int $player_id
+     * @param int $deck_id
+     * @throws AppException
+     * @return array|PlayerDeckModel
+     */
+    public function getPlayerDeck(int $player_id, int $deck_id)
+    {
+        $cond = [];
+        $cond["condition"]["player_id"] = $player_id;
+        $cond["condition"]["deck_id"] = $deck_id;
+
+        $row = $this->findFirst($cond);
+
+        if(empty($row))
+        {
+            throw new AppException("デッキが見つからない[player_id:{$player_id}, deck_id:{$deck_id}]");
+        }
+
+        return $row;
     }
 }

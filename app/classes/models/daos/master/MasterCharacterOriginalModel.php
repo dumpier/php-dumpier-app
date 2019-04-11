@@ -1,14 +1,16 @@
 <?php
-namespace App\Models\Daos\Player;
+namespace App\Models\Daos\Master;
 
-use App\Models\Daos\BaseMasterModel;
 use App\Models\Templates\Docs\Master\MasterCharacterOriginalDocTrait;
 
-class MasterCharacterOriginalModel extends BaseMasterModel
+/**
+ * master_character_original
+ */
+class MasterCharacterOriginalModel extends \App\Models\Daos\BaseMasterModel
 {
     use MasterCharacterOriginalDocTrait;
 
-    /** テーブル名 */
-    protected $table = "master_character_original";
+    const PRIMARY_KEY = "character_original_id";
 
+    protected $table = "master_character_original";
 }

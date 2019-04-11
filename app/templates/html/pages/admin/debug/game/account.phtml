@@ -1,6 +1,6 @@
 <div class=" thrones-box thrones-padding">
 	<span class="d-block p-2 rounded text-white bg-info"><span class="fa fa-info-circle"></span>DUMMYアカウント一覧</span>
 
-	{@ html()->table()->height(500)->render($playerPaginate->all()) }
+	{@ html()->table()->height(500)->render($playerPaginate->toArray()) }
 	{@ html()->paging()->target("#admin-dummy-list")->css("presto-get")->render($playerPaginate->count()) }
 </div>

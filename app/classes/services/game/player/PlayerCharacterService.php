@@ -16,7 +16,7 @@ class PlayerCharacterService extends \Service
     public function grant(int $player_id, int $character_id, $level=0)
     {
         // マスターデータの確認
-        $this->MasterCharacter->getById($character_id);
+        $this->MasterCharacter->getByCharacterId($character_id);
 
         // プレイヤーキャラを作成
         $PlayerCharacter = PlayerCharacterModel::regist($player_id, $character_id, $level);

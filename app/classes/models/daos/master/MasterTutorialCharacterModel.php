@@ -1,13 +1,14 @@
 <?php
-namespace App\Models\Daos\Player;
+namespace App\Models\Daos\Master;
 
-use App\Models\Daos\BaseMasterModel;
 use App\Models\Templates\Docs\Master\MasterTutorialCharacterDocTrait;
 
-class MasterTutorialCharacterModel extends BaseMasterModel
+/**
+ * master_tutorial_character
+ */
+class MasterTutorialCharacterModel extends \App\Models\Daos\BaseMasterModel
 {
     use MasterTutorialCharacterDocTrait;
 
-    /** テーブル名 */
     protected $table = "master_tutorial_character";
 }

@@ -8,17 +8,18 @@ class PlayerCharacterRepository extends Repository
 {
     protected $class = PlayerCharacterModel::class;
 
-    protected $relations = [
-        PlayerWeaponRepository::class=>[
-            "repository"=>PlayerWeaponRepository::class,
-            "type"=>Repository::HAS_ONE,
 
-            // JOIN条件
-            "join"=>["id"=>"player_character_id", ],
+    public function getPlayerCharacterList(int $player_id, array $characterIds=[])
+    {
+        $cond = [];
+        $cond["condition"]["player_id"] = $player_id;
 
-            // 子テーブルのソート
-            "order"=>["part_id"=>"ASC"],
-        ],
-    ];
+        if($characterIds)
+        {
+            $cond["condition"]["id"]["in"] = $characterIds;
+        }
 
+        return $this->find($cond);
+    }
 }
+
