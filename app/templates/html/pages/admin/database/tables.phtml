@@ -17,7 +17,7 @@
 	<tbody>
 		@foreach ($tables as $table)
 		<tr>
-			<td><a href="/admin/database/datas/?conn={{ $conn }}&table={{ $table['Name'] }}" class="load-to-modal" data-toggle="modal" data-target="#modal"><span class='fa fa-table'></span>{{ $table["Name"] }}</a></td>
+			<td><a href="/admin/database/datas/?conn={{ $conn }}&table={{ $table['Name'] }}" class="load-to-modal presto-get" p-target="div.modal-body" data-toggle="modal" data-target="#modal"><span class='fa fa-table'></span>{{ $table["Name"] }}</a></td>
 			<td>{{ $table["Comment"] }}</td>
 			<td>{{ $table["Rows"] }}</td>
 			<td>{{ $table["Auto_increment"] }}</td>
