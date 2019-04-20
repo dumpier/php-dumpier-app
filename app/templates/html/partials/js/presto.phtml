@@ -1,7 +1,7 @@
 <script>
 $(function(){
 	// リンクを押下した際
-	$("body").on("click", "a.presto-get", function(event){
+	$("body").on("click", "a.presto-get, a.presto-post", function(event){
 		// リンクの直接遷移を無効化
 		event.preventDefault();
 
@@ -12,11 +12,11 @@ $(function(){
 });
 
 var presto = presto || {
-	lodder : `<div class='presto-loading'><div class="loader"></div></div>`,
+	loader : `<div class='presto-loading'><div class="loader"></div></div>`,
 
 	loading : function(target) {
 		if(! $(`${target} div.presto-loading`).length ){
-			$(target).prepend(this.lodder);
+			$(target).prepend(this.loader);
 		}
 	},
 
@@ -75,7 +75,7 @@ presto.table = {
 		let html = `<table class="${presto.table.prop.css}">${this.html.header()} ${this.html.body()}</table>`;
 		console.log(html);
 		$(this.prop.target).html(html);
-		// if(! is_not_reset ) { this.reset(); }
+		if(! is_not_reset ) { this.reset(); }
 		return this;
 	}
 }
