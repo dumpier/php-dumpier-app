@@ -9,7 +9,8 @@
 <div class="col-md-7">
 	<ul class="list-unstyled">
 	@foreach ($files as $sub)
-		<li><a href='/admin/resource/view/?path={{ $sub }}' class='load-to-modal' data-toggle="modal" data-target="#modal"><span class="fa @if (pathinfo($sub, PATHINFO_EXTENSION)=='csv') fa-file-csv @else fa-file @endif "></span>{{ $sub }}</a></li>
+		<li><a href='/admin/resource/view/?path={{ $sub }}' class='load-to-modal presto-get' p-target="div.modal-body" data-toggle="modal" data-target="#modal">
+			<span class="fa @if (pathinfo($sub, PATHINFO_EXTENSION)=='csv') fa-file-csv @else fa-file @endif "></span>{{ $sub }}</a></li>
 	@endforeach
 	</ul>
 </div>

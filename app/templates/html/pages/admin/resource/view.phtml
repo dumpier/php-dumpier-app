@@ -1,19 +1,3 @@
-<script type="text/javascript">
-$(function(){
-	$("ul.presto-search-button li a").click(function(){
-		$("#search-type").val($(this).attr("search-type"));
-		let parameters = $("form#presto-search-form").serializeArray();
-		console.log(parameters);
-		$("div.modal-body").html("<div style='margin: auto; text-align:center; vetical-align=middle;'><img src='/res/icons/loading.gif'></div>");
-		$.ajax({type: "GET", url: "<?php echo html()->paging()->baseurl();?>", data: parameters,
-			 success: function(html){ $("div.modal-body").html(html); }
-		});
-	});
-});
-</script>
-
-
-
 <div class="row">
 	<div class="col-md-11">
 		<di class="table-responsive form-group">
@@ -33,9 +17,9 @@ $(function(){
 	<div class="col-md-1 text-right">
 		<style>ul.presto-search-button li { margin-bottom: 2px; }</style>
 		<ul class="presto-search-button list-unstyled">
-			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-info" search-type="like">類似検索</a></li>
-			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-success" search-type="strict">厳密検索</a></li>
-			<li><a href="javascript:void(0);" class="btn btn-sm btn-block btn-warning" search-type="reset">RESET</a></li>
+			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-info presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "like"}'>類似検索</a></li>
+			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-success presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "strict"}'>厳密検索</a></li>
+			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-warning presto-post" p-target="div.modal-body" p-param='{type: "reset"}'>RESET</a></li>
 		</ul>
 	</div>
 </div>

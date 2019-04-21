@@ -23,15 +23,15 @@ class PlayerRegistService extends \Service
 
     /**
      * プレイヤーマネージデータの作成
-     * @param string $uuid
-     * @param string $device_id
+     * @param string $loginid
+     * @param string $loginpw
      * @param int $type
      * @return \App\Models\Daos\Player\Manage\PlayerManageModel
      */
-    public function regist(string $uuid, string $device_id, int $type, int $character_type=0)
+    public function regist(string $loginid, string $loginpw, int $type, int $character_type=0)
     {
         // プレイヤーデータ作成
-        $PlayerManage = PlayerManageModel::regist($uuid, $device_id, $type);
+        $PlayerManage = PlayerManageModel::regist($loginid, $loginpw, $type);
 
         // 初期キャラーのドロップ
         $MasterCharacter = $this->dropCharacter($character_type);
@@ -57,8 +57,8 @@ class PlayerRegistService extends \Service
     public function dropCharacter(int $character_type=0)
     {
         // ドロップ可能なキャラ一覧
-        $characters = $this->MasterTutorialCharacter->find();
-        $character = lottery()->drop($characters);
+        $Characters = $this->MasterTutorialCharacter->find();
+        $character = lottery()->drop($Characters->toArray());
 
         // TODO drop
         $character_id = $character["character_id"];

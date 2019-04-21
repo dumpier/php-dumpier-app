@@ -5,6 +5,7 @@ use App\Services\Game\Player\PlayerDeckService;
 use App\Services\Game\Battle\BattleService;
 use App\Services\Game\Quest\QuestService;
 use App\Services\Game\Quest\PlayerQuestService;
+use App\Models\Repositories\Master\MasterQuestAreaRepository;
 
 class MainController extends \App\Http\Controllers\Game\Controller
 {
@@ -13,6 +14,10 @@ class MainController extends \App\Http\Controllers\Game\Controller
         PlayerDeckService::class,
         QuestService::class,
         BattleService::class,
+    ];
+
+    protected $repositories = [
+        MasterQuestAreaRepository::class,
     ];
 
     // メインクエストトップ（マップ一覧）
@@ -37,14 +42,28 @@ class MainController extends \App\Http\Controllers\Game\Controller
     }
 
 
-    // エリア詳細（敵、Lv等）
-    public function area()
+    // エリア一覧
+    public function stages()
     {
         $area_id = input("area_id");
 
-        $area = $this->PlayerQuestService->getArea($this->player_id, $area_id);
+        $Area = $this->MasterQuestArea->getByAreaId($area_id);
+        $Stages = $this->PlayerQuestService->getStageList($this->player_id, $area_id);
 
-        $this->content("area", $area->toArray());
+        $this->content("area", $Area->toArray());
+        $this->content("stages", $Stages->toArray());
+        return $this->response();
+    }
+
+
+    // ステージ詳細（敵、Lv等）
+    public function stage()
+    {
+        $stage_id = input("stage_id");
+
+        $Stage = $this->PlayerQuestService->getStage($this->player_id, $stage_id);
+
+        $this->content("stage", $Stage->toArray());
         return $this->response();
     }
 

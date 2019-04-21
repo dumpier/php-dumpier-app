@@ -24,7 +24,7 @@ var presto = presto || {
 		$(`${target} div.presto-loading`).remove();
 	},
 
-	load : function(el) {
+	load : function(el, method="GET") {
 		let url = el.attr("href");
 		let target = el.attr("p-target") ? el.attr("p-target") : "#game-content-panel";
 		let params = presto.param.all(el);
@@ -32,10 +32,11 @@ var presto = presto || {
 		this.loading(target);
 		console.log(`load content. url:${url}, target:${target}, params:${params}`);
 
-		$.ajax({ type: "GET", url: url, data: params, timeout: 3000 }).done(function(data){
+		$.ajax({ type: method, url: url, data: params, timeout: 5000 }).done(function(data){
 			$(target).html(data);
 		}).fail(function(xhr, status, error){
-			$(target).html(`Error!${status},${xhr},${error}`);
+			console.log(`error!${status}, ${error}`);
+			$(target).html(`error!${error}`);
 		}).always(function(){
 			console.log('always...');
 		});
@@ -44,9 +45,9 @@ var presto = presto || {
 
 presto.param = {
 	all : function (el) { return Object.assign( this.form(el), this.param(el), this.ref(el) ); },
-	form : function (el) { return $(el).serializeArray(); },
-	param : function (el) { return $(el).attr("p-param"); } ,
-	ref : function (el) { return $(el).attr("p-ref"); },
+	form : function (el) { console.log($(el.attr("p-form")).serializeArray()); return $(el.attr("p-form")).serializeArray();},
+	param : function (el) { console.log(el.attr("p-param")); return el.attr("p-param"); } ,
+	ref : function (el) { console.log(el.attr("p-ref")); return el.attr("p-ref"); },
 }
 
 

@@ -13,13 +13,14 @@ class PlayerQuestModel extends \App\Models\Daos\BasePlayerModel
     protected $table = "player_quest";
 
 
-    public static function regist(int $player_id, int $map_id, int $area_id)
+    public static function regist(int $player_id, int $map_id, int $area_id, int $stage_id)
     {
         $self = static::instance();
 
         $self->player_id = $player_id;
         $self->map_id = $map_id;
         $self->area_id = $area_id;
+        $self->stage_id = $stage_id;
 
         $self->save();
 

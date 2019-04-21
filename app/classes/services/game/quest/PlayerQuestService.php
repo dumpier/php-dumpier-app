@@ -6,12 +6,14 @@ use App\Models\Repositories\Master\MasterQuestMapRepository;
 use App\Models\Repositories\Master\MasterQuestAreaRepository;
 use App\Models\Daos\Player\PlayerQuestModel;
 use App\Models\Repositories\Player\PlayerQuestRepository;
+use App\Models\Repositories\Master\MasterQuestStageRepository;
 
 class PlayerQuestService extends \Service
 {
     protected $repositories = [
         MasterQuestMapRepository::class,
         MasterQuestAreaRepository::class,
+        MasterQuestStageRepository::class,
 
         PlayerQuestRepository::class,
     ];
@@ -25,10 +27,10 @@ class PlayerQuestService extends \Service
     public function getMapList(int $player_id)
     {
         // 最終クエストの取得
-        $quest = $this->getPlayerLastOpenQuest($player_id);
+        $Quest = $this->getPlayerLastOpenQuest($player_id);
 
         // 最終クエスト以下のマップ一覧の取得
-        $maps = $this->MasterQuestMap->getListByMapId($quest->map_id);
+        $maps = $this->MasterQuestMap->getListByMapId($Quest->map_id);
 
         return $maps;
     }
@@ -41,9 +43,9 @@ class PlayerQuestService extends \Service
     public function getAreaList(int $player_id, int $map_id)
     {
         // 指定マップの最終クエストの取得
-        $quest = $this->PlayerQuest->getLastOpenQuestByMapId($player_id, $map_id);
+        $Quest = $this->PlayerQuest->getLastOpenQuestByMapId($player_id, $map_id);
 
-        $areas = $this->MasterQuestArea->getListByMapId($quest->map_id);
+        $areas = $this->MasterQuestArea->getListByMapId($Quest->map_id);
 
         return $areas;
     }
@@ -55,14 +57,31 @@ class PlayerQuestService extends \Service
      * @param int $area_id
      * @return \App\Models\Daos\Master\MasterQuestAreaModel|NULL
      */
-    public function getArea(int $player_id, int $area_id=0)
+    public function getStageList(int $player_id, int $area_id=0)
     {
         // 指定マップの最終クエストの取得
-        $quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
+        $Quest = $this->PlayerQuest->getLastOpenQuestByAreaId($player_id, $area_id);
 
-        $area = $this->MasterQuestArea->getByAreaId($quest->area_id);
+        $Stages = $this->MasterQuestStage->getListByAreaId($Quest->area_id);
 
-        return $area;
+        return $Stages;
+    }
+
+
+    /**
+     * 指定エリア情報の取得
+     * @param int $player_id
+     * @param int $area_id
+     * @return \App\Models\Daos\Master\MasterQuestAreaModel|NULL
+     */
+    public function getStage(int $player_id, int $stage_id=0)
+    {
+        // 指定マップの最終クエストの取得
+        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $stage_id);
+
+        $Stage = $this->MasterQuestStage->getByStageId($Quest->stage_id);
+
+        return $Stage;
     }
 
 
@@ -75,17 +94,17 @@ class PlayerQuestService extends \Service
     public function getPlayerLastOpenQuest(int $player_id)
     {
         // 最終エリアの取得
-        $quest = $this->PlayerQuest->getLastOpenQuest($player_id);
+        $Quest = $this->PlayerQuest->getLastOpenQuest($player_id);
 
-        if(empty($quest))
+        if(empty($Quest))
         {
             // 解放されたエリアがまったくない場合
-            $area = $this->MasterQuestArea->getFirstArea();
+            $MasterStage = $this->MasterQuestStage->getFirstStage();
 
-            $quest = PlayerQuestModel::regist($player_id, $area->map_id, $area->area_id);
+            $Quest = PlayerQuestModel::regist($player_id, $MasterStage->map_id, $MasterStage->area_id, $MasterStage->stage_id);
         }
 
-        return $quest;
+        return $Quest;
     }
 
 
@@ -98,10 +117,9 @@ class PlayerQuestService extends \Service
      */
     public function getPlayerQuest(int $player_id, $area_id)
     {
-        $quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
+        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
 
-
-        return $quest;
+        return $Quest;
     }
 
     public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $battle)

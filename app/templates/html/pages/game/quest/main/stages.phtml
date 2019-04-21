@@ -1,0 +1,5 @@
+<ul class="game-block-list">
+	@foreach($stages as $stage)
+	<li><a class="presto-get" href="/game/quest/main/stage?stage_id={{$stage['stage_id']}}"><span class="fa fa-map"></span><span>{{$area['name']}}ステージ#{{$stage['serial_id']}}</span></a></li>
+	@endforeach
+</ul>
