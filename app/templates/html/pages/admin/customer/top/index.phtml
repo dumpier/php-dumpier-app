@@ -1,0 +1,4 @@
+<div id="player-list" class="col-md-12">
+	<?php html()->table()->render($PlayerManages->rows()->toArray()); ?>
+	<?php html()->pager()->render($PlayerManages->count()); ?>
+</div>

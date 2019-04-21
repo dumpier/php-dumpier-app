@@ -17,9 +17,9 @@
 	<div class="col-md-1 text-right">
 		<style>ul.presto-search-button li { margin-bottom: 2px; }</style>
 		<ul class="presto-search-button list-unstyled">
-			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-info presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "like"}'>類似検索</a></li>
-			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-success presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "strict"}'>厳密検索</a></li>
-			<li><a href="{@ echo html()->paging()->baseurl() }" class="btn btn-sm btn-block btn-warning presto-post" p-target="div.modal-body" p-param='{type: "reset"}'>RESET</a></li>
+			<li><a href="{@ echo html()->pager()->baseurl() }" class="btn btn-sm btn-block btn-info presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "like"}'>類似検索</a></li>
+			<li><a href="{@ echo html()->pager()->baseurl() }" class="btn btn-sm btn-block btn-success presto-post" p-target="div.modal-body" p-form="#presto-search-form" p-param='{type: "strict"}'>厳密検索</a></li>
+			<li><a href="{@ echo html()->pager()->baseurl() }" class="btn btn-sm btn-block btn-warning presto-post" p-target="div.modal-body" p-param='{type: "reset"}'>RESET</a></li>
 		</ul>
 	</div>
 </div>
@@ -39,4 +39,4 @@
 	</table>
 </div>
 
-<div>{@ html()->paging()->target("div.modal-body")->render($count) }</div>
+<div>{@ html()->pager()->css("presto-get")->target("div.modal-body")->render($count) }</div>
