@@ -40,10 +40,6 @@ class PlayerDeckService extends \Service
     {
         $PlayerDeck = $this->PlayerDeck->getPlayerDeck($player_id, $deck_id);
 
-        // TODO キャラ一覧
-        $CharacterCollection = $this->PlayerCharacter->getPlayerCharacterList($player_id);
-
-var_dump($CharacterCollection);
         return $PlayerDeck;
     }
 

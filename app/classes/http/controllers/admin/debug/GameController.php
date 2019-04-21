@@ -56,9 +56,9 @@ class GameController extends \App\Http\Controllers\Admin\Controller
 
         for($i = 1; $i<= $count; $i++)
         {
-            $uuid = encrypter()->random(32);
-            $device_id = encrypter()->random(32);
-            $PlayerManage = $this->PlayerRegistService->regist($uuid, $device_id, PLAYER::TYPE_DUMMY);
+            $loginid = encrypter()->random(32);
+            $loginpw = encrypter()->random(32);
+            $PlayerManage = $this->PlayerRegistService->regist($loginid, $loginpw, PLAYER::TYPE_DUMMY);
 
             $playerManages[] = $PlayerManage->toArray();
         }

@@ -1,7 +1,7 @@
 <script>
 $(function(){
 	// リンクを押下した際
-	$("body").on("click", "a.presto-get", function(event){
+	$("body").on("click", "a.presto-get, a.presto-post", function(event){
 		// リンクの直接遷移を無効化
 		event.preventDefault();
 
@@ -12,11 +12,11 @@ $(function(){
 });
 
 var presto = presto || {
-	lodder : `<div class='presto-loading'><div class="loader"></div></div>`,
+	loader : `<div class='presto-loading'><div class="loader"></div></div>`,
 
 	loading : function(target) {
 		if(! $(`${target} div.presto-loading`).length ){
-			$(target).prepend(this.lodder);
+			$(target).prepend(this.loader);
 		}
 	},
 
@@ -24,7 +24,7 @@ var presto = presto || {
 		$(`${target} div.presto-loading`).remove();
 	},
 
-	load : function(el) {
+	load : function(el, method="GET") {
 		let url = el.attr("href");
 		let target = el.attr("p-target") ? el.attr("p-target") : "#game-content-panel";
 		let params = presto.param.all(el);
@@ -32,10 +32,11 @@ var presto = presto || {
 		this.loading(target);
 		console.log(`load content. url:${url}, target:${target}, params:${params}`);
 
-		$.ajax({ type: "GET", url: url, data: params, timeout: 3000 }).done(function(data){
+		$.ajax({ type: method, url: url, data: params, timeout: 5000 }).done(function(data){
 			$(target).html(data);
 		}).fail(function(xhr, status, error){
-			$(target).html(`Error!${status},${xhr},${error}`);
+			console.log(`error!${status}, ${error}`);
+			$(target).html(`error!${error}`);
 		}).always(function(){
 			console.log('always...');
 		});
@@ -44,9 +45,9 @@ var presto = presto || {
 
 presto.param = {
 	all : function (el) { return Object.assign( this.form(el), this.param(el), this.ref(el) ); },
-	form : function (el) { return $(el).serializeArray(); },
-	param : function (el) { return $(el).attr("p-param"); } ,
-	ref : function (el) { return $(el).attr("p-ref"); },
+	form : function (el) { console.log($(el.attr("p-form")).serializeArray()); return $(el.attr("p-form")).serializeArray();},
+	param : function (el) { console.log(el.attr("p-param")); return el.attr("p-param"); } ,
+	ref : function (el) { console.log(el.attr("p-ref")); return el.attr("p-ref"); },
 }
 
 
@@ -75,7 +76,7 @@ presto.table = {
 		let html = `<table class="${presto.table.prop.css}">${this.html.header()} ${this.html.body()}</table>`;
 		console.log(html);
 		$(this.prop.target).html(html);
-		// if(! is_not_reset ) { this.reset(); }
+		if(! is_not_reset ) { this.reset(); }
 		return this;
 	}
 }

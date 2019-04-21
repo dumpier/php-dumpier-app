@@ -7,23 +7,43 @@ trait MasterQuestStageDocTrait
 {
     /** 項目一覧 */
     protected $properties = [
-        "id",
         "stage_id",
+        "serial_id",
         "map_id",
         "area_id",
+        "is_boss",
+        "enemy_id",
+        "enemy_level_min",
+        "enemy_level_max",
+        "enemy_count",
     ];
 
 
     /** @var int  */
-    public $id = 0;
+    public $stage_id = 0;
 
     /** @var int  */
-    public $stage_id = 0;
+    public $serial_id = 0;
 
     /** @var int  */
     public $map_id = 0;
 
     /** @var int  */
     public $area_id = 0;
+
+    /** @var int  */
+    public $is_boss = 0;
+
+    /** @var int  */
+    public $enemy_id = 0;
+
+    /** @var int  */
+    public $enemy_level_min = 0;
+
+    /** @var int  */
+    public $enemy_level_max = 0;
+
+    /** @var int  */
+    public $enemy_count = 0;
 
 }

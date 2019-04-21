@@ -10,15 +10,15 @@ trait PlayerManageDocTrait
         "player_id",
         "type",
         "public_id",
-        "uuid",
-        "device_id",
+        "login_id",
+        "login_pw",
         "birthday",
         "logincount_total",
         "logincount_today",
         "logintime_last",
         "logintime_pre",
-        "modified",
         "created",
+        "modified",
     ];
 
 
@@ -32,10 +32,10 @@ trait PlayerManageDocTrait
     public $public_id = "0";
 
     /** @var string  */
-    public $uuid = "";
+    public $login_id = "";
 
     /** @var string  */
-    public $device_id = "";
+    public $login_pw = "";
 
     /** @var int  */
     public $birthday = 0;
@@ -53,9 +53,9 @@ trait PlayerManageDocTrait
     public $logintime_pre = NULL;
 
     /** @var string  */
-    public $modified = NULL;
+    public $created = NULL;
 
     /** @var string  */
-    public $created = NULL;
+    public $modified = NULL;
 
 }

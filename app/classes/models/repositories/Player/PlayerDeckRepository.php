@@ -39,6 +39,9 @@ class PlayerDeckRepository extends Repository
                 "player_character_5"=>["player_character_id_5"=>"id"],
                 "player_character_6"=>["player_character_id_6"=>"id"],
             ],
+
+            // TODO
+            "slice"=>["player_character_id"=>10],
         ],
     ];
 
@@ -70,7 +73,7 @@ class PlayerDeckRepository extends Repository
         $cond["condition"]["player_id"] = $player_id;
         $cond["condition"]["deck_id"] = $deck_id;
 
-        $row = $this->findFirst($cond);
+        $row = $this->findFirst($cond, 1);
 
         if(empty($row))
         {

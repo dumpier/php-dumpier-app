@@ -17,17 +17,17 @@ class PlayerManageModel extends BasePlayerManageModel
 
     /**
      * プレイヤーマネージデータの作成
-     * @param string $uuid
-     * @param string $device_id
+     * @param string $loginid
+     * @param string $loginpw
      * @param int $type
      * @return \App\Models\Daos\Player\Manage\PlayerManageModel
      */
-    public static function regist(string $uuid, string $device_id, int $type)
+    public static function regist(string $loginid, string $loginpw, int $type)
     {
         $self = static::instance();
 
-        $self->uuid = $uuid;
-        $self->device_id = $device_id;
+        $self->login_id = $loginid;
+        $self->login_pw = $loginpw;
         $self->public_id = encrypter()->random(PLAYER::PUBLIC_ID_LENGTH);
         $self->type = $type;
 
