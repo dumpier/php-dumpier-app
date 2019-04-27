@@ -8,7 +8,7 @@ use App\Defines\Game\BUFF;
 class BuffManageEntity
 {
     /** @var Collection|BuffEntity[] */
-    protected $buffs;
+    protected $Buffs;
 
     /**
      * 状態異常の取得
@@ -17,7 +17,7 @@ class BuffManageEntity
      */
     public function get(int $buff_id)
     {
-        return $this->buffs->where("buff_id", $buff_id)->first();
+        return $this->Buffs->where("buff_id", $buff_id)->first();
     }
 
     /**
@@ -25,7 +25,7 @@ class BuffManageEntity
      */
     public function cleanup()
     {
-        $this->buffs->where("turn", ">", 0);
+        $this->Buffs->where("turn", ">", 0);
     }
 
     /**
@@ -40,7 +40,7 @@ class BuffManageEntity
         if(empty($buff))
         {
             $buff = new BuffEntity($buff_id, $turn);
-            $this->buffs->put($buff);
+            $this->Buffs->put($buff);
         }
 
         // ターン数が多きいのを入れ替える
@@ -92,7 +92,7 @@ class BuffManageEntity
      */
     public function isUnactable()
     {
-        if ( $this->buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count )
+        if ( $this->Buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count )
         {
             return true;
         }

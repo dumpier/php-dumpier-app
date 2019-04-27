@@ -4,11 +4,16 @@ namespace App\Models\Entities\Battle;
 class StatusManageEntity
 {
     /** @var StatusEntity 戦闘中のステータス */
-    public $status;
+    public $Status;
 
     /** @var StatusEntity キャラ固有のステータス */
-    public $originalStatus;
+    public $OriginalStatus;
 
+    public function __construct(array $status)
+    {
+        $this->Status = new StatusEntity($status);
+        $this->OriginalStatus = new StatusEntity($status);
+    }
 
     /**
      * 生きている判定
@@ -16,7 +21,7 @@ class StatusManageEntity
      */
     public function isAlive()
     {
-        if($this->status->hp > 0)
+        if($this->Status->hp > 0)
         {
             return true;
         }

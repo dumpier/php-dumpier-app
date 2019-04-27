@@ -7,7 +7,7 @@ use Presto\Core\Utilities\Collection;
 class DeckEntity
 {
     /** @var Collection|ActorEntity[] */
-    public $actors;
+    public $Actors;
 
     /** @var int 現在行動中のキャラー */
     public $actor_id = 0;
@@ -22,11 +22,13 @@ class DeckEntity
     public $recalculate_total_hp = true;
 
 
-    public function __construct(Collection $characters)
+    public function __construct(Collection $Characters)
     {
-        foreach ($characters as $character)
+        $this->Actors = collection();
+
+        foreach ($Characters as $Character)
         {
-            $this->actors->put(new ActorEntity($character));
+            $this->Actors->put(new ActorEntity($Character->toArray()));
         }
     }
 
@@ -60,9 +62,9 @@ class DeckEntity
         // 再計算する
         $this->total_hp = 0;
 
-        foreach ($this->characters as $actor)
+        foreach ($this->Actors as $Actor)
         {
-            $this->total_hp += $actor->statusManage->status->hp;
+            $this->total_hp += $Actor->StatusManage->Status->hp;
         }
 
         return $this->total_hp;

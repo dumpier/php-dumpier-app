@@ -3,6 +3,7 @@ namespace App\Models\Daos\Player;
 
 use App\Models\Daos\BasePlayerModel;
 use App\Models\Templates\Docs\Player\PlayerDeckDocTrait;
+use App\Models\Entities\Battle\DeckEntity;
 
 class PlayerDeckModel extends BasePlayerModel
 {
@@ -32,5 +33,15 @@ class PlayerDeckModel extends BasePlayerModel
         $self->save();
 
         return $self;
+    }
+
+
+    public function toDeckEntity()
+    {
+        // TODO
+        $Characters = collection(array_values($this->relations));
+
+        $Deck = new DeckEntity($Characters);
+        return $Deck;
     }
 }

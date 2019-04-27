@@ -13,21 +13,21 @@ class BattleEntity
 
 
     /** @var DeckEntity 味方デッキ */
-    public $ally;
+    public $AllyDeck;
 
     /** @var DeckEntity 対戦相手のデッキ */
-    public $oppenent;
+    public $OppenentDeck;
 
     /** @var Collection|ActorEntity[] 行動順番とおりのキャラ一覧 */
-    public $actors;
+    public $Actors;
 
     /** @var ActorEntity 現在行動中のキャラ */
-    public $actor;
+    public $Actor;
     /** @var ActorEntity 現在行動対象キャラ */
-    public $target;
+    public $Target;
 
     /** @var BattleLogManageEntity */
-    public $logManage;
+    public $LogManage;
 
     /** @var int 現在ラウンド数 */
     public $round = 0;
@@ -39,47 +39,54 @@ class BattleEntity
     public $total_turn = 0;
 
 
-    public function __construct(Collection $allies, Collection $oppenents)
+    public function __construct(DeckEntity $AllyDeck, DeckEntity $OppenentDeck)
     {
-        $this->ally = new DeckEntity($allies);
-        $this->oppenent = new DeckEntity($oppenents);
+        $this->AllyDeck = $AllyDeck;
+        $this->OppenentDeck = $OppenentDeck;
     }
 
 
-    public function setActor(ActorEntity $actor)
+    // TODO 行動可能なActor一覧
+    public function getActors()
     {
-        $this->actor = $actor;
+        return $this->AllyDeck->Actors;
     }
 
 
-    public function setTarget(ActorEntity $target)
+    public function setActor(ActorEntity $Actor)
     {
-        $this->target = $target;
+        $this->Actor = $Actor;
+    }
+
+
+    public function setTarget(ActorEntity $Target)
+    {
+        $this->Target = $Target;
     }
 
 
     /**
      * スキルのターゲット一覧の取得 TODO 未完成
-     * @param int $target_count
+     * @param int $Target_count
      * @return Collection|ActorEntity[]
      */
-    public function getTargets(int $target_count)
+    public function getTargets(int $Target_count)
     {
         // 発動中のスキル
-        $skill = $this->actor->skillManage->getSkill();
+        $Skill = $this->Actor->skillManage->getSkill();
 
-        return [$this->oppenent[0]];
+        return [$this->OppenentDeck[0]];
     }
 
 
     /**
-     * ゲームオーバー判定
+     * バトル終了判定
      * @return boolean
      */
-    public function isGameOver()
+    public function isBattleOver()
     {
         // 片方が全滅の場合、ゲーム終了
-        if ( $this->ally->isDestroyed() || $this->oppenent->isDestroyed() )
+        if ( $this->AllyDeck->isDestroyed() || $this->OppenentDeck->isDestroyed() )
         {
             return true;
         }
@@ -91,5 +98,15 @@ class BattleEntity
         }
 
         return false;
+    }
+
+
+    /**
+     * バトル継続判定
+     * @return boolean
+     */
+    public function isBattleContinue()
+    {
+        return ! $this->isBattleOver();
     }
 }

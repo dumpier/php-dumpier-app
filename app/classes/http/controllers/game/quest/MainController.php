@@ -23,9 +23,9 @@ class MainController extends \App\Http\Controllers\Game\Controller
     // メインクエストトップ（マップ一覧）
     public function index()
     {
-        $maps = $this->PlayerQuestService->getMapList($this->player_id);
+        $Maps = $this->PlayerQuestService->getMapList($this->player_id);
 
-        $this->content("maps", $maps);
+        $this->content("maps", $Maps);
         return $this->response();
     }
 
@@ -35,9 +35,9 @@ class MainController extends \App\Http\Controllers\Game\Controller
     {
         $map_id = input("map_id");
 
-        $areas = $this->PlayerQuestService->getAreaList($this->player_id, $map_id);
+        $Areas = $this->PlayerQuestService->getAreaList($this->player_id, $map_id);
 
-        $this->content("areas", $areas);
+        $this->content("areas", $Areas);
         return $this->response();
     }
 
@@ -78,20 +78,21 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $quest = $this->PlayerQuestService->getPlayerQuest($this->player_id, $area_id);
 
         // プレイヤーデッキの抽出
-        $allies = $this->PlayerDeckService->getPlayerDeck($this->player_id);
+        $AllyDeck = $this->PlayerDeckService->getPlayerDeck($this->player_id);
 
-        // 対戦デッキの抽出
-        $oppenents = $this->QuestService->getEnemyDeck($area_id, $is_boss);
+        // 対戦デッキの抽出 TODO
+        // $OppenentDeck = $this->QuestService->getEnemyDeck($area_id, $is_boss);
+        $OppenentDeck = $this->PlayerDeckService->getPlayerDeck($this->player_id);
 
         // バトルの実施
-        $battle = $this->BattleService->battle($allies, $oppenents);
+        $Battle = $this->BattleService->battle($AllyDeck->toDeckEntity(), $OppenentDeck->toDeckEntity());
 
         // 結果の更新
-        $quest = $this->PlayerQuestService->result($this->player_id, $area_id, $is_boss, $battle);
+        $Quest = $this->PlayerQuestService->result($this->player_id, $area_id, $is_boss, $Battle);
 
         $this->content("is_boss", $is_boss);
-        $this->content("battle", $battle);
-        $this->content("quest", $quest);
+        $this->content("battle", $Battle);
+        $this->content("quest", $Quest);
 
         return $this->response();
     }
