@@ -1,11 +1,12 @@
-<div class="col-md-5">
-	<!-- <div class=" thrones-box thrones-padding">
-	<pre><br><br><br><br><br></pre>
-	</div> -->
+<div class="col-md-4">
+	<!--
+	<iframe src="/game/top/index/" width=100% height=800 style="border:solid 5px #17a2b8;"></iframe>
+	 -->
+	<iframe id="game-panel" src="" width=100% height=800 style="border:solid 5px #17a2b8;"></iframe>
 </div>
 
 
-<div class="col-md-7">
+<div class="col-md-8">
 	<div class=" thrones-box thrones-padding">
 		<span class="d-block p-2 rounded text-white bg-info"><span class="fa fa-info-circle"></span>GAME LOGIN</span>
 		<form method="POST" action="/admin/auth/login/">
@@ -20,7 +21,12 @@
 					<tr>
 						<td>LOGIN PW</td>
 						<td><input type="password" name="password" id="password" class="form-control"></td>
-						<td><a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">GAME LOGIN</a></td>
+						<td>
+							<a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="$('iframe#game-panel').attr('src', '/game/top/index/');">GAME LOGIN</a>
+							<!--
+							<a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">GAME LOGIN</a>
+							 -->
+						</td>
 					</tr>
 
 					<tr>

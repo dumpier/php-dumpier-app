@@ -10,14 +10,15 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
 
     public function index()
     {
+        $root = input("root", "res");
         $path = input("path", "");
-        $this->addPathBreadcrumb($path);
-        // $this->breadcrumb("path::{$path}", "/admin/resource/index/?path={$path}");
+        $this->addPathBreadcrumb($root, $path);
 
-        list($directories, $files) = directory()->list(path()->resource(), $path);
+        list($directories, $files) = directory()->list(path()->switching($root), $path);
 
-        $this->content('directories', $directories);
-        $this->content('files', $files);
+        $this->content("directories", $directories);
+        $this->content("files", $files);
+        $this->content("root", $root);
         return $this->response();
     }
 
@@ -26,20 +27,20 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
     {
         $this->layout = "html/layouts/empty";
 
+        $root = input("root", "res");
         $path = input("path");
         $page = (int)input("page", 1);
         $parameters = input("parameters", []);
 
-        $this->breadcrumb($path, "/admin/resource/view/?path={$path}");
+        $this->addPathBreadcrumb($root, $path);
 
-        $full_path = path()->resource($path);
-
+        $full_path = path()->switching($root, $path);
         if(! csv()->isCsv($full_path))
         {
             throw new \Exception("CSV以外は未対応");
         }
 
-        if(!empty($parameters["type"]) && $parameters['type']=="reset")
+        if(!empty($parameters["type"]) && $parameters["type"]=="reset")
         {
             $parameters = [];
         }
@@ -50,11 +51,12 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
         $this->content("count", $count);
         $this->content("fields", $fields);
         $this->content("rows", $rows);
+        $this->content("root", $root);
         return $this->response();
     }
 
 
-    private function addPathBreadcrumb($path)
+    private function addPathBreadcrumb($root, $path)
     {
         $path = trim($path, "/");
 
@@ -68,7 +70,7 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
         foreach ($array as $string)
         {
             $current .= "/{$string}";
-            $this->breadcrumb($string, "/admin/resource/index/?path={$current}");
+            $this->breadcrumb($string, "/admin/resource/index/?root={$root}&path={$current}");
         }
     }
 }

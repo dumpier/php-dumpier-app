@@ -11,14 +11,22 @@ class ActorEntity
     public $sort_id = 0;
 
     /** @var StatusManageEntity ステータス管理 */
-    public $statusManage;
+    public $StatusManage;
 
     /** @var SkillManageEntity 状態異常の管理 */
-    public $skillManage;
+    public $SkillManage;
 
     /** @var BuffManageEntity 状態異常の管理 */
-    public $buffManage;
+    public $BuffManage;
 
+    public function __construct(array $character)
+    {
+        $this->StatusManage = new StatusManageEntity($character);
+
+        // TODO パッシブスキルによるバフ設定
+        $this->SkillManage = new SkillManageEntity();
+        $this->BuffManage = new BuffManageEntity();
+    }
 
     /**
      * 行動可能かの判定
@@ -29,20 +37,20 @@ class ActorEntity
      */
     public function isActable()
     {
-        return $this->statusManage->isAlive() && $this->buffManage->isActable();
+        return $this->StatusManage->isAlive() && $this->BuffManage->isActable();
     }
 
 
     public function getSkill()
     {
-        $skill = $this->skillManage->getSkill();
+        $Skill = $this->SkillManage->getSkill();
 
         // スキルポイントが足りない場合、通常攻撃にする
-        if ( $this->statusManage->status->mp < $skill->use_mp )
+        if ( $this->StatusManage->status->mp < $Skill->use_mp )
         {
             return new SkillEntity();
         }
 
-        return $skill;
+        return $Skill;
     }
 }

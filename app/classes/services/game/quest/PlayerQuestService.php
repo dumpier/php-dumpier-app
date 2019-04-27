@@ -7,6 +7,10 @@ use App\Models\Repositories\Master\MasterQuestAreaRepository;
 use App\Models\Daos\Player\PlayerQuestModel;
 use App\Models\Repositories\Player\PlayerQuestRepository;
 use App\Models\Repositories\Master\MasterQuestStageRepository;
+use App\Models\Daos\Master\MasterQuestMapModel;
+use Presto\Core\Utilities\Collection;
+use App\Models\Daos\Master\MasterQuestAreaModel;
+use App\Models\Daos\Master\MasterQuestStageModel;
 
 class PlayerQuestService extends \Service
 {
@@ -22,7 +26,7 @@ class PlayerQuestService extends \Service
     /**
      * 解放済みのマップ一覧
      * @param int $player_id
-     * @return array
+     * @return Collection|MasterQuestMapModel[]
      */
     public function getMapList(int $player_id)
     {
@@ -30,24 +34,24 @@ class PlayerQuestService extends \Service
         $Quest = $this->getPlayerLastOpenQuest($player_id);
 
         // 最終クエスト以下のマップ一覧の取得
-        $maps = $this->MasterQuestMap->getListByMapId($Quest->map_id);
+        $Maps = $this->MasterQuestMap->getListByMapId($Quest->map_id);
 
-        return $maps;
+        return $Maps;
     }
 
     /**
      * 解放済みのエリア一覧
      * @param int $player_id
-     * @return array
+     * @return Collection|MasterQuestAreaModel[]
      */
     public function getAreaList(int $player_id, int $map_id)
     {
         // 指定マップの最終クエストの取得
         $Quest = $this->PlayerQuest->getLastOpenQuestByMapId($player_id, $map_id);
 
-        $areas = $this->MasterQuestArea->getListByMapId($Quest->map_id);
+        $Areas = $this->MasterQuestArea->getListByMapId($Quest->map_id);
 
-        return $areas;
+        return $Areas;
     }
 
 
@@ -55,7 +59,7 @@ class PlayerQuestService extends \Service
      * 指定エリア情報の取得
      * @param int $player_id
      * @param int $area_id
-     * @return \App\Models\Daos\Master\MasterQuestAreaModel|NULL
+     * @return Collection|MasterQuestStageModel[]|NULL
      */
     public function getStageList(int $player_id, int $area_id=0)
     {
@@ -122,7 +126,7 @@ class PlayerQuestService extends \Service
         return $Quest;
     }
 
-    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $battle)
+    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $Battle)
     {
 
     }

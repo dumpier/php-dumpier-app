@@ -6,7 +6,7 @@ use Presto\Core\Utilities\Collection;
 class SkillManageEntity
 {
     /** @var Collection|SkillEntity[] */
-    public $skills;
+    public $Skills;
 
     /** @var int スキル発動回数 */
     public $use_skill_count = 0;
@@ -29,8 +29,8 @@ class SkillManageEntity
     public function getBySkillId(int $skill_id)
     {
         /* @var $skill SkillEntity */
-        $skill = $this->skills->where("skill_id", $skill_id)->first();
+        $Skill = $this->Skills->where("skill_id", $skill_id)->first();
 
-        return $skill;
+        return $Skill;
     }
 }
