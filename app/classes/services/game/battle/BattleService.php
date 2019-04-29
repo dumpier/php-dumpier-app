@@ -66,6 +66,7 @@ class BattleService extends \Service
      */
     private function roundStart(BattleEntity $BattleEntity)
     {
+        $BattleEntity->LogManage->roundStart($BattleEntity->round);
 
     }
 

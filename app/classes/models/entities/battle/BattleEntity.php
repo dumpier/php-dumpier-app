@@ -45,6 +45,7 @@ class BattleEntity
     {
         $this->AllyDeck = $AllyDeck;
         $this->OppenentDeck = $OppenentDeck;
+        $this->LogManage = new BattleLogManage;
     }
 
 
@@ -115,5 +116,4 @@ class BattleEntity
     {
         return ! $this->isBattleOver();
     }
-
 }

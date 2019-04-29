@@ -75,4 +75,10 @@ class BattleLogManage
     {
 
     }
+
+
+    public function result()
+    {
+        return $this->logs;
+    }
 }

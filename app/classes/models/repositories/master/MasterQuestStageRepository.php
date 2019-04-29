@@ -14,13 +14,38 @@ class MasterQuestStageRepository extends Repository
 
     /**
      * 最初のステージの取得
+     * @param int $area_id
      * @return MasterQuestStageModel|NULL
      */
-    public function getFirstStage()
+    public function getFirstStage(int $area_id=0)
     {
-        $row = $this->findFirst();
+        $cond = [];
 
-        return $row;
+        if($area_id)
+        {
+            $cond["condition"]["area_id"] = $area_id;
+        }
+
+        return $this->findFirst($cond);
+    }
+
+
+    /**
+     * 指定エリアの最終ステージの取得
+     * @param int $area_id
+     * @return MasterQuestStageModel
+     */
+    public function getLastStage(int $area_id)
+    {
+        $cond = [];
+
+        if($area_id)
+        {
+            $cond["condition"]["area_id"] = $area_id;
+        }
+
+        $cond["order"][] = "id DESC";
+        return $this->findFirst($cond);
     }
 
 

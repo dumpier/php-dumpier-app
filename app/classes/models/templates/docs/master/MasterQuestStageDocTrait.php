@@ -11,6 +11,9 @@ trait MasterQuestStageDocTrait
         "serial_id",
         "map_id",
         "area_id",
+        "next_map_id",
+        "next_area_id",
+        "next_stage_id",
         "is_boss",
         "enemy_id",
         "enemy_level_min",
@@ -30,6 +33,15 @@ trait MasterQuestStageDocTrait
 
     /** @var int  */
     public $area_id = 0;
+
+    /** @var int  */
+    public $next_map_id = 0;
+
+    /** @var int  */
+    public $next_area_id = 0;
+
+    /** @var int  */
+    public $next_stage_id = 0;
 
     /** @var int  */
     public $is_boss = 0;

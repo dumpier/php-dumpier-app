@@ -90,9 +90,13 @@ class MainController extends \App\Http\Controllers\Game\Controller
         // 結果の更新
         $Quest = $this->PlayerQuestService->result($this->player_id, $area_id, $is_boss, $BattleEntity);
 
+        // 次のクエストの解放
+        $NextQuest = $this->PlayerQuestService->openNextStage($this->player_id, $area_id, $is_boss, $BattleEntity);
+
         $this->content("is_boss", $is_boss);
-        $this->content("battle", $BattleEntity);
-        $this->content("quest", $Quest);
+        $this->content("Battle", $BattleEntity);
+        $this->content("Quest", $Quest);
+        $this->content("NextQuest", $NextQuest);
 
         return $this->response();
     }

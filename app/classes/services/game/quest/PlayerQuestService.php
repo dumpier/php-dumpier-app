@@ -115,20 +115,49 @@ class PlayerQuestService extends \Service
     /**
      * クエスト情報の取得
      * @param int $player_id
-     * @param number $area_id
      * @param number $stage_id
      * @return \App\Models\Daos\Player\PlayerQuestModel|array|mixed
      */
-    public function getPlayerQuest(int $player_id, $area_id)
+    public function getPlayerQuest(int $player_id, int $stage_id)
     {
-        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
+        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $stage_id);
 
         return $Quest;
     }
 
-    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $Battle)
+    /**
+     * 次のクエストの解放
+     * @param int $player_id
+     * @return NULL|\App\Models\Daos\Player\PlayerQuestModel
+     */
+    public function openNextStage(int $player_id)
+    {
+        $LastOpenQuest = $this->PlayerQuest->getLastOpenQuest($player_id);
+
+        if ( $LastOpenQuest->complete_count <= 0 )
+        {
+            return null;
+        }
+
+        // 最終クリアステージマスター
+        $MasterStage = $this->MasterQuestStage->getByStageId($LastOpenQuest->stage_id);
+
+        // 新しいステージを解放する
+        $NextMasterStage = $this->MasterQuestStage->getByStageId($MasterStage->next_stage_id);
+
+        $PlayerQuest = PlayerQuestModel::regist($player_id, $NextMasterStage->map_id, $NextMasterStage->area_id, $NextMasterStage->stage_id);
+        return $PlayerQuest;
+    }
+
+
+    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $BattleEntity)
     {
 
+
+        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
+        $Quest->battle(TRUE);
+
+        return $Quest;
     }
 
 }
