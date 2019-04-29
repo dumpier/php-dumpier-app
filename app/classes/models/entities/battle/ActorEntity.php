@@ -19,13 +19,13 @@ class ActorEntity
     /** @var BuffManageEntity 状態異常の管理 */
     public $BuffManage;
 
-    public function __construct(array $character)
+    public function __construct(array $status, array $skills, array $buffs)
     {
-        $this->StatusManage = new StatusManageEntity($character);
+        $this->StatusManage = new StatusManageEntity($status);
 
         // TODO パッシブスキルによるバフ設定
-        $this->SkillManage = new SkillManageEntity();
-        $this->BuffManage = new BuffManageEntity();
+        $this->SkillManage = new SkillManageEntity($skills);
+        $this->BuffManage = new BuffManageEntity($buffs);
     }
 
     /**

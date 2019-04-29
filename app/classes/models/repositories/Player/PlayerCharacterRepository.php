@@ -10,17 +10,19 @@ class PlayerCharacterRepository extends Repository
 {
     protected $class = PlayerCharacterModel::class;
 
-//     protected $relations = [
-//         MasterCharacterLevelRepository::class=>[
-//             "type"=>Model::HAS_ONE,
-//             "repository"=>MasterCharacterLevelRepository::class,
+    protected $relations = [
+        MasterCharacterLevelRepository::class=>[
+            "type"=>Model::HAS_ONE,
+            "repository"=>MasterCharacterLevelRepository::class,
 
-//             "join"=>[
-//                 "character_id"=>"character_id",
-//                 "level"=>"level",
-//             ],
-//         ],
-//     ];
+            "join"=>[
+                "MasterCharacterLevel"=>[
+                    "character_id"=>"character_id",
+                    "level"=>"level",
+                ],
+            ],
+        ],
+    ];
 
 
     public function getPlayerCharacterList(int $player_id, array $characterIds=[])

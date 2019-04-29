@@ -2,7 +2,7 @@
 namespace App\Models\Entities\Battle;
 
 
-use App\Models\Entities\Battle\Log\BattleLogManageEntity;
+use App\Models\Entities\Battle\Log\BattleLogManage;
 use Presto\Core\Traits\Instanceable;
 use Presto\Core\Utilities\Collection;
 use App\Defines\Game\BATTLE;
@@ -23,10 +23,12 @@ class BattleEntity
 
     /** @var ActorEntity 現在行動中のキャラ */
     public $Actor;
+    /** @var SkillEntity 現在行動中のスキル */
+    public $Skill;
     /** @var ActorEntity 現在行動対象キャラ */
     public $Target;
 
-    /** @var BattleLogManageEntity */
+    /** @var BattleLogManage */
     public $LogManage;
 
     /** @var int 現在ラウンド数 */
@@ -58,6 +60,10 @@ class BattleEntity
         $this->Actor = $Actor;
     }
 
+    public function setSkill(SkillEntity $Skill)
+    {
+        $this->Skill = $Skill;
+    }
 
     public function setTarget(ActorEntity $Target)
     {
@@ -109,4 +115,5 @@ class BattleEntity
     {
         return ! $this->isBattleOver();
     }
+
 }

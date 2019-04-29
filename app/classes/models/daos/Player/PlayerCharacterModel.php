@@ -33,4 +33,24 @@ class PlayerCharacterModel extends BasePlayerModel
 
         return $self;
     }
+
+
+    // TODO
+    public function getStatus()
+    {
+        return $this->relations["MasterCharacterLevel"]->toArray();
+    }
+
+    // TODO
+    public function getSkillList()
+    {
+        return [];
+    }
+
+    // TODO
+    public function getBuffList()
+    {
+        return [];
+    }
+
 }

@@ -44,13 +44,20 @@ class BattleService extends \Service
      * 開幕処理
      * @param BattleEntity $BattleEntity
      */
-    private function opening(BattleEntity $BattleEntity) { }
+    private function opening(BattleEntity $BattleEntity)
+    {
+        $BattleEntity->round += 1;
+        $BattleEntity->turn = 0;
+    }
 
     /**
      * 閉幕処理
      * @param BattleEntity $BattleEntity
      */
-    private function ending(BattleEntity $BattleEntity) { }
+    private function ending(BattleEntity $BattleEntity)
+    {
+
+    }
 
     /**
      * ラウンド開始
@@ -59,11 +66,7 @@ class BattleService extends \Service
      */
     private function roundStart(BattleEntity $BattleEntity)
     {
-        // ラウンドをカウントアップ
-        $BattleEntity->round += 1;
 
-        // ターン数をリセット
-        $BattleEntity->turn = 0;
     }
 
     /**
@@ -71,7 +74,10 @@ class BattleService extends \Service
      *  - 片方全滅判定を行うなど
      * @param BattleEntity $BattleEntity
      */
-    private function roundEnd(BattleEntity $BattleEntity) { }
+    private function roundEnd(BattleEntity $BattleEntity)
+    {
+
+    }
 
     /**
      * ラウンド実行
@@ -79,10 +85,8 @@ class BattleService extends \Service
      */
     private function round(BattleEntity $BattleEntity)
     {
-        $Actors = $BattleEntity->getActors()->all();
-
         // 行動順番通りに行動する
-        foreach ($Actors as $Actor)
+        foreach ($BattleEntity->getActors() as $Actor)
         {
             if ( ! $Actor->isActable() )
             {
@@ -93,8 +97,12 @@ class BattleService extends \Service
             // 行動者を決める
             $BattleEntity->setActor($Actor);
 
-            // ターゲットを決める
-            $this->targeting($BattleEntity, $Actor);
+            // TODO 行動前の状態異常反映
+
+            // スキル発動、ターゲットを決める
+            $this->skill($BattleEntity, $Actor);
+
+            // TODO 行動後の状態異常反映
 
             // ゲーム終了判定
             if($BattleEntity->isGameOver())
@@ -105,11 +113,14 @@ class BattleService extends \Service
     }
 
 
-    // ターゲティング処理
-    private function targeting(BattleEntity $BattleEntity)
+    // スキル処理
+    private function skill(BattleEntity $BattleEntity)
     {
-        // ターゲッティング回数を決める
+        // スキル決定
         $Skill = $BattleEntity->Actor->SkillManage->getSkill();
+        $BattleEntity->setSkill($Skill);
+
+        // TODO スキル発動時の効果
 
         $targeting_count = $Skill->getTargetingCount();
 
@@ -119,15 +130,17 @@ class BattleService extends \Service
 
             if($BattleEntity->isGameOver())
             {
-                return true;
+                break;
             }
         }
+
+        // TODO スキル発動後の効果
     }
 
     // ターゲット処理
     private function targets(BattleEntity $BattleEntity)
     {
-        $Skill = $BattleEntity->Actor->SkillManage->getSkill();
+        $Skill = $BattleEntity->getSkill();
         $target_count = $Skill->getTargetCount();
 
         $Targets = $BattleEntity->getTargets($target_count);
@@ -136,6 +149,9 @@ class BattleService extends \Service
         {
             // ターゲットを設定
             $BattleEntity->setTarget($Target);
+
+            // 行動一覧
+            $this->actions($BattleEntity);
 
             if($BattleEntity->isGameOver())
             {
@@ -165,7 +181,7 @@ class BattleService extends \Service
     // 単体行動処理
     private function action(BattleEntity $BattleEntity)
     {
-        $Skill = $BattleEntity->Actor->SkillManage->getSkill();
+        $Skill = $BattleEntity->getSkill();
     }
 
 }
