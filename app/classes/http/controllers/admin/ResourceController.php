@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Admin;
 
 use Presto\Core\Utilities\Files\FileLoader;
+use Presto\Core\Utilities\Files\JsonLoader;
+use Presto\Core\Utilities\Files\CsvLoader;
+use App\Exceptions\AppException;
 
 class ResourceController extends \App\Http\Controllers\Admin\Controller
 {
@@ -45,13 +48,18 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
 
         $extension = FileLoader::instance()->extension($full_path);
 
-        if($extension=="csv")
+        switch ($extension)
         {
-            list($rows, $count, $fields) = csv()->paging($full_path, $page, $parameters);
-        }
-        elseif($extension=="json")
-        {
-            list($rows, $count, $fields) = FileLoader::instance()->paging($full_path, $page, $parameters);
+            case "csv":
+                list($rows, $count, $fields) = CsvLoader::instance()->paging($full_path, $page, $parameters);
+                break;
+
+            case "json":
+                list($rows, $count, $fields) = JsonLoader::instance()->paging($full_path, $page, $parameters);
+                break;
+
+            default:
+                throw new AppException("未対応ファイルタイプ");
         }
 
         $this->content("parameters", $parameters);
