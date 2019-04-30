@@ -1,18 +1,31 @@
 <?php
 namespace App\Models\Entities\Battle\Log;
 
+use App\Models\Entities\Battle\Log\Traits\BattleLogTowable;
+
 class BattleLogManage
 {
-    protected $logs = [];
+    use BattleLogTowable;
+
+    /** @var BattleLogRound[] */
+    public $logs = [];
 
     /** @return BattleLogRound */
     private function getCurrentRound() { return end($this->logs); }
+
     /** @return BattleLogTurn */
     private function getCurrentTurn() { return end($this->getCurrentRound()->Turns); }
-    /** @return BattleLogEffectBuff|BattleLogEffectSkill */
-    private function getCurrentEffect() { return end($this->getCurrentTurn()->Effects); }
-    /** @return BattleLogEffectBuff|BattleLogEffectSkill */
-    private function getCurrentAction() { return end($this->getCurrentTurn()->Effects); }
+
+    /** @return BattleLogEffectBuff TODO BuffEffectとSkillEffectの区分 */
+    private function getCurrentBuffEffect() { return end($this->getCurrentTurn()->Effects); }
+    /** @return BattleLogAction */
+    private function getCurrentBuffAction() { return end($this->getCurrentBuffEffect()->Actions); }
+
+    /** @return BattleLogEffectSkill TODO BuffEffectとSkillEffectの区分 */
+    private function getCurrentSkillEffect() { return end($this->getCurrentTurn()->Effects); }
+    /** @return BattleLogAction */
+    private function getCurrentSkillAction() { return end($this->getCurrentSkillEffect()->Actions); }
+
 
     public function opening()
     {
@@ -26,48 +39,62 @@ class BattleLogManage
 
     public function roundStart(int $round)
     {
-        $BattleLogRound = new BattleLogRound();
-        $BattleLogRound->round = $round;
+        $Round = new BattleLogRound();
+        $Round->round = $round;
 
-        $this->logs[] = $BattleLogRound;
+        $this->logs[] = $Round;
     }
 
 
     public function roundEnd()
     {
-        $BattleLogRound = $this->getCurrentRound();
-        $BattleLogRound->Turns[] = [];
+        $this->getCurrentRound()->Turns[] = [];
     }
 
 
-    public function turn(int $actor_id)
+    public function turn(int $actor_id, int $turn)
     {
-        $BattleLogRound = $this->getCurrentRound();
-        $BattleLogTurn = new BattleLogTurn();
-        $BattleLogTurn->actor_id = $actor_id;
-        $BattleLogRound->Turns[] = $BattleLogTurn;
-    }
+        $Turn = new BattleLogTurn();
+        $Turn->actor_id = $actor_id;
+        $Turn->turn = $turn;
 
-    public function skillEffect()
-    {
-
+        $this->getCurrentRound()->Turns[] = $Turn;
     }
 
 
-    public function targeting()
+    public function setSkill(int $skill_id)
     {
+        $SkillEffect = new BattleLogEffectSkill();
+        $SkillEffect->skill_id = $skill_id;
 
+        $this->getCurrentTurn()->Effects[] = $SkillEffect;
     }
 
 
-    public function target()
+    public function skillAction(int $actor_id, int $target_id)
     {
+        $Action = new BattleLogAction();
+        $Action->actor_id = $actor_id;
+        $Action->target_id = $target_id;
 
+        $this->getCurrentSkillEffect()->Actions[] = $Action;
     }
 
-    public function buffEffect()
-    {
 
+    public function setBuff(int $buff_id)
+    {
+        $Buff = new BattleLogEffectBuff();
+        $Buff->buff_id = $buff_id;
+
+        $this->getCurrentTurn()->Effects[] = $Buff;
+    }
+
+
+    public function buffAction()
+    {
+        $Action = new BattleLogAction();
+
+        $this->getCurrentBuffEffect()->Actions[] = $Action;
     }
 
 
@@ -77,8 +104,8 @@ class BattleLogManage
     }
 
 
-    public function result()
+    public function toJson()
     {
-        return $this->logs;
+        return json_encode($this->toArray());
     }
 }

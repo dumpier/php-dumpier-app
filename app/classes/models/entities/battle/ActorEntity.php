@@ -3,7 +3,7 @@ namespace App\Models\Entities\Battle;
 
 class ActorEntity
 {
-    public $id;
+    public $actor_id;
     public $is_boss = false;
     public $is_enemy = false;
 

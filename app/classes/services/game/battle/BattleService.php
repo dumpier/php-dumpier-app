@@ -46,8 +46,6 @@ class BattleService extends \Service
      */
     private function opening(BattleEntity $BattleEntity)
     {
-        $BattleEntity->round += 1;
-        $BattleEntity->turn = 0;
     }
 
     /**
@@ -66,8 +64,10 @@ class BattleService extends \Service
      */
     private function roundStart(BattleEntity $BattleEntity)
     {
-        $BattleEntity->LogManage->roundStart($BattleEntity->round);
+        $BattleEntity->round += 1;
+        $BattleEntity->turn = 0;
 
+        $BattleEntity->LogManage->roundStart($BattleEntity->round);
     }
 
     /**
@@ -86,9 +86,13 @@ class BattleService extends \Service
      */
     private function round(BattleEntity $BattleEntity)
     {
+        $actors = $BattleEntity->getActors();
         // 行動順番通りに行動する
-        foreach ($BattleEntity->getActors() as $Actor)
+        foreach ($actors as $Actor)
         {
+            $BattleEntity->turn ++;
+            $BattleEntity->LogManage->turn($Actor->actor_id, $BattleEntity->turn);
+
             if ( ! $Actor->isActable() )
             {
                 // 行動不能な場合、TODO 行動不能ログを記録する
@@ -106,7 +110,7 @@ class BattleService extends \Service
             // TODO 行動後の状態異常反映
 
             // ゲーム終了判定
-            if($BattleEntity->isGameOver())
+            if($BattleEntity->isBattleOver())
             {
                 break;
             }
@@ -117,8 +121,11 @@ class BattleService extends \Service
     // スキル処理
     private function skill(BattleEntity $BattleEntity)
     {
-        // スキル決定
+        // スキル決定 TODO 発動不能判定など
         $Skill = $BattleEntity->Actor->SkillManage->getSkill();
+
+        $BattleEntity->LogManage->setSkill($Skill->skill_id);
+
         $BattleEntity->setSkill($Skill);
 
         // TODO スキル発動時の効果
@@ -129,7 +136,7 @@ class BattleService extends \Service
         {
             $this->targets($BattleEntity);
 
-            if($BattleEntity->isGameOver())
+            if($BattleEntity->isBattleOver())
             {
                 break;
             }
@@ -144,7 +151,8 @@ class BattleService extends \Service
         $Skill = $BattleEntity->getSkill();
         $target_count = $Skill->getTargetCount();
 
-        $Targets = $BattleEntity->getTargets($target_count);
+        // TODO
+        $Targets = $BattleEntity->OppenentDeck->Actors;
 
         foreach ($Targets as $Target)
         {
@@ -154,7 +162,7 @@ class BattleService extends \Service
             // 行動一覧
             $this->actions($BattleEntity);
 
-            if($BattleEntity->isGameOver())
+            if($BattleEntity->isBattleOver())
             {
                 return true;
             }
@@ -172,7 +180,7 @@ class BattleService extends \Service
         {
             $this->action($BattleEntity);
 
-            if($BattleEntity->isGameOver())
+            if($BattleEntity->isBattleOver())
             {
                 return true;
             }
@@ -183,6 +191,11 @@ class BattleService extends \Service
     private function action(BattleEntity $BattleEntity)
     {
         $Skill = $BattleEntity->getSkill();
+        $Actor = $BattleEntity->getActor();
+        $Target = $BattleEntity->getTarget();
+
+        $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
+
     }
 
 }

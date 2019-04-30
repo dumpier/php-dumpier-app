@@ -5,13 +5,13 @@ namespace App\Defines\Game;
 class BUFF
 {
     /** ステータス操作 */
-    const TYPE_CHANGE_STATUS = 1;
+    const TYPE_CHANGE_STATUS = 1000;
 
     /** 状態異常をクリア */
-    const TYPE_CHANGE_BUFF = 2;
+    const TYPE_CLEAR_BUFF = 2000;
 
     /** 状態異常の操作（） */
-    const TYPE_CHANGE_BUFF = 3;
+    const TYPE_CHANGE_BUFF = 3000;
 
 
 

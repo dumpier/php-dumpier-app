@@ -5,16 +5,15 @@ namespace App\Models\Entities\Battle\Log;
 use Presto\Core\Traits\Instanceable;
 use App\Models\Entities\Battle\Log\Traits\BattleLogTowable;
 
-class BattleLogTurn
+class BattleLogBuff
 {
     use Instanceable;
     use BattleLogTowable;
 
+    public $buff_id;
     public $turn;
 
-    public $actor_id;
-
-    /** @var BattleLogEffectSkill[]|BattleLogEffectBuff[] */
-    public $Effects = [];
+    /** @var BattleLogStatus[] */
+    public $Statuses;
 
 }

@@ -43,47 +43,42 @@ class BattleEntity
 
     public function __construct(DeckEntity $AllyDeck, DeckEntity $OppenentDeck)
     {
+        $this->LogManage = new BattleLogManage;
+
         $this->AllyDeck = $AllyDeck;
         $this->OppenentDeck = $OppenentDeck;
-        $this->LogManage = new BattleLogManage;
+
+        // actor_idの採番
+        $actor_id = 0;
+        foreach ($this->AllyDeck->Actors as $Actor)
+        {
+            $actor_id ++;
+            $Actor->actor_id = $actor_id;
+        }
+
+        foreach ($this->OppenentDeck->Actors as $Actor)
+        {
+            $actor_id ++;
+            $Actor->actor_id = $actor_id;
+        }
+
     }
 
 
     // TODO 行動可能なActor一覧
     public function getActors()
     {
-        return $this->AllyDeck->Actors;
+        return array_merge($this->AllyDeck->Actors->all(), $this->OppenentDeck->Actors->all());
     }
 
 
-    public function setActor(ActorEntity $Actor)
-    {
-        $this->Actor = $Actor;
-    }
+    public function setActor(ActorEntity $Actor) { $this->Actor = $Actor; }
+    public function setTarget(ActorEntity $Target) { $this->Target = $Target; }
+    public function setSkill(SkillEntity $Skill) { $this->Skill = $Skill; }
 
-    public function setSkill(SkillEntity $Skill)
-    {
-        $this->Skill = $Skill;
-    }
-
-    public function setTarget(ActorEntity $Target)
-    {
-        $this->Target = $Target;
-    }
-
-
-    /**
-     * スキルのターゲット一覧の取得 TODO 未完成
-     * @param int $Target_count
-     * @return Collection|ActorEntity[]
-     */
-    public function getTargets(int $Target_count)
-    {
-        // 発動中のスキル
-        $Skill = $this->Actor->skillManage->getSkill();
-
-        return [$this->OppenentDeck[0]];
-    }
+    public function getActor() { return $this->Actor; }
+    public function getTarget() { return $this->Target; }
+    public function getSkill() { return $this->Skill; }
 
 
     /**

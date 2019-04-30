@@ -1,8 +1,12 @@
 <?php
 namespace App\Models\Entities\Battle;
 
+use Presto\Core\Traits\Arrayable;
+
 class StatusEntity
 {
+    use Arrayable;
+
     // -----------------------------------------------
     // HP、MP、AP
     // -----------------------------------------------
