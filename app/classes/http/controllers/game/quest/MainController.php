@@ -74,6 +74,8 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $area_id = (int)input("area_id", 0);
         $is_boss = (int)input("is_boss", 0);
 
+        // TODO 過去のログ
+
         // 指定クエストの取得
         $Quest = $this->PlayerQuestService->getPlayerQuest($this->player_id, $area_id);
 

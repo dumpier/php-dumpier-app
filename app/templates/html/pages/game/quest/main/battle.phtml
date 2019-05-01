@@ -1,1 +1,92 @@
-<?php echo ($Battle->LogManage->toJson());?>
+<style>
+.game-battle-actor { margin-bottom: 5px; }
+</style>
+
+<div>
+	<div style="float: left;">
+		<p>ally</p>
+		@foreach ($Battle->AllyDeck->Actors as $key=>$Actor)
+		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
+			<div style="float: left;">{@ echo character()->image($Actor->actor_id) }</div>
+			<div style="float: left; margin-left:5px;">
+				<div style="background: #fd7e14; padding:1px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+				<div style="background: #fd7e14; padding:1px;margin-top:3px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+			</div>
+			<br style="clear: both;">
+		</div>
+		@endforeach
+	</div>
+
+	<div style="float: right; text-align: right;">
+		<p>oppenent</p>
+		@foreach ($Battle->OppenentDeck->Actors as $key=>$Actor)
+		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
+			<div style="float: right;">{@ echo character()->image($Actor->actor_id) }</div>
+			<div style="float: right; margin-right:5px;">
+				<div style="background: #fd7e14; padding:1px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+				<div style="background: #fd7e14; padding:1px;margin-top:3px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+			</div>
+			<br style="clear: both;">
+		</div>
+		@endforeach
+	</div>
+
+	<br style="clear: both;">
+</div>
+
+<script>
+var battle = battle || {
+	logs : <?php echo ($Battle->LogManage->toJson()); ?>.logs,
+
+	play : function() {
+		console.log(this.logs);
+		this.rounds(this.logs);
+	},
+
+	rounds : function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			console.log(`# round : ${data.round}`);
+			this.turns(data.Turns);
+		}
+	},
+
+	turns : function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			console.log(`  - turn : ${data.turn}, actor : ${data.actor_id}`);
+			this.effects(data.Effects);
+		}
+	},
+
+	effects : function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			console.log(`    - effect : ${key}, skill : ${data.skill_id}`);
+			this.actions(data.Actions);
+		}
+	},
+
+	actions : function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			console.log(data);
+			console.log(`      - action : ${key}, actor: ${data.actor_id}, target: ${data.target_id}`);
+			this.action(data);
+		}
+	},
+
+	action : function(data) {
+		$(`div#game-actor-${data.actor_id}`).css("background", "red");
+	},
+}
+
+battle.data = {
+
+}
+
+battle.play();
+</script>
+
+
+<?php ;?>

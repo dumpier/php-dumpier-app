@@ -30,7 +30,7 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
 
     public function view()
     {
-        $this->layout = "html/layouts/empty";
+        $this->layout = "html/layouts/admin/empty";
 
         $root = input("root", "res");
         $path = input("path");

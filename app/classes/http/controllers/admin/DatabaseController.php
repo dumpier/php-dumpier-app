@@ -32,7 +32,7 @@ class DatabaseController extends \App\Http\Controllers\Admin\Controller
 
     public function datas()
     {
-        $this->layout = "html/layouts/empty";
+        $this->layout = "html/layouts/admin/empty";
 
         $connection = input("conn");
         $table = input("table");

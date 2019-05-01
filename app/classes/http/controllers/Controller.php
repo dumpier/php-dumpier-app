@@ -5,7 +5,7 @@ use Presto\Core\Views\View;
 
 class Controller extends \Controller
 {
-    public $layout = 'html/layouts/html';
+    public $layout = 'html/layouts/admin/html';
     public $type = View::HTML;
 
 }
