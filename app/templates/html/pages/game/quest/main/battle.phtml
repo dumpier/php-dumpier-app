@@ -1,16 +1,21 @@
 <style>
 .game-battle-actor { margin-bottom: 5px; }
+
+.game-gauge {background: #fd7e14; padding:1px; margin-bottom:5px; }
+.game-gauge .bar { background: #17a2b8; width:100px; height:8px; }
+.game-gauge .val { background:#fd7e14; width:40px; height:8px; }
+
+#game-battle-log { position:fixed; bottom:0px; background:#f9f9f9; padding:5px; border: solid 5px #ddd; width:100vw; height: 400px; overflow: scroll; }
 </style>
 
-<div>
+<div id="game-actor-list">
 	<div style="float: left;">
-		<p>ally</p>
 		@foreach ($Battle->AllyDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
 			<div style="float: left;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: left; margin-left:5px;">
-				<div style="background: #fd7e14; padding:1px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
-				<div style="background: #fd7e14; padding:1px;margin-top:3px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
+				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
 			</div>
 			<br style="clear: both;">
 		</div>
@@ -18,71 +23,92 @@
 	</div>
 
 	<div style="float: right; text-align: right;">
-		<p>oppenent</p>
 		@foreach ($Battle->OppenentDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
 			<div style="float: right;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: right; margin-right:5px;">
-				<div style="background: #fd7e14; padding:1px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
-				<div style="background: #fd7e14; padding:1px;margin-top:3px;"><div style="background: #17a2b8; width:100px; height:8px;"><div style="background:#fd7e14; width:40px; height:8px;"></div></div></div>
+				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
+				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
 			</div>
 			<br style="clear: both;">
 		</div>
 		@endforeach
 	</div>
-
 	<br style="clear: both;">
 </div>
+
+<div id="game-battle-log"></div>
 
 <script>
 var battle = battle || {
 	logs : <?php echo ($Battle->LogManage->toJson()); ?>.logs,
 
-	play : function() {
+	timeout : function(ms=1000) {
+		return new Promise(resolve => setTimeout(() => { resolve(); }, ms));
+	},
+
+	play : async function() {
 		console.log(this.logs);
-		this.rounds(this.logs);
+		await this.rounds(this.logs);
 	},
 
-	rounds : function(datas) {
+	rounds : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			console.log(`# round : ${data.round}`);
-			this.turns(data.Turns);
+			$("#game-battle-log").append(`<p># round : ${data.round}</p>`);
+			await this.turns(data.Turns);
 		}
 	},
 
-	turns : function(datas) {
+	turns : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			console.log(`  - turn : ${data.turn}, actor : ${data.actor_id}`);
-			this.effects(data.Effects);
+			$("#game-battle-log").append(`<p style="padding-left:5px;">- turn : ${data.turn}, actor : ${data.actor_id}</p>`);
+			await this.effects(data.Effects);
 		}
 	},
 
-	effects : function(datas) {
+	effects : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			console.log(`    - effect : ${key}, skill : ${data.skill_id}`);
-			this.actions(data.Actions);
+			$("#game-battle-log").append(`<p style="padding-left:10px;">- effect : ${key}, skill : ${data.skill_id}</p>`);
+			await this.actions(data.Actions);
 		}
 	},
 
-	actions : function(datas) {
+	actions : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			console.log(data);
-			console.log(`      - action : ${key}, actor: ${data.actor_id}, target: ${data.target_id}`);
-			this.action(data);
+			await this.action(data);
 		}
 	},
 
-	action : function(data) {
-		$(`div#game-actor-${data.actor_id}`).css("background", "red");
+	action : async function(data) {
+		await this.actor(data);
+		await this.target(data);
+		await this.loging(data);
 	},
+
+	actor : async function(data) {
+		battle.el.get(data.actor_id).effect("shake", {times:3, distance: 3, direction:"left"}, 10);
+		return this.timeout(800);
+	},
+
+	target : async function(data) {
+		battle.el.get(data.target_id).effect("shake", {times:3, distance: 3, direction:"down"}, 10);
+		return this.timeout(800);
+	},
+
+	loging : async function(data) {
+		$("#game-battle-log").prepend(`<p style="padding-left:15px;">- action,  actor:${data.actor_id}, target:${data.target_id}</p>`);
+	},
+
 }
 
-battle.data = {
-
+battle.el = {
+	get: function(actor_id) {
+		return $("div#game-actor-" + actor_id);
+	}
 }
 
 battle.play();

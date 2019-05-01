@@ -152,7 +152,7 @@ class BattleService extends \Service
         $target_count = $Skill->getTargetCount();
 
         // TODO
-        $Targets = $BattleEntity->OppenentDeck->Actors;
+        $Targets = $BattleEntity->OppenentDeck->Actors->merge($BattleEntity->AllyDeck->Actors)->shuffle()->all(1);
 
         foreach ($Targets as $Target)
         {
