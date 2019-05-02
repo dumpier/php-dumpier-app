@@ -3,12 +3,14 @@ namespace App\Models\Entities\Battle;
 
 class ActorEntity
 {
+    public $team_id;
     public $actor_id;
+    /** @var int 編成番号 */
+    public $sort_id = 0;
+
     public $is_boss = false;
     public $is_enemy = false;
 
-    /** @var int 編成番号 */
-    public $sort_id = 0;
 
     /** @var StatusManageEntity ステータス管理 */
     public $StatusManage;
@@ -28,17 +30,12 @@ class ActorEntity
         $this->BuffManage = new BuffManageEntity($buffs);
     }
 
-    /**
-     * 行動可能かの判定
-     *      - 生きている
-     *      - 動けない状態異常にかかってない
-     *      - TODO アクションポイント（AP）がある
-     * @return boolean
-     */
-    public function isActable()
-    {
-        return $this->StatusManage->isAlive() && $this->BuffManage->isActable();
-    }
+    /** 生死の判定 @return boolean */
+    public function isAlive() { return $this->StatusManage->isAlive(); }
+    public function isDead() { return $this->StatusManage->isDead(); }
+    /** 行動可能判定 @return boolean */
+    public function isActable() { return $this->StatusManage->isAlive() && $this->BuffManage->isActable(); }
+    public function isInactable() { return ! $this->isActable(); }
 
 
     public function getSkill()

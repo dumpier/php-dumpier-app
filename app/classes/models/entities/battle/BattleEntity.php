@@ -54,12 +54,14 @@ class BattleEntity
         {
             $actor_id ++;
             $Actor->actor_id = $actor_id;
+            $Actor->team_id = BATTLE::TEAM_ID_ALLY;
         }
 
         foreach ($this->OppenentDeck->Actors as $Actor)
         {
             $actor_id ++;
             $Actor->actor_id = $actor_id;
+            $Actor->team_id = BATTLE::TEAM_ID_OPPENENT;
         }
 
     }
@@ -73,15 +75,32 @@ class BattleEntity
     {
         $actors = [];
 
-        $allies = $this->AllyDeck->Actors->all();
-        $oppenents = $this->OppenentDeck->Actors->all();
+        $allies = $this->getActorListByAlive();
+        $oppenents = $this->getActorListByAlive(BATTLE::TEAM_ID_OPPENENT);
 
         foreach ($allies as $Ally)
         {
             $actors[] = $Ally;
+
             if($Oppenent = array_shift($oppenents))
             {
                 $actors[] = $Oppenent;
+            }
+        }
+
+        return $actors;
+    }
+
+    public function getActorListByAlive(int $team_id=BATTLE::TEAM_ID_ALLY)
+    {
+        /* @var $actors ActorEntity[] */
+        $actors = ($team_id==BATTLE::TEAM_ID_ALLY) ? $this->AllyDeck->Actors->all() : $this->OppenentDeck->Actors->all();
+
+        foreach ($actors as $key=>$Actor)
+        {
+            if($Actor->isDead())
+            {
+                unset($actors[$key]);
             }
         }
 

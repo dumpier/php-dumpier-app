@@ -8,10 +8,16 @@ div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
 
 .game-gauge { background: #fd7e14; padding:1px; margin-bottom:2px; }
 .game-gauge .bar-base { background: #888; width:100px; height:10px; }
-.game-gauge .bar-base .bar-val { overflow:hidden;background:#fd7e14; width:100px; height:10px; line-height:10px; font-size:4pt; color:#f9f9f9; }
+.game-gauge .bar-base .bar-val { overflow:hidden;background:#28a745; width:100px; height:10px; line-height:10px; font-size:4pt; color:#f9f9f9; }
 .game-gauge .bar-base .bar-val span { height:10px; line-height:10px; font-size:4pt; color:#f9f9f9;}
 
 #game-battle-log { position:fixed; bottom:0px; background:#f9f9f9; padding:5px; border: solid 5px #ddd; width:100vw; height: 400px; overflow: scroll; }
+#game-battle-log span.log-line { display: block; margin-bottom:2px; background:#6c757d; color:#f9f9f9; }
+#game-battle-log span.round { background:#fd7e14; }
+#game-battle-log span.turn { background:#ffc107; padding-left:5px; }
+#game-battle-log span.actor { background:#17a2b8; padding-left:10px; }
+#game-battle-log span.action { background:#888; padding-left:15px; }
+
 </style>
 
 <div id="game-actor-list" style="position: relative;">
@@ -26,15 +32,9 @@ div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
 			<div style="float: left;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: left; margin-left:5px;">
 				<!-- ------------------- gauge ------------------ -->
-				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:
-					<span class="hp-text">{@ echo $Actor->baseHp() }</span> /
-					<span class="hp-base-text">{@ echo $Actor->baseHp() }</span></div></div></div>
-				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar">MP:
-					<span class="mp-text">{@ echo $Actor->baseMp() }</span> /
-					<span class="mp-base-text">{@ echo $Actor->baseMp() }</span></div></div></div>
-				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar">AP:
-					<span class="ap-text">{@ echo $Actor->baseAp() }</span> /
-					<span class="ap-base-text">{@ echo $Actor->baseAp() }</span></div></div></div>
+				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:<span class="hp-text"><?php echo $Actor->baseHp();?></span> /<span class="hp-base-text"><?php echo $Actor->baseHp();?></span></div></div></div>
+				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar" style="background:#fd7e14;">MP:<span class="mp-text"><?php echo $Actor->baseMp();?></span> /<span class="mp-base-text"><?php echo $Actor->baseMp();?></span></div></div></div>
+				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar" style="background:#17a2b8;">AP:<span class="ap-text"><?php echo $Actor->baseAp();?></span> /<span class="ap-base-text"><?php echo $Actor->baseAp();?></span></div></div></div>
 				<!-- ------------------- gauge ------------------ -->
 			</div>
 			<br style="clear: both;">
@@ -51,15 +51,9 @@ div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
 			<div style="float: right;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: right; margin-right:5px;">
 				<!-- ------------------- gauge ------------------ -->
-				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:
-					<span class="hp-text">{@ echo $Actor->baseHp() }</span> /
-					<span class="hp-base-text">{@ echo $Actor->baseHp() }</span></div></div></div>
-				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar">MP:
-					<span class="mp-text">{@ echo $Actor->baseMp() }</span> /
-					<span class="mp-base-text">{@ echo $Actor->baseMp() }</span></div></div></div>
-				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar">AP:
-					<span class="ap-text">{@ echo $Actor->baseAp() }</span> /
-					<span class="ap-base-text">{@ echo $Actor->baseAp() }</span></div></div></div>
+				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:<span class="hp-text"><?php echo $Actor->baseHp();?></span> /<span class="hp-base-text"><?php echo $Actor->baseHp();?></span></div></div></div>
+				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar" style="background:#fd7e14;">MP:<span class="mp-text"><?php echo $Actor->baseMp();?></span> /<span class="mp-base-text"><?php echo $Actor->baseMp();?></span></div></div></div>
+				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar" style="background:#17a2b8;">AP:<span class="ap-text"><?php echo $Actor->baseAp();?></span> /<span class="ap-base-text"><?php echo $Actor->baseAp();?></span></div></div></div>
 				<!-- ------------------- gauge ------------------ -->
 			</div>
 			<br style="clear: both;">
@@ -109,7 +103,7 @@ var battle = battle || {
 	rounds : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			$("#game-battle-log").append(`<p># round : ${data.round}</p>`);
+			$("#game-battle-log").append(`<span class="log-line round"># round : ${data.round}</span>`);
 			await this.turns(data.Turns);
 		}
 	},
@@ -118,7 +112,7 @@ var battle = battle || {
 	turns : async function(datas) {
 		for (let key in datas) {
 			let data = datas[key];
-			$("#game-battle-log").append(`<p style="padding-left:5px;">- turn : ${data.turn}, actor : ${data.actor_id}</p>`);
+			$("#game-battle-log").append(`<span class="log-line turn">- turn : ${data.turn}, actor : ${data.actor_id}</span>`);
 			await this.effects(data.Effects);
 		}
 	},
@@ -128,7 +122,7 @@ var battle = battle || {
 		for (let key in datas) {
 			let data = datas[key];
 
-			$("#game-battle-log").append(`<p style="padding-left:10px;">- effect : ${key}, skill : ${data.skill_id}</p>`);
+			$("#game-battle-log").append(`<span class="log-line actor"">- actor : ${key}, skill : ${data.skill_id}</span>`);
 			await this.actions(data.Actions);
 			$("#game-skill").html("");
 		}
@@ -175,12 +169,13 @@ var battle = battle || {
 		if(data.Statuses){
 			for(let key in data.Statuses){
 				let status = data.Statuses[key];
-				$("#game-battle-log").append(`<p style="padding-left:15px;">- ${status.name},  ${status.value}</p>`);
+				$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}, <span style="background: #dc3545; padding:0px 3px;"> ${status.name}:${status.value} </span></span>`);
 				gauge.damage(data.target_id, status.value);
 			}
+		}else{
+			$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}</span>`);
 		}
 
-		$("#game-battle-log").append(`<p style="padding-left:15px;">- action,  actor:${data.actor_id}, target:${data.target_id}</p>`);
 		document.getElementById("game-battle-log").scrollTop = document.getElementById("game-battle-log").scrollHeight;
 	},
 }

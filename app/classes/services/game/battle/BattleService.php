@@ -94,12 +94,16 @@ class BattleService extends \Service
     private function round(BattleEntity $BattleEntity)
     {
         // 行動順番通りに行動する
-        foreach ($BattleEntity->getActorListByTurn() as $Actor)
+        $actors = $BattleEntity->getActorListByTurn();
+
+        foreach ($actors as $Actor)
         {
+            if ( $Actor->isDead() ) { continue; }
+
             $BattleEntity->turn ++;
             $BattleEntity->LogManage->turn($Actor->actor_id, $BattleEntity->turn);
 
-            if ( ! $Actor->isActable() )
+            if ( $Actor->isInactable() )
             {
                 // 行動不能な場合、TODO 動けないログを記録する
                 continue;
@@ -155,7 +159,9 @@ class BattleService extends \Service
     // ターゲット処理
     private function targets(BattleEntity $BattleEntity)
     {
-        foreach ($this->SkillService->getTargets($BattleEntity) as $Target)
+        $targets = $this->SkillService->getTargets($BattleEntity);
+
+        foreach ($targets as $Target)
         {
             // ターゲットを設定
             $BattleEntity->setTarget($Target);
@@ -194,8 +200,8 @@ class BattleService extends \Service
         $Actor = $BattleEntity->getActor();
         $Target = $BattleEntity->getTarget();
 
-        // スキルログ
-        $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
+        // TODO スキルログ
+        // $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
 
         // ダメージログ
         $damage = $this->DamageService->damage($BattleEntity);
