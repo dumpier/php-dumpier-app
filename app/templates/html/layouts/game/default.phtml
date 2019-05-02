@@ -1,12 +1,12 @@
 @if (! presto()->http()->isAjax())
-@include('html/partials/game/header')
-@include('html/partials/presto.js')
-@include('html/partials/presto.css')
+	@include('html/partials/game/header')
+	@include('html/partials/presto.js')
+	@include('html/partials/presto.css')
 @endif
 
 <div class="game-content">@content</div>
 
 @if (! presto()->http()->isAjax())
-</body>
-</html>
+	</body>
+	</html>
 @endif

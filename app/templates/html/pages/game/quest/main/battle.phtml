@@ -87,20 +87,26 @@ var battle = battle || {
 		await this.actor(data);
 		await this.target(data);
 		await this.loging(data);
+		await this.scroll();
+		return this.timeout(500);
 	},
 
 	actor : async function(data) {
-		battle.el.get(data.actor_id).effect("shake", {times:3, distance: 3, direction:"left"}, 10);
+		battle.el.get(data.actor_id).effect("shake", {times:2, distance: 10, direction:"left"}, 10);
 		return this.timeout(800);
 	},
 
 	target : async function(data) {
-		battle.el.get(data.target_id).effect("shake", {times:3, distance: 3, direction:"down"}, 10);
+		battle.el.get(data.target_id).effect("shake", {times:4, distance: 3, direction:"down"}, 10);
 		return this.timeout(800);
 	},
 
 	loging : async function(data) {
-		$("#game-battle-log").prepend(`<p style="padding-left:15px;">- action,  actor:${data.actor_id}, target:${data.target_id}</p>`);
+		$("#game-battle-log").append(`<p style="padding-left:15px;">- action,  actor:${data.actor_id}, target:${data.target_id}</p>`);
+	},
+
+	scroll : async function() {
+		document.getElementById("game-battle-log").scrollTop = document.getElementById("game-battle-log").scrollHeight;
 	},
 
 }
