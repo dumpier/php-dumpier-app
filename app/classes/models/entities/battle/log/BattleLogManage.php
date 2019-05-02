@@ -106,6 +106,7 @@ class BattleLogManage
 
     public function toJson()
     {
-        return json_encode($this->toArray());
+        $logs = $this->toArray();
+        return json_encode($logs["logs"]);
     }
 }

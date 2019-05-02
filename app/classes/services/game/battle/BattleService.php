@@ -6,6 +6,12 @@ use App\Models\Entities\Battle\DeckEntity;
 
 class BattleService extends \Service
 {
+    protected $services = [
+        SkillService::class,
+        BuffService::class,
+    ];
+
+
     /**
      * バトル処理
      * @param DeckEntity $AllyDeck 味方デッキ
