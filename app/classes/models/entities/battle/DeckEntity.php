@@ -3,6 +3,7 @@ namespace App\Models\Entities\Battle;
 
 
 use Presto\Core\Utilities\Collection;
+use App\Models\Daos\Player\PlayerCharacterModel;
 
 class DeckEntity
 {
@@ -22,13 +23,18 @@ class DeckEntity
     public $recalculate_total_hp = true;
 
 
+    /**
+     *
+     * @param Collection|PlayerCharacterModel[] $Characters
+     */
     public function __construct(Collection $Characters)
     {
         $this->Actors = collection();
 
         foreach ($Characters as $Character)
         {
-            $this->Actors->put(new ActorEntity($Character->toArray()));
+            $Actor = new ActorEntity($Character->getStatus(), $Character->getSkillList(), $Character->getBuffList());
+            $this->Actors->put($Actor);
         }
     }
 

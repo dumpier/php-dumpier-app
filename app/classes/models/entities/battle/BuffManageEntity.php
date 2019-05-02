@@ -10,6 +10,12 @@ class BuffManageEntity
     /** @var Collection|BuffEntity[] */
     protected $Buffs;
 
+
+    public function __construct()
+    {
+        $this->Buffs = collection();
+    }
+
     /**
      * 状態異常の取得
      * @param int $buff_id
@@ -92,7 +98,7 @@ class BuffManageEntity
      */
     public function isUnactable()
     {
-        if ( $this->Buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count )
+        if ( $this->Buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count() )
         {
             return true;
         }

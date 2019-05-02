@@ -74,8 +74,10 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $area_id = (int)input("area_id", 0);
         $is_boss = (int)input("is_boss", 0);
 
+        // TODO 過去のログ
+
         // 指定クエストの取得
-        $quest = $this->PlayerQuestService->getPlayerQuest($this->player_id, $area_id);
+        $Quest = $this->PlayerQuestService->getPlayerQuest($this->player_id, $area_id);
 
         // プレイヤーデッキの抽出
         $AllyDeck = $this->PlayerDeckService->getPlayerDeck($this->player_id);
@@ -85,14 +87,18 @@ class MainController extends \App\Http\Controllers\Game\Controller
         $OppenentDeck = $this->PlayerDeckService->getPlayerDeck($this->player_id);
 
         // バトルの実施
-        $Battle = $this->BattleService->battle($AllyDeck->toDeckEntity(), $OppenentDeck->toDeckEntity());
+        $BattleEntity = $this->BattleService->battle($AllyDeck->toDeckEntity(), $OppenentDeck->toDeckEntity());
 
         // 結果の更新
-        $Quest = $this->PlayerQuestService->result($this->player_id, $area_id, $is_boss, $Battle);
+        $Quest = $this->PlayerQuestService->result($this->player_id, $area_id, $is_boss, $BattleEntity);
+
+        // 次のクエストの解放
+        $NextQuest = $this->PlayerQuestService->openNextStage($this->player_id, $area_id, $is_boss, $BattleEntity);
 
         $this->content("is_boss", $is_boss);
-        $this->content("battle", $Battle);
-        $this->content("quest", $Quest);
+        $this->content("Battle", $BattleEntity);
+        $this->content("Quest", $Quest);
+        $this->content("NextQuest", $NextQuest);
 
         return $this->response();
     }

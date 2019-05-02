@@ -18,8 +18,9 @@ class SkillManageEntity
      */
     public function getSkill()
     {
-
+        return new SkillEntity();
     }
+
 
     /**
      * スキルの取得

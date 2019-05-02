@@ -26,4 +26,14 @@ class PlayerQuestModel extends \App\Models\Daos\BasePlayerModel
 
         return $self;
     }
+
+
+    public function battle(bool $is_win)
+    {
+        $this->play_count += 1;
+        $this->complete_count += $is_win ? 1: 0;
+        $this->save();
+
+        return $this;
+    }
 }

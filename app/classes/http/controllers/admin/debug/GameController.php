@@ -35,7 +35,7 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     // ダミーアカウント一覧
     public function account()
     {
-        $this->layout = "html/layouts/empty";
+        $this->layout = "html/layouts/admin/empty";
         $playerPaginate = $this->PlayerManage->pagingDummy(SORT_DESC);
 
         $this->content("playerPaginate", $playerPaginate);
@@ -46,7 +46,7 @@ class GameController extends \App\Http\Controllers\Admin\Controller
     // 新規ダミーアカウントの作成
     public function regist()
     {
-        $this->layout = "html/layouts/empty";
+        $this->layout = "html/layouts/admin/empty";
 
         // 100個以上作成できないようにする
         $count = (int)input("count", 1);

@@ -35,6 +35,7 @@ class SkillEntity
      */
     public function getTargetingCount()
     {
+        // TODO
         return $this->targeting_count;
     }
 
@@ -44,6 +45,7 @@ class SkillEntity
      */
     public function getTargetCount()
     {
+        // TODO
         return $this->target_count;
     }
 

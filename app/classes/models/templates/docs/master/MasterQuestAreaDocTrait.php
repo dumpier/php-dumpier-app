@@ -10,6 +10,8 @@ trait MasterQuestAreaDocTrait
         "area_id",
         "map_id",
         "serial_id",
+        "next_map_id",
+        "next_area_id",
         "name",
         "caption",
     ];
@@ -23,6 +25,12 @@ trait MasterQuestAreaDocTrait
 
     /** @var int  */
     public $serial_id = 0;
+
+    /** @var int  */
+    public $next_map_id = 0;
+
+    /** @var int  */
+    public $next_area_id = 0;
 
     /** @var string  */
     public $name = "";
