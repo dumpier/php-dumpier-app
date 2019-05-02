@@ -65,10 +65,27 @@ class BattleEntity
     }
 
 
-    // TODO 行動可能なActor一覧
-    public function getActors()
+    /**
+     * Actorを行動順番通りに並ぶ
+     * @return ActorEntity[]
+     */
+    public function getActorListByTurn()
     {
-        return array_merge($this->AllyDeck->Actors->all(), $this->OppenentDeck->Actors->all());
+        $actors = [];
+
+        $allies = $this->AllyDeck->Actors->all();
+        $oppenents = $this->OppenentDeck->Actors->all();
+
+        foreach ($allies as $Ally)
+        {
+            $actors[] = $Ally;
+            if($Oppenent = array_shift($oppenents))
+            {
+                $actors[] = $Oppenent;
+            }
+        }
+
+        return $actors;
     }
 
 

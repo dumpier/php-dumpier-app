@@ -35,7 +35,7 @@ class SkillEntity
      */
     public function getTargetingCount()
     {
-        // TODO
+        return mt_rand(1, mt_rand(1,2));
         return $this->targeting_count;
     }
 
@@ -45,7 +45,7 @@ class SkillEntity
      */
     public function getTargetCount()
     {
-        // TODO
+        return mt_rand(1, mt_rand(1, mt_rand(1,3)));
         return $this->target_count;
     }
 
@@ -55,6 +55,7 @@ class SkillEntity
      */
     public function getActionCount()
     {
+        return mt_rand(1, mt_rand(1, mt_rand(1,3)));
         return $this->action_count;
     }
 

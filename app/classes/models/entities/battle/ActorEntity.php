@@ -53,4 +53,23 @@ class ActorEntity
 
         return $Skill;
     }
+
+
+    public function hp() { return $this->StatusManage->Status->hp; }
+    public function mp() { return $this->StatusManage->Status->mp; }
+    public function ap() { return $this->StatusManage->Status->ap; }
+
+    public function baseHp() { return $this->StatusManage->OriginalStatus->hp; }
+    public function baseMp() { return $this->StatusManage->OriginalStatus->mp; }
+    public function baseAp() { return $this->StatusManage->OriginalStatus->ap; }
+
+    public function damage(int $damage)
+    {
+        $this->StatusManage->Status->hp -= $damage;
+        if($this->StatusManage->Status->hp <= 0)
+        {
+            $this->StatusManage->Status->hp = 0;
+        }
+        return $this;
+    }
 }

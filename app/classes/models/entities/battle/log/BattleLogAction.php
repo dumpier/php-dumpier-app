@@ -13,10 +13,7 @@ class BattleLogAction
     public $actor_id;
     public $target_id;
 
-    public $Statuses;
+    public $Statuses = [];
 
-    public $Buffs;
-
-
-
+    public $Buffs = [];
 }

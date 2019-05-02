@@ -11,6 +11,7 @@ class BattleLogStatus
     use BattleLogTowable;
 
     public $status_id;
+    public $name;
     public $value;
 
 }

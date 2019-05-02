@@ -2,6 +2,8 @@
 /**
  * @property \App\Services\Admin\AdminAuthService $AdminAuthService
  * @property \App\Services\Game\Battle\BattleService $BattleService
+ * @property \App\Services\Game\Battle\BuffService $BuffService
+ * @property \App\Services\Game\Battle\DamageService $DamageService
  * @property \App\Services\Game\Battle\SkillService $SkillService
  * @property \App\Services\Game\Player\PlayerCharacterService $PlayerCharacterService
  * @property \App\Services\Game\Player\PlayerDeckService $PlayerDeckService
@@ -21,6 +23,7 @@
  * @property \App\Models\Repositories\Master\MasterTutorialCharacterRepository $MasterTutorialCharacter
  * @property \App\Models\Repositories\Player\PlayerCharacterRepository $PlayerCharacter
  * @property \App\Models\Repositories\Player\PlayerDeckRepository $PlayerDeck
+ * @property \App\Models\Repositories\Player\PlayerQuestBattleRepository $PlayerQuestBattle
  * @property \App\Models\Repositories\Player\PlayerQuestRepository $PlayerQuest
  * @property \App\Models\Repositories\Player\Manage\PlayerManageRepository $PlayerManage
  */

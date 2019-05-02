@@ -97,11 +97,25 @@ class BattleLogManage
         $this->getCurrentBuffEffect()->Actions[] = $Action;
     }
 
-
     public function action(int $actor_id, int $target_id, array $statuses=[], array $buffs=[])
     {
 
     }
+
+    public function damage(int $actor_id, int $target_id, int $damage)
+    {
+        $Action = new BattleLogAction();
+        $Action->actor_id = $actor_id;
+        $Action->target_id = $target_id;
+
+        $Status = new BattleLogStatus();
+        $Status->name = "hp";
+        $Status->value = -$damage;
+        $Action->Statuses[] = $Status;
+
+        $this->getCurrentSkillEffect()->Actions[] = $Action;
+    }
+
 
 
     public function toJson()
