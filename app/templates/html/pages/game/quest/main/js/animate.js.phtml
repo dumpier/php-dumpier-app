@@ -1,0 +1,19 @@
+<script>
+var animate = animate || {}
+
+animate.png = {
+	timeout : function(ms=1000) {
+		return new Promise(resolve => setTimeout(() => { resolve(); }, ms));
+	},
+
+	show : async function(el){
+		el.css({"display":"block", "background": "url(/res/images/effect/opening.png) no-repeat top"});
+//		await this.loop(el);
+	},
+
+	loop : async function(el){
+		el.css({"background-position": 100 + "px " + 100 + "px"});
+		setTimeout(this.loop(el), 100);
+	},
+}
+</script>

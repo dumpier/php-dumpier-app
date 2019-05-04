@@ -21,11 +21,9 @@
 					<tr>
 						<td>LOGIN PW</td>
 						<td><input type="password" name="password" id="password" class="form-control"></td>
-						<td>
-							<a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="$('iframe#game-panel').attr('src', '/game/top/index/');">GAME LOGIN</a>
-							<!--
-							<a class="btn btn-warning btn-block" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">GAME LOGIN</a>
-							 -->
+						<td align=right>
+							<a class="btn btn-warning" href="javascript:void(0);" onclick="$('iframe#game-panel').attr('src', '/game/top/index/');">GAME LOGIN</a>
+							<a class="btn btn-danger" href="javascript:void(0);" onclick="window.open('/game/top/index/', 'Game', 'width=400,height=800,scrollbars=none,resizable=none');">GAME LOGIN(新窓)</a>
 						</td>
 					</tr>
 
@@ -45,5 +43,5 @@
 		</form>
 	</div>
 
-	<div id="admin-dummy-list"></div>
+	<div id="admin-dummy-list" style="position: relative;"></div>
 </div>

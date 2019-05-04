@@ -87,7 +87,7 @@ class BuffManageEntity
      */
     public function isActable()
     {
-        return ! $this->isUnactable();
+        return ! $this->isInactable();
     }
 
 
@@ -96,7 +96,7 @@ class BuffManageEntity
      *      TODO 動けない、凍結、麻痺。。。
      * @return boolean
      */
-    public function isUnactable()
+    public function isInactable()
     {
         if ( $this->Buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count() )
         {

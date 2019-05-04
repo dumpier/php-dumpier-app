@@ -9,6 +9,7 @@ class BattleService extends \Service
     protected $services = [
         SkillService::class,
         BuffService::class,
+        DamageService::class,
     ];
 
 
@@ -92,16 +93,19 @@ class BattleService extends \Service
      */
     private function round(BattleEntity $BattleEntity)
     {
-        $actors = $BattleEntity->getActors();
         // 行動順番通りに行動する
+        $actors = $BattleEntity->getActorListByTurn();
+
         foreach ($actors as $Actor)
         {
+            if ( $Actor->isDead() ) { continue; }
+
             $BattleEntity->turn ++;
             $BattleEntity->LogManage->turn($Actor->actor_id, $BattleEntity->turn);
 
-            if ( ! $Actor->isActable() )
+            if ( $Actor->isInactable() )
             {
-                // 行動不能な場合、TODO 行動不能ログを記録する
+                // 行動不能な場合、TODO 動けないログを記録する
                 continue;
             }
 
@@ -138,7 +142,7 @@ class BattleService extends \Service
 
         $targeting_count = $Skill->getTargetingCount();
 
-        for ( $i=0; $i <= $targeting_count; $i++ )
+        for ( $i=1; $i <= $targeting_count; $i++ )
         {
             $this->targets($BattleEntity);
 
@@ -151,16 +155,13 @@ class BattleService extends \Service
         // TODO スキル発動後の効果
     }
 
+
     // ターゲット処理
     private function targets(BattleEntity $BattleEntity)
     {
-        $Skill = $BattleEntity->getSkill();
-        $target_count = $Skill->getTargetCount();
+        $targets = $this->SkillService->getTargets($BattleEntity);
 
-        // TODO
-        $Targets = $BattleEntity->OppenentDeck->Actors->merge($BattleEntity->AllyDeck->Actors)->shuffle()->all(1);
-
-        foreach ($Targets as $Target)
+        foreach ($targets as $Target)
         {
             // ターゲットを設定
             $BattleEntity->setTarget($Target);
@@ -178,11 +179,10 @@ class BattleService extends \Service
     // 行動処理
     private function actions(BattleEntity $BattleEntity)
     {
-        $Skill = $BattleEntity->Actor->SkillManage->getSkill();
-        $action_count = $Skill->getActionCount();
+        $Skill = $BattleEntity->getSkill();
 
         // 行動回数分ループ
-        for ( $i=0; $i <= $action_count; $i++ )
+        for ( $i=1; $i <= $Skill->getActionCount(); $i++ )
         {
             $this->action($BattleEntity);
 
@@ -200,8 +200,13 @@ class BattleService extends \Service
         $Actor = $BattleEntity->getActor();
         $Target = $BattleEntity->getTarget();
 
-        $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
+        // TODO スキルログ
+        // $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
 
+        // ダメージログ
+        $damage = $this->DamageService->damage($BattleEntity);
+        $BattleEntity->Actor->damage($damage);
+        $BattleEntity->LogManage->damage($Actor->actor_id, $Target->actor_id, $damage);
     }
 
 }

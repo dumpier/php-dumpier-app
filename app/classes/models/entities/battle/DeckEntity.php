@@ -70,7 +70,7 @@ class DeckEntity
 
         foreach ($this->Actors as $Actor)
         {
-            $this->total_hp += $Actor->StatusManage->Status->hp;
+            $this->total_hp += $Actor->hp();
         }
 
         return $this->total_hp;

@@ -1,30 +1,82 @@
+@include('html/pages/game/quest/main/js/animate.js')
+@include('html/pages/game/quest/main/js/battle.js')
+
 <style>
-div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
+/* ************** animation *************** */
+div#mask-opening {
+    position: absolute; width:100%; height:100%; opacity: 1; z-index:1;
+    background: url('/res/images/effect/opening.png') no-repeat;background-size: 100% 3000px;
+    /* animation: opening 1.2s steps(10) forwards; */
+}
+@keyframes opening {
+    100% { background-position: 0px -3000px; opacity:0; }
+}
+
+div.battle-effect-1 {
+    background: url('/res/images/effect/opening.png') no-repeat;background-size: 160px 100%;
+    animation: opening 1.2s steps(5) forwards;
+}
+@keyframes battle-effect-1 {
+    100% { background-position: -800px; opacity:0; }
+}
+/* ************** animation *************** */
+
+div#battle-round {
+    position: absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+    border-radius: 50%;
+    box-sizing: border-box;
+    width:100%; text-align: center;
+    height:60px; line-height:50px;
+    color: #dc3545; font-size:14pt; font-weight: bold;
+    animation: round-effect .3s infinite;
+}
+@keyframes round-effect {
+    100% { opacity: 0.7; font-size:16pt; }
+}
 
 
 .game-battle-actor { position: relative; margin-bottom: 5px; }
-.game-battle-actor .masker { position:absolute; width:100%; height:100%;opacity: 0.3; }
+.game-battle-actor .mask, .game-battle-actor .mask-effect { position:absolute; width:100%; height:100%; opacity: 0.4; }
+.game-battle-actor .mask-damage { display:none; position:absolute; top:-10px; padding:5px; color:red; font-weight:bold; z-index:1; opacity: 0.9;
+    font-size:15pt;
+    animation: damage 0.6s infinite;
+}
+@keyframes damage { 100% {opacity:0.8; font-size:20pt;} }
 
+.game-gauge { background: #fd7e14; padding:1px; margin-bottom:2px; }
+.game-gauge .bar-base { background: #888; width:100px; height:10px; }
+.game-gauge .bar-base .bar-val { overflow:hidden;background:#28a745; width:100px; height:10px; line-height:10px; font-size:4pt; color:#f9f9f9; }
+.game-gauge .bar-base .bar-val span { height:10px; line-height:10px; font-size:4pt; color:#f9f9f9;}
 
-.game-gauge {background: #fd7e14; padding:1px; margin-bottom:5px; }
-.game-gauge .bar { background: #17a2b8; width:100px; height:8px; }
-.game-gauge .val { background:#fd7e14; width:40px; height:8px; }
+#game-battle-log { position:fixed; bottom:0px; padding:5px; width:100vw; height: 400px; overflow-y: scroll; opacity:0.7; }
+/* scroll barを非表示 */
+#game-battle-log::-webkit-scrollbar{ display:none; }
+#game-battle-log span.log-line { display: block; margin-bottom:2px; background:#6c757d; color:#f9f9f9; }
+#game-battle-log span.round { background:#fd7e14; }
+#game-battle-log span.turn { background:#ffc107; padding-left:5px; }
+#game-battle-log span.actor { background:#17a2b8; padding-left:10px; }
+#game-battle-log span.action { background:#888; padding-left:15px; }
 
-#game-battle-log { position:fixed; bottom:0px; background:#f9f9f9; padding:5px; border: solid 5px #ddd; width:100vw; height: 400px; overflow: scroll; }
 </style>
 
 <div id="game-actor-list" style="position: relative;">
-	<div style="position: absolute; width:100%; height:100%; opacity: 0.8;"><div id="game-skill"></div></div>
+	<div id="mask-opening"></div>
+	<div id="battle-round"></div>
 
 	<div style="float: left;">
 		@foreach ($Battle->AllyDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
-			<div class="masker"></div> <!-- -------- mask -------- -->
+			<div class="mask"></div>
+			<div class="mask-effect"></div>
+			<div class="mask-damage" style="right:-20px;"></div>
 
 			<div style="float: left;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: left; margin-left:5px;">
-				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
-				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
+				<!-- ------------------- gauge ------------------ -->
+				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:<span class="hp-text"><?php echo $Actor->baseHp();?></span> /<span class="hp-base-text"><?php echo $Actor->baseHp();?></span></div></div></div>
+				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar" style="background:#fd7e14;">MP:<span class="mp-text"><?php echo $Actor->baseMp();?></span> /<span class="mp-base-text"><?php echo $Actor->baseMp();?></span></div></div></div>
+				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar" style="background:#17a2b8;">AP:<span class="ap-text"><?php echo $Actor->baseAp();?></span> /<span class="ap-base-text"><?php echo $Actor->baseAp();?></span></div></div></div>
+				<!-- ------------------- gauge ------------------ -->
 			</div>
 			<br style="clear: both;">
 		</div>
@@ -34,12 +86,17 @@ div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
 	<div style="float: right; text-align: right;">
 		@foreach ($Battle->OppenentDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
-			<div class="masker"></div> <!-- -------- mask -------- -->
+			<div class="mask"></div>
+			<div class="mask-effect"></div>
+			<div class="mask-damage" style="left:-20px;"></div>
 
 			<div style="float: right;">{@ echo character()->image($Actor->actor_id) }</div>
 			<div style="float: right; margin-right:5px;">
-				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
-				<div class="game-gauge"><div class="bar"><div class="val"></div></div></div>
+				<!-- ------------------- gauge ------------------ -->
+				<div class="game-gauge hp-gauge"><div class="bar-base"><div class="bar-val hp-bar">HP:<span class="hp-text"><?php echo $Actor->baseHp();?></span> /<span class="hp-base-text"><?php echo $Actor->baseHp();?></span></div></div></div>
+				<div class="game-gauge mp-gauge"><div class="bar-base"><div class="bar-val mp-bar" style="background:#fd7e14;">MP:<span class="mp-text"><?php echo $Actor->baseMp();?></span> /<span class="mp-base-text"><?php echo $Actor->baseMp();?></span></div></div></div>
+				<div class="game-gauge bp-gauge"><div class="bar-base"><div class="bar-val ap-bar" style="background:#17a2b8;">AP:<span class="ap-text"><?php echo $Actor->baseAp();?></span> /<span class="ap-base-text"><?php echo $Actor->baseAp();?></span></div></div></div>
+				<!-- ------------------- gauge ------------------ -->
 			</div>
 			<br style="clear: both;">
 		</div>
@@ -48,145 +105,9 @@ div#game-skill { margin:auto; text-align:center; padding: 10px 100px; }
 	<br style="clear: both;">
 </div>
 
-<div class="text-right"><a href="javascript:void(0);" class="btn btn-danger" onclick="battle.play();">バトル演出</a></div>
-
+<div class="text-right" style="position:absolute; z-index: 2;width:100%;"><a href="javascript:void(0);" class="btn btn-success" onclick="battle.play();">バトル演出</a></div>
 <div id="game-battle-log"></div>
 
-<script>
-// -------------------------------------------------------------------
-// バトル演出
-// -------------------------------------------------------------------
-var battle = battle || {
-	is_playing : false,
-
-	// 待ち時間
-	timeout : function(ms=1000) {
-		return new Promise(resolve => setTimeout(() => { resolve(); }, ms));
-	},
-
-	// バトル演出の開始
-	play : async function() {
-		if(this.is_playing){
-			console.log(`Is playing !!!`);
-			alert(`Is playing !!!`);
-			return ;
-		}
-
-		this.is_playing = true;
-		console.log(this.logs);
-		await this.rounds(this.logs);
-		this.is_playing = false;
-	},
-
-	// ラウンド一覧の演出
-	rounds : async function(datas) {
-		for (let key in datas) {
-			let data = datas[key];
-			$("#game-battle-log").append(`<p># round : ${data.round}</p>`);
-			await this.turns(data.Turns);
-		}
-	},
-
-	// ターン一覧の演出
-	turns : async function(datas) {
-		for (let key in datas) {
-			let data = datas[key];
-			$("#game-battle-log").append(`<p style="padding-left:5px;">- turn : ${data.turn}, actor : ${data.actor_id}</p>`);
-			await this.effects(data.Effects);
-		}
-	},
-
-	// 各種効果の演出
-	effects : async function(datas) {
-		for (let key in datas) {
-			let data = datas[key];
-
-			$("#game-battle-log").append(`<p style="padding-left:10px;">- effect : ${key}, skill : ${data.skill_id}</p>`);
-			await this.actions(data.Actions);
-			$("#game-skill").html("");
-		}
-	},
-
-	// アクション一覧
-	actions : async function(datas) {
-		for (let key in datas) {
-			let data = datas[key];
-			await this.action(data);
-		}
-	},
-
-	// アクションの再現
-	action : async function(data) {
-		await this.loging(data);
-		await this.actor(data);
-		await this.target(data);
-		battle.el.actor.mask(data.actor_id).html("").hide();
-		battle.el.actor.mask(data.target_id).html("").hide();
-		return this.timeout(500);
-	},
-
-	// 行動者の動き
-	actor : async function(data) {
-		battle.el.actor.mask(data.actor_id).css({"display":"block","background":"#007bff"});
-		// TODO とりあえずランダムでエフェクトを選ぶ
-		let effect_id = Math.floor( Math.random() * 5 ) + 1;
-		battle.el.actor.mask(data.actor_id).html(`<img width=100% height=100% src="/res/images/effect/${effect_id}.gif">`);
-		// await anime.png.show(battle.el.get(data.actor_id).children("div.masker"));
-
-		battle.el.actor.get(data.actor_id).effect("shake", {times:1, distance: 10, direction:"left"}, 400);
-		return this.timeout(600);
-	},
-
-	// ターゲットの動き
-	target : async function(data) {
-		battle.el.actor.mask(data.target_id).css({"display":"block","background":"#e83e8c"});
-		battle.el.actor.get(data.target_id).effect("shake", {times:2, distance: 3, direction:"down"}, 300);
-		return this.timeout(600);
-	},
-
-	// ログの出力
-	loging : async function(data) {
-		$("#game-battle-log").append(`<p style="padding-left:15px;">- action,  actor:${data.actor_id}, target:${data.target_id}</p>`);
-		document.getElementById("game-battle-log").scrollTop = document.getElementById("game-battle-log").scrollHeight;
-	},
-
-	// バトルログ
-	logs : <?php echo ($Battle->LogManage->toJson()); ?>,
-}
-
-battle.el = {}
-battle.el.actor = {
-	get: function(actor_id) {
-		return $("div#game-actor-" + actor_id);
-	},
-	mask: function(actor_id) {
-		return this.get(actor_id).children("div.masker");
-	},
-}
-
-var anime = anime || {}
-anime.png = {
-	show : async function(el){
-		el.css({"display":"block", "background": "url(/res/images/effect/battle/320x240/pipo-btleffect001.png) no-repeat top"});
-		await this.loop(el);
-	},
-
-	loop : async function(el){
-		el.css({"background-position": 100 + "px " + 100 + "px"});
-		setTimeout(this.loop(el), 100);
-	},
-}
-//-------------------------------------------------------------------
-
-
-// -------------------------------------------------------------------
-// ゲージ
-// -------------------------------------------------------------------
-var gauge = {
-
-}
-
-</script>
-
-
-<?php ;?>
+<!--
+<?php echo ($Battle->LogManage->toJson()); ?>
+ -->

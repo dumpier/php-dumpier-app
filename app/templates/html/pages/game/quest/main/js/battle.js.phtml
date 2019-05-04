@@ -1,0 +1,195 @@
+<script>
+const battlelog = <?php echo ($Battle->LogManage->toJson()); ?>;
+
+// -------------------------------------------------------------------
+// バトル演出
+// -------------------------------------------------------------------
+var battle = battle || {
+	is_playing : false,
+
+	// 待ち時間
+	timeout : function(ms=1000) {
+		return new Promise(resolve => setTimeout(() => { resolve(); }, ms));
+	},
+
+	// バトル演出の開始
+	play : async function() {
+		if(this.is_playing){
+			console.log(`Is playing !!!`);
+			alert(`Is playing !!!`);
+			return ;
+		}
+
+		console.log(battlelog);
+
+		this.is_playing = true;
+		await this.opening();
+		$("#mask-opening").hide();
+
+		await this.rounds(battlelog);
+
+		$("#mask-opening").hide();
+		this.is_playing = false;
+	},
+
+	opening: async function(){
+		$("div#mask-opening").css("animation", "opening 1.2s steps(10) forwards");
+		return this.timeout(1400);
+	},
+
+
+	// ラウンド一覧の演出
+	rounds : async function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			$("#game-battle-log").append(`<span class="log-line round"># round : ${data.round}</span>`);
+			$("#battle-round").text(`Round.${data.round}`);
+			await this.turns(data.Turns);
+		}
+	},
+
+	// ターン一覧の演出
+	turns : async function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			$("#game-battle-log").append(`<span class="log-line turn">- turn : ${data.turn}, actor : ${data.actor_id}</span>`);
+			await this.effects(data.Effects);
+		}
+	},
+
+	// 各種効果の演出
+	effects : async function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			$("#game-battle-log").append(`<span class="log-line actor"">- actor : ${key}, skill : ${data.skill_id}</span>`);
+			await this.actions(data.Actions);
+		}
+	},
+
+	// アクション一覧
+	actions : async function(datas) {
+		for (let key in datas) {
+			let data = datas[key];
+			await this.action(data);
+		}
+	},
+
+	// アクションの再現
+	action : async function(data) {
+		await this.loging(data);
+		await this.actor(data);
+		await this.target(data);
+
+		battle.el.actor.effect(data.actor_id).html("").hide();
+		battle.el.actor.effect(data.target_id).html("").hide();
+		battle.el.actor.damage(data.actor_id).hide();
+		battle.el.actor.damage(data.target_id).hide();
+		return this.timeout(500);
+	},
+
+	// 行動者の動き
+	actor : async function(data) {
+		battle.el.actor.effect(data.actor_id).css({"display":"block","background":"#007bff"});
+		// TODO とりあえずランダムでエフェクトを選ぶ
+		let effect_id = Math.floor( Math.random() * 5 ) + 1;
+		battle.el.actor.effect(data.actor_id).html(`<img width=100% height=100% src="/res/images/effect/${effect_id}.gif">`);
+
+		battle.el.actor.get(data.actor_id).effect("shake", {times:1, distance: 10, direction:"left"}, 400);
+		this.statuses(data.actor_id, data);
+		return this.timeout(600);
+	},
+
+	// ターゲットの動き
+	target : async function(data) {
+		battle.el.actor.effect(data.target_id).css({"display":"block","background":"#e83e8c"});
+		battle.el.actor.get(data.target_id).effect("shake", {times:2, distance: 3, direction:"down"}, 300);
+		this.statuses(data.target_id, data);
+		return this.timeout(600);
+	},
+
+	// ログの出力
+	loging : async function(data) {
+		if(data.Statuses){
+			for(let key in data.Statuses){
+				let status = data.Statuses[key];
+				$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}, <span style="background: #dc3545; padding:0px 3px;"> ${status.name}:${status.value} </span></span>`);
+			}
+		}else{
+			$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}</span>`);
+		}
+
+		document.getElementById("game-battle-log").scrollTop = document.getElementById("game-battle-log").scrollHeight;
+	},
+
+	// ステータス変動
+	statuses: async function(self_id, data){
+		console.log(`${self_id}, ${data.target_id}`);
+		if(self_id!=data.target_id || ! data.Statuses) { return ; }
+
+		for(let key in data.Statuses){
+			let status = data.Statuses[key];
+			switch(status.name){
+				case "hp":
+					gauge.damage(data.target_id, status.value);
+					break;
+
+				case "damage":
+					battle.el.actor.damage(data.target_id).text(status.value).show();
+					gauge.damage(data.target_id, -status.value);
+					break;
+
+				default:
+					break;
+			}
+		}
+	},
+}
+
+battle.el = {}
+battle.el.actor = {
+	get: function(actor_id) {
+		return $(`div#game-actor-${actor_id}`);
+	},
+	effect: function(actor_id) {
+		return this.get(actor_id).children("div.mask-effect");
+	},
+	mask: function(actor_id) {
+		return this.get(actor_id).children("div.mask");
+	},
+	damage: function(actor_id) {
+		return this.get(actor_id).children("div.mask-damage");
+	},
+	first: function(actor_id, children) {
+		return $(`div#game-actor-${actor_id}`).find(`${children}`).first();
+	},
+}
+//-------------------------------------------------------------------
+
+
+// -------------------------------------------------------------------
+// ゲージ
+// -------------------------------------------------------------------
+var gauge = {
+	damage : function(actor_id, damage){
+		let elBar = battle.el.actor.first(actor_id, ".hp-bar");
+		let elVal = battle.el.actor.first(actor_id, ".hp-text");
+		let elBase = battle.el.actor.first(actor_id, ".hp-base-text");
+
+		let hp_base = parseInt(elBase.text());
+
+		let hp = parseInt(elVal.text()) + damage;
+		if(hp <= 0){
+			hp = 0;
+			battle.el.actor.mask(actor_id).css({"display":"block","background":"#000", "opacity":"0.6"});
+		}
+
+		let width = Math.ceil( 100 * hp / hp_base);
+		elVal.text(hp);
+		elBar.css("width", `${width}px`);
+		console.log(`damage:${damage}, hp:${hp}, hp-base:${hp_base}, width:${width}`);
+	},
+
+}
+
+</script>
+

@@ -1,7 +1,13 @@
-@include('html/partials/game/header')
-@include('html/partials/presto.js')
-@include('html/partials/presto.css')
+<script>
+$(function(){
+	$("div.game-menu ul li a").click(function(){
+		if($(this).attr("href")!=""){
+			$('div#game-menu-panel').toggle();
+		}
+	});
+});
 
+</script>
 <div id="game-wrapper">
 	<div id="game-header">
 		<div style="float: left;">{@ echo character()->size(1) } </div>
@@ -65,5 +71,3 @@
 		</ul>
 	</div>
 </div>
-
-@include('html/partials/game/footer')
