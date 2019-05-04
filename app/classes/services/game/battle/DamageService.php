@@ -15,7 +15,7 @@ class DamageService extends \Service
         $hp = $BattleEntity->Target->hp();
 
         // TODO
-        $damage = mt_rand(10,50);
+        $damage = mt_rand(10,30);
         $damage = ($damage > $hp) ? $hp : $damage;
 
         return $damage;
