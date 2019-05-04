@@ -16,4 +16,11 @@ class BattleLogAction
     public $Statuses = [];
 
     public $Buffs = [];
+
+
+    public function __construct(int $actor_id, int $target_id)
+    {
+        $this->actor_id = $actor_id;
+        $this->target_id = $target_id;
+    }
 }

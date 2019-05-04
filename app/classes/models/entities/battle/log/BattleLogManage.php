@@ -73,9 +73,7 @@ class BattleLogManage
 
     public function skillAction(int $actor_id, int $target_id)
     {
-        $Action = new BattleLogAction();
-        $Action->actor_id = $actor_id;
-        $Action->target_id = $target_id;
+        $Action = new BattleLogAction($actor_id, $target_id);
 
         $this->getCurrentSkillEffect()->Actions[] = $Action;
     }
@@ -90,27 +88,27 @@ class BattleLogManage
     }
 
 
-    public function buffAction()
+    public function buffAction(int $actor_id, int $target_id)
     {
-        $Action = new BattleLogAction();
+        $Action = new BattleLogAction($actor_id, $target_id);
 
         $this->getCurrentBuffEffect()->Actions[] = $Action;
     }
 
     public function action(int $actor_id, int $target_id, array $statuses=[], array $buffs=[])
     {
+        $Action = new BattleLogAction($actor_id, $target_id);
 
     }
 
     public function damage(int $actor_id, int $target_id, int $damage)
     {
-        $Action = new BattleLogAction();
-        $Action->actor_id = $actor_id;
-        $Action->target_id = $target_id;
+        $Action = new BattleLogAction($actor_id, $target_id);
 
         $Status = new BattleLogStatus();
-        $Status->name = "hp";
-        $Status->value = -$damage;
+        $Status->name = "damage";
+        $Status->value = $damage;
+
         $Action->Statuses[] = $Status;
 
         $this->getCurrentSkillEffect()->Actions[] = $Action;

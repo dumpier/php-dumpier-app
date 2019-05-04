@@ -79,8 +79,11 @@ var battle = battle || {
 		await this.loging(data);
 		await this.actor(data);
 		await this.target(data);
+
 		battle.el.actor.effect(data.actor_id).html("").hide();
 		battle.el.actor.effect(data.target_id).html("").hide();
+		battle.el.actor.damage(data.actor_id).hide();
+		battle.el.actor.damage(data.target_id).hide();
 		return this.timeout(500);
 	},
 
@@ -92,6 +95,7 @@ var battle = battle || {
 		battle.el.actor.effect(data.actor_id).html(`<img width=100% height=100% src="/res/images/effect/${effect_id}.gif">`);
 
 		battle.el.actor.get(data.actor_id).effect("shake", {times:1, distance: 10, direction:"left"}, 400);
+		this.statuses(data.actor_id, data);
 		return this.timeout(600);
 	},
 
@@ -99,6 +103,7 @@ var battle = battle || {
 	target : async function(data) {
 		battle.el.actor.effect(data.target_id).css({"display":"block","background":"#e83e8c"});
 		battle.el.actor.get(data.target_id).effect("shake", {times:2, distance: 3, direction:"down"}, 300);
+		this.statuses(data.target_id, data);
 		return this.timeout(600);
 	},
 
@@ -108,13 +113,35 @@ var battle = battle || {
 			for(let key in data.Statuses){
 				let status = data.Statuses[key];
 				$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}, <span style="background: #dc3545; padding:0px 3px;"> ${status.name}:${status.value} </span></span>`);
-				gauge.damage(data.target_id, status.value);
 			}
 		}else{
 			$("#game-battle-log").append(`<span class="log-line action">[action] actor:${data.actor_id}, target:${data.target_id}</span>`);
 		}
 
 		document.getElementById("game-battle-log").scrollTop = document.getElementById("game-battle-log").scrollHeight;
+	},
+
+	// ステータス変動
+	statuses: async function(self_id, data){
+		console.log(`${self_id}, ${data.target_id}`);
+		if(self_id!=data.target_id || ! data.Statuses) { return ; }
+
+		for(let key in data.Statuses){
+			let status = data.Statuses[key];
+			switch(status.name){
+				case "hp":
+					gauge.damage(data.target_id, status.value);
+					break;
+
+				case "damage":
+					battle.el.actor.damage(data.target_id).text(status.value).show();
+					gauge.damage(data.target_id, -status.value);
+					break;
+
+				default:
+					break;
+			}
+		}
 	},
 }
 
@@ -128,6 +155,9 @@ battle.el.actor = {
 	},
 	mask: function(actor_id) {
 		return this.get(actor_id).children("div.mask");
+	},
+	damage: function(actor_id) {
+		return this.get(actor_id).children("div.mask-damage");
 	},
 	first: function(actor_id, children) {
 		return $(`div#game-actor-${actor_id}`).find(`${children}`).first();
