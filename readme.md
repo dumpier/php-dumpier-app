@@ -2,7 +2,10 @@
 ```
 軽量、快速、簡潔
 ```
-https://scrutinizer-ci.com/g/dumpier/php-presto-app/
+- Scrutinizer : https://scrutinizer-ci.com/g/dumpier/php-presto-app/
+
+- Demo : https://dumpier.github.io/javascript-presto/pages/battle/index.html
+
 
 <img src=https://i.imgur.com/Cn5QNLv.gif>
 <img src=https://i.imgur.com/QSwm8l8.gif>
