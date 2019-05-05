@@ -12,12 +12,12 @@ class DamageService extends \Service
      */
     public function damage(BattleEntity $BattleEntity)
     {
-        $hp = $BattleEntity->Target->hp();
-
         // TODO
-        $damage = mt_rand(10,30);
-        $damage = ($damage > $hp) ? $hp : $damage;
+        $damage = mt_rand(15,40);
 
-        return $damage;
+        // HPをカット
+        $damage = $BattleEntity->Target->damage($damage);
+
+        $BattleEntity->LogManage->damage($BattleEntity->Actor->actor_id, $BattleEntity->Target->actor_id, $damage);
     }
 }

@@ -36,19 +36,21 @@ div#battle-round {
 
 
 .game-battle-actor { position: relative; margin-bottom: 5px; }
-.game-battle-actor .mask, .game-battle-actor .mask-effect { position:absolute; width:100%; height:100%; opacity: 0.4; }
-.game-battle-actor .mask-damage { display:none; position:absolute; top:-10px; padding:5px; color:red; font-weight:bold; z-index:1; opacity: 0.9;
-    font-size:15pt;
+.game-battle-actor .mask, .game-battle-actor .mask-skill-effect { position:absolute; width:100%; height:100%; opacity: 0.4; }
+.game-battle-actor .mask-damage {
+    display:none; position:absolute; top:-3px; background:#dc3545; padding:0px 15px; color:#f9f9f9; font-weight:bold; z-index:1; opacity: 0.9;
+    border-radius: 5px;
+    font-size:10pt;
     animation: damage 0.6s infinite;
 }
-@keyframes damage { 100% {opacity:0.8; font-size:20pt;} }
+@keyframes damage {  100% {opacity:0.6;} }
 
 .game-gauge { background: #fd7e14; padding:1px; margin-bottom:2px; }
 .game-gauge .bar-base { background: #888; width:100px; height:10px; }
 .game-gauge .bar-base .bar-val { overflow:hidden;background:#28a745; width:100px; height:10px; line-height:10px; font-size:4pt; color:#f9f9f9; }
 .game-gauge .bar-base .bar-val span { height:10px; line-height:10px; font-size:4pt; color:#f9f9f9;}
 
-#game-battle-log { position:fixed; bottom:0px; padding:5px; width:100vw; height: 400px; overflow-y: scroll; opacity:0.7; }
+#game-battle-log { position:fixed; bottom:0px; padding:5px; width:100vw; height: 400px; background:#f9f9f9; border: solid 5px #ccc; overflow-y: scroll; opacity:0.8; }
 /* scroll barを非表示 */
 #game-battle-log::-webkit-scrollbar{ display:none; }
 #game-battle-log span.log-line { display: block; margin-bottom:2px; background:#6c757d; color:#f9f9f9; }
@@ -67,7 +69,7 @@ div#battle-round {
 		@foreach ($Battle->AllyDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
 			<div class="mask"></div>
-			<div class="mask-effect"></div>
+			<div class="mask-skill-effect"></div>
 			<div class="mask-damage" style="right:-20px;"></div>
 
 			<div style="float: left;">{@ echo character()->image($Actor->actor_id) }</div>
@@ -87,7 +89,7 @@ div#battle-round {
 		@foreach ($Battle->OppenentDeck->Actors as $key=>$Actor)
 		<div id="game-actor-{{$Actor->actor_id}}" class="game-battle-actor">
 			<div class="mask"></div>
-			<div class="mask-effect"></div>
+			<div class="mask-skill-effect"></div>
 			<div class="mask-damage" style="left:-20px;"></div>
 
 			<div style="float: right;">{@ echo character()->image($Actor->actor_id) }</div>

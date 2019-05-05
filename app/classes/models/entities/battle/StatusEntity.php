@@ -109,4 +109,14 @@ class StatusEntity
     public $debuff_resistance_value = 0;
     // -----------------------------------------------
 
+    public function toArray()
+    {
+        $array = [];
+        foreach ($this as $key=>$val)
+        {
+            $array[$key] = $val;
+        }
+
+        return $array;
+    }
 }

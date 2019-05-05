@@ -1,3 +1,13 @@
+<style>
+#game-header .player-status { float: left; margin-left:10px; }
+#game-header .player-asset { float: right; margin-right:10px; text-align:right; }
+
+#game-header .player-status div, #game-header .player-asset div { height:16px; line-height:16px; margin-top:1px; font-size:8pt; }
+
+
+#game-menu-panel { background:#f9f9f9; }
+</style>
+
 <script>
 $(function(){
 	$("div.game-menu ul li a").click(function(){
@@ -6,20 +16,23 @@ $(function(){
 		}
 	});
 });
-
 </script>
+
+
 <div id="game-wrapper">
 	<div id="game-header">
 		<div style="float: left;">{@ echo character()->size(1) } </div>
 
-		<div style="float: left; margin-left:10px;">
-			<div>Lv</div>
-			<div>Exp</div>
+		<div class="player-status">
+			<div>Lv: 101</div>
+			<div>Exp: 121202121</div>
+			<div>Home Base: 1-7</div>
 		</div>
 
-		<div style="float: right; margin-right:10px; ">
-			<div>Stone</div>
-			<div>Coin</div>
+		<div class="player-asset">
+			<div>Stone: 100</div>
+			<div>Gold: 1000</div>
+			<div>Coin: 1000000</div>
 		</div>
 	</div>
 

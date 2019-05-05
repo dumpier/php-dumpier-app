@@ -203,10 +203,14 @@ class BattleService extends \Service
         // TODO スキルログ
         // $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
 
-        // ダメージログ
+        // $BattleEntity->LogManage->debugAction($Actor, $Target); // debug ダメージ反映前
+
+        // ダメージ
         $damage = $this->DamageService->damage($BattleEntity);
-        $BattleEntity->Actor->damage($damage);
-        $BattleEntity->LogManage->damage($Actor->actor_id, $Target->actor_id, $damage);
+
+
+        // $BattleEntity->LogManage->debugAction($Actor, $Target); // debug ダメージ反映後
+
     }
 
 }

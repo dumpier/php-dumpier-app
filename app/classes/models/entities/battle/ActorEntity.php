@@ -62,11 +62,9 @@ class ActorEntity
 
     public function damage(int $damage)
     {
+        $damage = ($damage > $this->StatusManage->Status->hp) ? $this->StatusManage->Status->hp : $damage;
+
         $this->StatusManage->Status->hp -= $damage;
-        if($this->StatusManage->Status->hp <= 0)
-        {
-            $this->StatusManage->Status->hp = 0;
-        }
-        return $this;
+        return $damage;
     }
 }
