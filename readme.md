@@ -7,8 +7,8 @@
 - Demo : https://dumpier.github.io/javascript-presto/pages/battle/index.html
 
 
-<img src=https://i.imgur.com/Cn5QNLv.gif>
-<img src=https://i.imgur.com/QSwm8l8.gif>
+<img src=https://i.imgur.com/Cj0f0IC.gif>
+<img src=https://i.imgur.com/VhQ7JBv.gif>
 <img src=https://i.imgur.com/pvSSxYF.gif>
 
 # 使った素材
