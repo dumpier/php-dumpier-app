@@ -1,0 +1,13 @@
+<script>
+var character = character || {}
+character.img = {
+	name : function (character_id){ return ( "000" + character_id ).slice( -3 ); },
+	src : function (character_id){
+		return `/res/images/character/face/96x96/${this.name()}`;
+	},
+
+
+
+}
+
+</script>

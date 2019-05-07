@@ -196,20 +196,29 @@ class BattleService extends \Service
     // 単体行動処理
     private function action(BattleEntity $BattleEntity)
     {
-        $Skill = $BattleEntity->getSkill();
-        $Actor = $BattleEntity->getActor();
-        $Target = $BattleEntity->getTarget();
+        // アクション開始ログ
+        $BattleEntity->LogManage->action($BattleEntity->Actor->actor_id, $BattleEntity->Target->actor_id);
+
 
         // TODO スキルログ
         // $BattleEntity->LogManage->skillAction($Actor->actor_id, $Target->actor_id);
 
-        // $BattleEntity->LogManage->debugAction($Actor, $Target); // debug ダメージ反映前
+        // debug before
+        $BattleEntity->LogManage->debugAction($BattleEntity->Actor, $BattleEntity->Target);
 
-        // ダメージ
+        // ダメージ計算
         $damage = $this->DamageService->damage($BattleEntity);
 
+        // HPをカット
+        $damage = $BattleEntity->Target->damage($damage);
 
-        // $BattleEntity->LogManage->debugAction($Actor, $Target); // debug ダメージ反映後
+        // log
+        $BattleEntity->LogManage->damage($BattleEntity->Actor->actor_id, $BattleEntity->Target->actor_id, $damage);
+
+        // debug after
+        $BattleEntity->LogManage->debugAction($BattleEntity->Actor, $BattleEntity->Target);
+
+
 
     }
 

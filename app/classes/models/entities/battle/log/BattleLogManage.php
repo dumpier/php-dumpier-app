@@ -88,10 +88,14 @@ class BattleLogManage
         $this->getCurrentTurn()->Effects[] = $Buff;
     }
 
-
-    public function action(int $actor_id, int $target_id, array $statuses=[], array $buffs=[])
+    // アクションの開始
+    public function action(int $actor_id, int $target_id, array $Statuses=[], array $Buffs=[])
     {
         $Action = new BattleLogAction($actor_id, $target_id);
+
+        if($Statuses) { $Action->Statuses[] = $Statuses; }
+        if($Buffs) { $Action->Buffs[] = $Buffs; }
+
         $this->getCurrentEffect()->Actions[] = $Action;
     }
 
@@ -101,15 +105,13 @@ class BattleLogManage
         $Status->name = "damage";
         $Status->value = $damage;
 
-        $Action = new BattleLogAction($actor_id, $target_id);
+        $Action = $this->getCurrentAction($actor_id, $target_id);
         $Action->Statuses[] = $Status;
-
-        $this->getCurrentEffect()->Actions[] = $Action;
     }
 
     public function debugAction(ActorEntity $Actor, ActorEntity $Target)
     {
-        $this->getCurrentAction()->debug($Actor, $Target);
+        $this->getCurrentAction($Actor->actor_id, $Target->actor_id)->debug($Actor, $Target);
     }
 
 

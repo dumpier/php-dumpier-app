@@ -15,9 +15,6 @@ class DamageService extends \Service
         // TODO
         $damage = mt_rand(15,40);
 
-        // HPをカット
-        $damage = $BattleEntity->Target->damage($damage);
-
-        $BattleEntity->LogManage->damage($BattleEntity->Actor->actor_id, $BattleEntity->Target->actor_id, $damage);
+        return $damage;
     }
 }

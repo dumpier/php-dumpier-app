@@ -10,7 +10,7 @@ class BattleLogStatus
     use Instanceable;
     use BattleLogTowable;
 
-    public $status_id;
+    // public $status_id;
     public $name;
     public $value;
 
