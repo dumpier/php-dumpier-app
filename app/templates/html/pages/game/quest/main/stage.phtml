@@ -1,11 +1,11 @@
 <style>
-div.game-block { background: #f9f9f9; opacity: 0.8; border: solid 1px #fd7e14; padding:2px 1px; margin-bottom: 10px; }
+div.game-block { background: #f9f9f9; opacity: 0.9; border: solid 1px #fd7e14; border-radius:5px;  padding:2px 1px; margin-bottom: 10px; }
 div.game-block .game-left { float: left; margin: 0px 2px; }
 div.game-block .game-right { float:right; margin: 0px 2px; }
 </style>
 
 
-<div>
+<div style="margin: 5px;">
     <div class="game-block">
         <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
         <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
