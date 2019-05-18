@@ -2,8 +2,10 @@
 .fa { margin-right: 5px; }
 * { font-size: 9pt; }
 
-body { background:#f9f9f9; counter-reset: row-counter; }
+body { background:#f9f9f9; }
 
+/* テーブル行数 */
+table.table-counter {counter-reset: row-counter;}
 table.table-counter thead tr, table.table-counter tbody tr { position: relative; }
 table.table-counter thead tr:before { position: relative; padding: 10px; display: block; bottom: 0; content: "#" }
 table.table-counter tbody tr:before { position: relative; padding: 10px; display: block; bottom: 0; counter-increment: row-counter; content: "#"counter(row-counter); }

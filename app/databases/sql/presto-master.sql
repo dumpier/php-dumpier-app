@@ -17,12 +17,102 @@ DROP DATABASE IF EXISTS `presto_master`;
 CREATE DATABASE IF NOT EXISTS `presto_master` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `presto_master`;
 
+--  テーブル presto_master.master_buff の構造をダンプしています
+DROP TABLE IF EXISTS `master_buff`;
+CREATE TABLE IF NOT EXISTS `master_buff` (
+  `buff_id` int(10) unsigned DEFAULT NULL,
+  `buff_type` int(10) unsigned DEFAULT NULL COMMENT '状態異常区分',
+  `is_positive` int(10) unsigned DEFAULT NULL COMMENT '有利',
+  `timing` int(10) unsigned DEFAULT NULL COMMENT '発動タイミング',
+  `rate` int(10) unsigned DEFAULT NULL COMMENT '発動確率',
+  `status_id` int(10) unsigned DEFAULT NULL COMMENT 'ステータスID',
+  `status_value` varchar(50) DEFAULT NULL COMMENT 'ステータス値',
+  `impact_buff_id` int(10) unsigned DEFAULT NULL,
+  `special_effect_json` text,
+  `name` varchar(50) DEFAULT NULL,
+  `caption` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='状態異常マスター';
+
+-- テーブル presto_master.master_buff: ~68 rows (約) のデータをダンプしています
+DELETE FROM `master_buff`;
+/*!40000 ALTER TABLE `master_buff` DISABLE KEYS */;
+INSERT INTO `master_buff` (`buff_id`, `buff_type`, `is_positive`, `timing`, `rate`, `status_id`, `status_value`, `impact_buff_id`, `special_effect_json`, `name`, `caption`) VALUES
+	(1001, 1, 0, 0, 0, 0, '0', 0, '', '命中', '命中'),
+	(1002, 1, 0, 0, 0, 0, '0', 0, '', '会心命中', '会心命中'),
+	(1003, 1, 0, 0, 0, 0, '0', 0, '', '回避', '回避'),
+	(2001, 2, 0, 0, 0, 0, '0', 1, '', '絶対命中', '絶対命中'),
+	(2002, 2, 0, 0, 0, 0, '0', 2, '', '絶対会心命中', '絶対会心命中'),
+	(2003, 2, 0, 0, 0, 0, '0', 3, '', '絶対回避', '絶対回避'),
+	(3001, 3, 0, 0, 0, 0, '0', 0, '', '戦慄', '動けない'),
+	(3002, 3, 0, 0, 0, 0, '0', 0, '', '眩暈', '動けない'),
+	(3003, 3, 0, 0, 0, 0, '0', 0, '', '凍結', '攻撃ができない'),
+	(3004, 3, 0, 0, 0, 0, '0', 0, '', '眠り', '動けない、撃たれたら目覚める'),
+	(4001, 4, 1, 0, 0, 0, '0', 0, '', '援護', 'ダメージを減少、反射'),
+	(4002, 4, 1, 0, 0, 0, '0', 0, '', '狂乱', 'クリティカル100%、状態異常にならない'),
+	(4003, 4, 1, 0, 0, 0, '0', 0, '', '挑発', '敵の攻撃を自分に集中させる'),
+	(4004, 4, 1, 0, 0, 0, '0', 0, '', '潜伏', '攻撃対象にならない'),
+	(4005, 4, 0, 0, 0, 0, '0', 0, '', '封印', 'スキルが発動できない'),
+	(4003, 4, 0, 0, 0, 3, '-3%', 0, '', '毒', '最大HPの3%ダメージを受ける'),
+	(4003, 4, 0, 0, 0, 3, '-3%', 0, '', '火傷', '最大HPの3%ダメージを受ける'),
+	(9001, 9, 0, 0, 0, 0, '0', 0, '', '特殊', '特殊イメージ'),
+	(21001, 21, 1, 0, 0, 1, '0', 0, '', 'AP上昇', 'AP上昇'),
+	(21002, 21, 1, 0, 0, 2, '0', 0, '', 'MP上昇', 'MP上昇'),
+	(21003, 21, 1, 0, 0, 3, '0', 0, '', 'HP上昇', 'HP上昇'),
+	(21101, 21, 1, 0, 0, 101, '0', 0, '', 'ダメージ上昇', 'ダメージ上昇'),
+	(21201, 21, 1, 0, 0, 201, '0', 0, '', '力上昇', '力上昇'),
+	(21202, 21, 1, 0, 0, 202, '0', 0, '', '体力上昇', '体力上昇'),
+	(21203, 21, 1, 0, 0, 203, '0', 0, '', '素早さ上昇', '素早さ上昇'),
+	(21204, 21, 1, 0, 0, 204, '0', 0, '', '知力上昇', '知力上昇'),
+	(21301, 21, 1, 0, 0, 301, '0', 0, '', '攻撃力（最小）上昇', '攻撃力（最小）上昇'),
+	(21302, 21, 1, 0, 0, 302, '0', 0, '', '攻撃力（最大）上昇', '攻撃力（最大）上昇'),
+	(21303, 21, 1, 0, 0, 303, '0', 0, '', '防御力上昇', '防御力上昇'),
+	(21304, 21, 1, 0, 0, 304, '0', 0, '', '防御力上昇', '防御力上昇'),
+	(21305, 21, 1, 0, 0, 305, '0', 0, '', '命中力上昇', '命中力上昇'),
+	(21306, 21, 1, 0, 0, 306, '0', 0, '', '回避力上昇', '回避力上昇'),
+	(21307, 21, 1, 0, 0, 307, '0', 0, '', '会心命中力上昇', '会心命中力上昇'),
+	(21308, 21, 1, 0, 0, 308, '0', 0, '', '会心回避力上昇', '会心回避力上昇'),
+	(21309, 21, 1, 0, 0, 309, '0', 0, '', 'HP反射上昇', 'HP反射上昇'),
+	(21310, 21, 1, 0, 0, 310, '0', 0, '', 'HP吸収上昇', 'HP吸収上昇'),
+	(21311, 21, 1, 0, 0, 311, '0', 0, '', '状態異常耐性上昇', '状態異常耐性上昇'),
+	(21401, 21, 1, 0, 0, 401, '0', 0, '', 'HP自動回復上昇', 'HP自動回復上昇'),
+	(21402, 21, 1, 0, 0, 402, '0', 0, '', 'HP自動回復上昇', 'HP自動回復上昇'),
+	(21403, 21, 1, 0, 0, 403, '0', 0, '', 'MP自動回復上昇', 'MP自動回復上昇'),
+	(21404, 21, 1, 0, 0, 404, '0', 0, '', 'MP自動回復上昇', 'MP自動回復上昇'),
+	(21405, 21, 1, 0, 0, 405, '0', 0, '', 'AP自動回復上昇', 'AP自動回復上昇'),
+	(21406, 21, 1, 0, 0, 406, '0', 0, '', 'AP自動回復上昇', 'AP自動回復上昇'),
+	(22001, 22, 0, 0, 0, 1, '0', 0, '', 'AP上昇', 'APダウン'),
+	(22002, 22, 0, 0, 0, 2, '0', 0, '', 'MP上昇', 'MPダウン'),
+	(22003, 22, 0, 0, 0, 3, '0', 0, '', 'HP上昇', 'HPダウン'),
+	(22101, 22, 0, 0, 0, 101, '0', 0, '', 'ダメージ上昇', 'ダメージダウン'),
+	(22201, 22, 0, 0, 0, 201, '0', 0, '', '力上昇', '力ダウン'),
+	(22202, 22, 0, 0, 0, 202, '0', 0, '', '体力上昇', '体力ダウン'),
+	(22203, 22, 0, 0, 0, 203, '0', 0, '', '素早さ上昇', '素早さダウン'),
+	(22204, 22, 0, 0, 0, 204, '0', 0, '', '知力上昇', '知力ダウン'),
+	(22301, 22, 0, 0, 0, 301, '0', 0, '', '攻撃力（最小）上昇', '攻撃力（最小）ダウン'),
+	(22302, 22, 0, 0, 0, 302, '0', 0, '', '攻撃力（最大）上昇', '攻撃力（最大）ダウン'),
+	(22303, 22, 0, 0, 0, 303, '0', 0, '', '防御力上昇', '防御力ダウン'),
+	(22304, 22, 0, 0, 0, 304, '0', 0, '', '防御力上昇', '防御力ダウン'),
+	(22305, 22, 0, 0, 0, 305, '0', 0, '', '命中力上昇', '命中力ダウン'),
+	(22306, 22, 0, 0, 0, 306, '0', 0, '', '回避力上昇', '回避力ダウン'),
+	(22307, 22, 0, 0, 0, 307, '0', 0, '', '会心命中力上昇', '会心命中力ダウン'),
+	(22308, 22, 0, 0, 0, 308, '0', 0, '', '会心回避力上昇', '会心回避力ダウン'),
+	(22309, 22, 0, 0, 0, 309, '0', 0, '', 'HP反射上昇', 'HP反射ダウン'),
+	(22310, 22, 0, 0, 0, 310, '0', 0, '', 'HP吸収上昇', 'HP吸収ダウン'),
+	(22311, 22, 0, 0, 0, 311, '0', 0, '', '状態異常耐性上昇', '状態異常耐性ダウン'),
+	(22401, 22, 0, 0, 0, 401, '0', 0, '', 'HP自動回復上昇', 'HP自動回復ダウン'),
+	(22402, 22, 0, 0, 0, 402, '0', 0, '', 'HP自動回復上昇', 'HP自動回復ダウン'),
+	(22403, 22, 0, 0, 0, 403, '0', 0, '', 'MP自動回復上昇', 'MP自動回復ダウン'),
+	(22404, 22, 0, 0, 0, 404, '0', 0, '', 'MP自動回復上昇', 'MP自動回復ダウン'),
+	(22405, 22, 0, 0, 0, 405, '0', 0, '', 'AP自動回復上昇', 'AP自動回復ダウン'),
+	(22406, 22, 0, 0, 0, 406, '0', 0, '', 'AP自動回復上昇', 'AP自動回復ダウン');
+/*!40000 ALTER TABLE `master_buff` ENABLE KEYS */;
+
 --  テーブル presto_master.master_character の構造をダンプしています
 DROP TABLE IF EXISTS `master_character`;
 CREATE TABLE IF NOT EXISTS `master_character` (
   `character_id` int(10) unsigned DEFAULT NULL,
   `character_original_id` int(10) unsigned DEFAULT NULL,
-  `rank` int(10) unsigned DEFAULT NULL,
+  `rank_id` int(10) unsigned DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `caption` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='キャラマスター';
@@ -30,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `master_character` (
 -- テーブル presto_master.master_character: ~50 rows (約) のデータをダンプしています
 DELETE FROM `master_character`;
 /*!40000 ALTER TABLE `master_character` DISABLE KEYS */;
-INSERT INTO `master_character` (`character_id`, `character_original_id`, `rank`, `name`, `caption`) VALUES
+INSERT INTO `master_character` (`character_id`, `character_original_id`, `rank_id`, `name`, `caption`) VALUES
 	(100101, 1001, 1, '銃士#R.1', '銃士#R.1'),
 	(100102, 1001, 2, '銃士#R.2', '銃士#R.2'),
 	(100103, 1001, 3, '銃士#R.3', '銃士#R.3'),
@@ -89,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `master_character_level` (
   `id` int(10) unsigned NOT NULL,
   `character_id` int(10) unsigned NOT NULL,
   `character_original_id` int(10) unsigned NOT NULL,
-  `rank` int(11) unsigned NOT NULL DEFAULT '0',
+  `rank_id` int(11) unsigned NOT NULL DEFAULT '0',
   `level` int(11) unsigned NOT NULL DEFAULT '0',
   `ap` int(11) unsigned NOT NULL DEFAULT '0',
   `mp` int(11) unsigned NOT NULL DEFAULT '0',
@@ -120,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `master_character_level` (
 -- テーブル presto_master.master_character_level: ~200 rows (約) のデータをダンプしています
 DELETE FROM `master_character_level`;
 /*!40000 ALTER TABLE `master_character_level` DISABLE KEYS */;
-INSERT INTO `master_character_level` (`id`, `character_id`, `character_original_id`, `rank`, `level`, `ap`, `mp`, `hp`, `power`, `stamina`, `speed`, `intellect`, `attack_min`, `attack_max`, `defence_min`, `defence_max`, `hit_value`, `hit_avoid_value`, `critical_hit_value`, `critical_hit_avoid_value`, `hp_reflect_damage_rate`, `hp_sorption_value`, `debuff_resistance_value`, `hp_auto_recovery_min`, `hp_auto_recovery_max`, `mp_auto_recovery_min`, `mp_auto_recovery_max`, `ap_auto_recovery_min`, `ap_auto_recovery_max`) VALUES
+INSERT INTO `master_character_level` (`id`, `character_id`, `character_original_id`, `rank_id`, `level`, `ap`, `mp`, `hp`, `power`, `stamina`, `speed`, `intellect`, `attack_min`, `attack_max`, `defence_min`, `defence_max`, `hit_value`, `hit_avoid_value`, `critical_hit_value`, `critical_hit_avoid_value`, `hp_reflect_damage_rate`, `hp_sorption_value`, `debuff_resistance_value`, `hp_auto_recovery_min`, `hp_auto_recovery_max`, `mp_auto_recovery_min`, `mp_auto_recovery_max`, `ap_auto_recovery_min`, `ap_auto_recovery_max`) VALUES
 	(100101001, 100101, 1001, 1, 1, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 5, 10, 5, 10, 5, 10),
 	(100101002, 100101, 1001, 1, 2, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 10, 20, 10, 20, 10, 20),
 	(100101003, 100101, 1001, 1, 3, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 15, 30, 15, 30, 15, 30),
@@ -381,6 +471,8 @@ CREATE TABLE IF NOT EXISTS `master_quest_area` (
   `area_id` int(10) unsigned NOT NULL DEFAULT '0',
   `map_id` int(10) unsigned DEFAULT NULL,
   `serial_id` int(10) unsigned DEFAULT NULL,
+  `next_map_id` int(10) unsigned DEFAULT NULL,
+  `next_area_id` int(10) unsigned DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `caption` text,
   PRIMARY KEY (`area_id`)
@@ -389,38 +481,39 @@ CREATE TABLE IF NOT EXISTS `master_quest_area` (
 -- テーブル presto_master.master_quest_area: ~25 rows (約) のデータをダンプしています
 DELETE FROM `master_quest_area`;
 /*!40000 ALTER TABLE `master_quest_area` DISABLE KEYS */;
-INSERT INTO `master_quest_area` (`area_id`, `map_id`, `serial_id`, `name`, `caption`) VALUES
-	(101, 1, 1, '始まりの章#1', '始まりの章#1'),
-	(102, 1, 2, '始まりの章#2', '始まりの章#2'),
-	(103, 1, 3, '始まりの章#3', '始まりの章#3'),
-	(104, 1, 4, '始まりの章#4', '始まりの章#4'),
-	(105, 1, 5, '始まりの章#5', '始まりの章#5'),
-	(201, 2, 1, '〇〇を探せ！#1', '〇〇を探せ！#1'),
-	(202, 2, 2, '〇〇を探せ！#2', '〇〇を探せ！#2'),
-	(203, 2, 3, '〇〇を探せ！#3', '〇〇を探せ！#3'),
-	(204, 2, 4, '〇〇を探せ！#4', '〇〇を探せ！#4'),
-	(205, 2, 5, '〇〇を探せ！#5', '〇〇を探せ！#5'),
-	(301, 3, 1, '北へ進め！#1', '北へ進め！#1'),
-	(302, 3, 2, '北へ進め！#2', '北へ進め！#2'),
-	(303, 3, 3, '北へ進め！#3', '北へ進め！#3'),
-	(304, 3, 4, '北へ進め！#4', '北へ進め！#4'),
-	(305, 3, 5, '北へ進め！#5', '北へ進め！#5'),
-	(401, 4, 1, '北の北！#1', '北の北！#1'),
-	(402, 4, 2, '北の北！#2', '北の北！#2'),
-	(403, 4, 3, '北の北！#3', '北の北！#3'),
-	(404, 4, 4, '北の北！#4', '北の北！#4'),
-	(405, 4, 5, '北の北！#5', '北の北！#5'),
-	(501, 5, 1, '冬が来る！#1', '冬が来る！#1'),
-	(502, 5, 2, '冬が来る！#2', '冬が来る！#2'),
-	(503, 5, 3, '冬が来る！#3', '冬が来る！#3'),
-	(504, 5, 4, '冬が来る！#4', '冬が来る！#4'),
-	(505, 5, 5, '冬が来る！#5', '冬が来る！#5');
+INSERT INTO `master_quest_area` (`area_id`, `map_id`, `serial_id`, `next_map_id`, `next_area_id`, `name`, `caption`) VALUES
+	(101, 1, 1, 1, 102, '1-エリア#1', '1-エリア#1'),
+	(102, 1, 2, 1, 103, '1-エリア#2', '1-エリア#2'),
+	(103, 1, 3, 1, 104, '1-エリア#3', '1-エリア#3'),
+	(104, 1, 4, 1, 105, '1-エリア#4', '1-エリア#4'),
+	(105, 1, 5, 2, 201, '1-エリア#5', '1-エリア#5'),
+	(201, 2, 1, 2, 202, '2-エリア#1', '2-エリア#1'),
+	(202, 2, 2, 2, 203, '2-エリア#2', '2-エリア#2'),
+	(203, 2, 3, 2, 204, '2-エリア#3', '2-エリア#3'),
+	(204, 2, 4, 2, 205, '2-エリア#4', '2-エリア#4'),
+	(205, 2, 5, 3, 301, '2-エリア#5', '2-エリア#5'),
+	(301, 3, 1, 3, 302, '3-エリア#1', '3-エリア#1'),
+	(302, 3, 2, 3, 303, '3-エリア#2', '3-エリア#2'),
+	(303, 3, 3, 3, 304, '3-エリア#3', '3-エリア#3'),
+	(304, 3, 4, 3, 305, '3-エリア#4', '3-エリア#4'),
+	(305, 3, 5, 4, 401, '3-エリア#5', '3-エリア#5'),
+	(401, 4, 1, 4, 402, '4-エリア#1', '4-エリア#1'),
+	(402, 4, 2, 4, 403, '4-エリア#2', '4-エリア#2'),
+	(403, 4, 3, 4, 404, '4-エリア#3', '4-エリア#3'),
+	(404, 4, 4, 4, 405, '4-エリア#4', '4-エリア#4'),
+	(405, 4, 5, 5, 501, '4-エリア#5', '4-エリア#5'),
+	(501, 5, 1, 5, 502, '5-エリア#1', '5-エリア#1'),
+	(502, 5, 2, 5, 503, '5-エリア#2', '5-エリア#2'),
+	(503, 5, 3, 5, 504, '5-エリア#3', '5-エリア#3'),
+	(504, 5, 4, 5, 505, '5-エリア#4', '5-エリア#4'),
+	(505, 5, 5, 0, 0, '5-エリア#5', '5-エリア#5');
 /*!40000 ALTER TABLE `master_quest_area` ENABLE KEYS */;
 
 --  テーブル presto_master.master_quest_map の構造をダンプしています
 DROP TABLE IF EXISTS `master_quest_map`;
 CREATE TABLE IF NOT EXISTS `master_quest_map` (
   `map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `next_map_id` int(10) unsigned NOT NULL DEFAULT '0',
   `name` varchar(50) DEFAULT NULL,
   `caption` text,
   PRIMARY KEY (`map_id`)
@@ -429,27 +522,228 @@ CREATE TABLE IF NOT EXISTS `master_quest_map` (
 -- テーブル presto_master.master_quest_map: ~5 rows (約) のデータをダンプしています
 DELETE FROM `master_quest_map`;
 /*!40000 ALTER TABLE `master_quest_map` DISABLE KEYS */;
-INSERT INTO `master_quest_map` (`map_id`, `name`, `caption`) VALUES
-	(1, '始まりの章', '始まりの章'),
-	(2, '〇〇を探せ！', '〇〇を探せ！'),
-	(3, '北へ進め！', '北へ進め！'),
-	(4, '北の北！', '北の北！'),
-	(5, '冬が来る！', '冬が来る！');
+INSERT INTO `master_quest_map` (`map_id`, `next_map_id`, `name`, `caption`) VALUES
+	(1, 2, '始まりの章', '始まりの章'),
+	(2, 3, '〇〇を探せ！', '〇〇を探せ！'),
+	(3, 4, '北へ！', '北へ！'),
+	(4, 5, '北の北！', '北の北！'),
+	(5, 6, '冬が来る！', '冬が来る！'),
+	(6, 0, '未知の地', '未知の地');
 /*!40000 ALTER TABLE `master_quest_map` ENABLE KEYS */;
 
 --  テーブル presto_master.master_quest_stage の構造をダンプしています
 DROP TABLE IF EXISTS `master_quest_stage`;
 CREATE TABLE IF NOT EXISTS `master_quest_stage` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
   `stage_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `map_id` int(10) unsigned DEFAULT NULL,
-  `area_id` int(10) unsigned DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `serial_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `area_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `next_map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `next_area_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `next_stage_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_boss` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `enemy_id` int(11) NOT NULL DEFAULT '0',
+  `enemy_level_min` int(11) NOT NULL DEFAULT '0',
+  `enemy_level_max` int(11) NOT NULL DEFAULT '0',
+  `enemy_count` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ステージ一覧';
 
--- テーブル presto_master.master_quest_stage: ~0 rows (約) のデータをダンプしています
+-- テーブル presto_master.master_quest_stage: ~60 rows (約) のデータをダンプしています
 DELETE FROM `master_quest_stage`;
 /*!40000 ALTER TABLE `master_quest_stage` DISABLE KEYS */;
+INSERT INTO `master_quest_stage` (`stage_id`, `serial_id`, `map_id`, `area_id`, `next_map_id`, `next_area_id`, `next_stage_id`, `is_boss`, `enemy_id`, `enemy_level_min`, `enemy_level_max`, `enemy_count`) VALUES
+	(10101, 1, 1, 101, 1, 101, 10102, 0, 100101, 1, 1, 1),
+	(10102, 2, 1, 101, 1, 101, 10103, 0, 100201, 3, 4, 3),
+	(10103, 3, 1, 101, 1, 101, 10104, 0, 100301, 6, 8, 5),
+	(10104, 4, 1, 101, 1, 102, 10201, 1, 100401, 10, 13, 1),
+	(10201, 1, 1, 102, 1, 102, 10202, 0, 100101, 11, 11, 1),
+	(10202, 2, 1, 102, 1, 102, 10203, 0, 100201, 13, 14, 3),
+	(10203, 3, 1, 102, 1, 102, 10204, 0, 100301, 16, 18, 5),
+	(10204, 4, 1, 102, 1, 103, 10301, 1, 100401, 20, 23, 1),
+	(10301, 1, 1, 103, 1, 103, 10302, 0, 100101, 21, 21, 1),
+	(10302, 2, 1, 103, 1, 103, 10303, 0, 100201, 23, 24, 3),
+	(10303, 3, 1, 103, 1, 103, 10304, 0, 100301, 26, 28, 5),
+	(10304, 4, 1, 103, 1, 104, 10401, 1, 100401, 30, 33, 1),
+	(10401, 1, 1, 104, 1, 104, 10402, 0, 100101, 31, 31, 1),
+	(10402, 2, 1, 104, 1, 104, 10403, 0, 100201, 33, 34, 3),
+	(10403, 3, 1, 104, 1, 104, 10404, 0, 100301, 36, 38, 5),
+	(10404, 4, 1, 104, 1, 105, 10501, 1, 100401, 40, 43, 1),
+	(10501, 1, 1, 105, 1, 105, 10502, 0, 100401, 41, 41, 1),
+	(10502, 2, 1, 105, 1, 105, 10503, 0, 100401, 43, 44, 3),
+	(10503, 3, 1, 105, 1, 105, 10504, 0, 100401, 46, 48, 5),
+	(10504, 4, 1, 105, 2, 201, 20101, 1, 100401, 50, 53, 1),
+	(20101, 1, 2, 201, 2, 201, 20102, 0, 100101, 51, 51, 2),
+	(20102, 2, 2, 201, 2, 201, 20103, 0, 100201, 53, 54, 3),
+	(20103, 3, 2, 201, 2, 201, 20104, 0, 100301, 56, 58, 5),
+	(20104, 4, 2, 201, 2, 202, 20201, 1, 100401, 60, 63, 1),
+	(20201, 1, 2, 202, 2, 202, 20202, 0, 100101, 61, 61, 2),
+	(20202, 2, 2, 202, 2, 202, 20203, 0, 100201, 63, 64, 3),
+	(20203, 3, 2, 202, 2, 202, 20204, 0, 100301, 66, 68, 5),
+	(20204, 4, 2, 202, 2, 203, 20301, 1, 100401, 70, 73, 1),
+	(20301, 1, 2, 203, 2, 203, 20302, 0, 100101, 71, 71, 2),
+	(20302, 2, 2, 203, 2, 203, 20303, 0, 100201, 73, 74, 3),
+	(20303, 3, 2, 203, 2, 203, 20304, 0, 100301, 76, 78, 5),
+	(20304, 4, 2, 203, 2, 204, 20401, 1, 100401, 80, 83, 1),
+	(20401, 1, 2, 204, 2, 204, 20402, 0, 100101, 81, 81, 2),
+	(20402, 2, 2, 204, 2, 204, 20403, 0, 100201, 83, 84, 3),
+	(20403, 3, 2, 204, 2, 204, 20404, 0, 100301, 86, 88, 5),
+	(20404, 4, 2, 204, 2, 205, 20501, 1, 100401, 90, 93, 1),
+	(20501, 1, 2, 205, 2, 205, 20502, 0, 100401, 91, 91, 2),
+	(20502, 2, 2, 205, 2, 205, 20503, 0, 100401, 93, 94, 3),
+	(20503, 3, 2, 205, 2, 205, 20504, 0, 100401, 96, 98, 5),
+	(20504, 4, 2, 205, 3, 301, 30101, 1, 100401, 100, 103, 1),
+	(30101, 1, 3, 301, 3, 301, 30102, 0, 100101, 101, 101, 3),
+	(30102, 2, 3, 301, 3, 301, 30103, 0, 100201, 103, 104, 3),
+	(30103, 3, 3, 301, 3, 301, 30104, 0, 100301, 106, 108, 5),
+	(30104, 4, 3, 301, 3, 302, 30201, 1, 100401, 110, 113, 1),
+	(30201, 1, 3, 302, 3, 302, 30202, 0, 100101, 111, 111, 3),
+	(30202, 2, 3, 302, 3, 302, 30203, 0, 100201, 113, 114, 3),
+	(30203, 3, 3, 302, 3, 302, 30204, 0, 100301, 116, 118, 5),
+	(30204, 4, 3, 302, 3, 303, 30301, 1, 100401, 120, 123, 1),
+	(30301, 1, 3, 303, 3, 303, 30302, 0, 100101, 121, 121, 3),
+	(30302, 2, 3, 303, 3, 303, 30303, 0, 100201, 123, 124, 3),
+	(30303, 3, 3, 303, 3, 303, 30304, 0, 100301, 126, 128, 5),
+	(30304, 4, 3, 303, 3, 304, 30401, 1, 100401, 130, 133, 1),
+	(30401, 1, 3, 304, 3, 304, 30402, 0, 100101, 131, 131, 3),
+	(30402, 2, 3, 304, 3, 304, 30403, 0, 100201, 133, 134, 3),
+	(30403, 3, 3, 304, 3, 304, 30404, 0, 100301, 136, 138, 5),
+	(30404, 4, 3, 304, 3, 305, 30501, 1, 100401, 140, 143, 1),
+	(30501, 1, 3, 305, 3, 305, 30502, 0, 100401, 141, 141, 3),
+	(30502, 2, 3, 305, 3, 305, 30503, 0, 100401, 143, 144, 3),
+	(30503, 3, 3, 305, 3, 305, 30504, 0, 100401, 146, 148, 5),
+	(30504, 4, 3, 305, 0, 0, 0, 1, 100401, 150, 153, 1);
 /*!40000 ALTER TABLE `master_quest_stage` ENABLE KEYS */;
+
+--  テーブル presto_master.master_skill の構造をダンプしています
+DROP TABLE IF EXISTS `master_skill`;
+CREATE TABLE IF NOT EXISTS `master_skill` (
+  `skill_id` int(11) unsigned NOT NULL,
+  `skill_original_id` int(11) unsigned NOT NULL,
+  `level` int(11) unsigned NOT NULL,
+  `level_next` int(11) unsigned NOT NULL,
+  `use_mp` int(11) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='スキルマスター';
+
+-- テーブル presto_master.master_skill: ~9 rows (約) のデータをダンプしています
+DELETE FROM `master_skill`;
+/*!40000 ALTER TABLE `master_skill` DISABLE KEYS */;
+INSERT INTO `master_skill` (`skill_id`, `skill_original_id`, `level`, `level_next`, `use_mp`) VALUES
+	(1000101, 10001, 1, 1, 100),
+	(1000201, 10002, 1, 1, 100),
+	(1000301, 10003, 1, 1, 100),
+	(1000401, 10004, 1, 1, 100),
+	(1000501, 10005, 1, 1, 100),
+	(1000601, 10006, 1, 1, 100),
+	(1000701, 10007, 1, 1, 100),
+	(1000801, 10008, 1, 1, 100),
+	(1000801, 10008, 1, 2, 100);
+/*!40000 ALTER TABLE `master_skill` ENABLE KEYS */;
+
+--  テーブル presto_master.master_skill_effect の構造をダンプしています
+DROP TABLE IF EXISTS `master_skill_effect`;
+CREATE TABLE IF NOT EXISTS `master_skill_effect` (
+  `id` int(11) unsigned NOT NULL,
+  `skill_id` int(11) unsigned NOT NULL,
+  `skill_original_id` int(11) unsigned NOT NULL,
+  `level` int(11) unsigned NOT NULL,
+  `serial_id` int(11) unsigned NOT NULL,
+  `timing` int(11) unsigned NOT NULL,
+  `target_type` int(11) unsigned NOT NULL,
+  `target_count` int(11) unsigned NOT NULL,
+  `action_count` int(11) unsigned NOT NULL,
+  `status_id` int(11) unsigned NOT NULL,
+  `status_value` varchar(50) NOT NULL,
+  `buff_id` int(11) unsigned NOT NULL,
+  `buff_turn` int(11) unsigned NOT NULL,
+  `buff_value` varchar(50) NOT NULL,
+  `special_effect_json` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='スキル効果マスター';
+
+-- テーブル presto_master.master_skill_effect: ~0 rows (約) のデータをダンプしています
+DELETE FROM `master_skill_effect`;
+/*!40000 ALTER TABLE `master_skill_effect` DISABLE KEYS */;
+INSERT INTO `master_skill_effect` (`id`, `skill_id`, `skill_original_id`, `level`, `serial_id`, `timing`, `target_type`, `target_count`, `action_count`, `status_id`, `status_value`, `buff_id`, `buff_turn`, `buff_value`, `special_effect_json`) VALUES
+	(10001011, 1000101, 10001, 1, 1, 0, 1, 1, 2, 0, '', 0, 0, '', ''),
+	(10002011, 1000201, 10002, 1, 1, 0, 1, 1, 3, 0, '', 0, 0, '', ''),
+	(10003011, 1000301, 10003, 1, 1, 0, 1, 2, 1, 0, '', 0, 0, '', ''),
+	(10004011, 1000401, 10004, 1, 1, 0, 1, 3, 1, 0, '', 0, 0, '', ''),
+	(10005011, 1000501, 10005, 1, 1, 0, 1, 2, 2, 0, '', 0, 0, '', ''),
+	(10006011, 1000601, 10006, 1, 1, 0, 1, 2, 3, 0, '', 0, 0, '', ''),
+	(10007011, 1000701, 10007, 1, 1, 0, 1, 1, 1, 9, '200%', 0, 0, '', ''),
+	(10008011, 1000801, 10008, 1, 1, 0, 2, 1, 1, 1, '30%', 0, 0, '', ''),
+	(10009011, 1000901, 10009, 1, 1, 0, 2, 1, 1, 2, '30%', 0, 0, '', '');
+/*!40000 ALTER TABLE `master_skill_effect` ENABLE KEYS */;
+
+--  テーブル presto_master.master_skill_original の構造をダンプしています
+DROP TABLE IF EXISTS `master_skill_original`;
+CREATE TABLE IF NOT EXISTS `master_skill_original` (
+  `skill_original_id` int(10) unsigned NOT NULL,
+  `rank_id` int(10) unsigned NOT NULL,
+  `skill_type` int(10) unsigned NOT NULL,
+  `round` int(10) unsigned NOT NULL,
+  `character_id` int(10) unsigned NOT NULL,
+  `character_type` int(10) unsigned NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `caption` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='スキルオリジナルマスター';
+
+-- テーブル presto_master.master_skill_original: ~9 rows (約) のデータをダンプしています
+DELETE FROM `master_skill_original`;
+/*!40000 ALTER TABLE `master_skill_original` DISABLE KEYS */;
+INSERT INTO `master_skill_original` (`skill_original_id`, `rank_id`, `skill_type`, `round`, `character_id`, `character_type`, `name`, `caption`) VALUES
+	(10001, 1, 1, 0, 0, 0, '一動二撃', '敵1体に2回攻撃'),
+	(10002, 1, 1, 0, 0, 0, '一動三撃', '敵1体に3回攻撃'),
+	(10003, 1, 1, 0, 0, 0, '一挙二得', '敵2体に1回ずつ攻撃'),
+	(10004, 1, 1, 0, 0, 0, '一挙三得', '敵3体に1回ずつ攻撃'),
+	(10005, 1, 1, 0, 0, 0, '二挙四得', '敵2体に2回ずつ攻撃'),
+	(10006, 1, 1, 0, 0, 0, '二挙六得', '敵3体に2回ずつ攻撃'),
+	(10007, 1, 1, 0, 0, 0, '強攻撃', 'ダメージN倍'),
+	(10008, 1, 1, 0, 0, 0, '味方HP回復', '味方HP回復'),
+	(10009, 1, 1, 0, 0, 0, '味方MP回復', '味方MP回復');
+/*!40000 ALTER TABLE `master_skill_original` ENABLE KEYS */;
+
+--  テーブル presto_master.master_status の構造をダンプしています
+DROP TABLE IF EXISTS `master_status`;
+CREATE TABLE IF NOT EXISTS `master_status` (
+  `status_id` int(10) unsigned NOT NULL,
+  `status_type` int(10) unsigned NOT NULL,
+  `serial_id` int(10) unsigned NOT NULL,
+  `evaluation` float unsigned NOT NULL,
+  `property` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `caption` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='ステータスマスター';
+
+-- テーブル presto_master.master_status: ~25 rows (約) のデータをダンプしています
+DELETE FROM `master_status`;
+/*!40000 ALTER TABLE `master_status` DISABLE KEYS */;
+INSERT INTO `master_status` (`status_id`, `status_type`, `serial_id`, `evaluation`, `property`, `name`, `caption`) VALUES
+	(1, 0, 1, 2, 'hp', 'HP', ''),
+	(2, 0, 2, 2, 'mp', 'MP', ''),
+	(3, 0, 3, 2, 'ap', 'AP', ''),
+	(9, 1, 1, 0, 'damage', 'ダメージ', ''),
+	(201, 2, 1, 3, 'power', '力', ''),
+	(202, 2, 2, 3, 'stamina', '体力', ''),
+	(203, 2, 3, 3, 'speed', '素早さ', ''),
+	(204, 2, 4, 3, 'intellect', '知力', ''),
+	(301, 3, 1, 1, 'attack_min', '攻撃力（最小）', ''),
+	(302, 3, 2, 1, 'attack_max', '攻撃力（最大）', ''),
+	(303, 3, 3, 1, 'defence_min', '防御力', ''),
+	(304, 3, 4, 1, 'defence_max', '防御力', ''),
+	(305, 3, 5, 1, 'hit_value', '命中力', ''),
+	(306, 3, 6, 1, 'hit_avoid_value', '回避力', ''),
+	(307, 3, 7, 1, 'critical_hit_value', '会心命中力', ''),
+	(308, 3, 8, 1, 'critical_hit_avoid_value', '会心回避力', ''),
+	(309, 3, 9, 1, 'hp_reflect_damage_rate', 'HP反射', ''),
+	(310, 3, 10, 1, 'hp_sorption_value', 'HP吸収', ''),
+	(311, 3, 11, 1, 'debuff_resistance_value', '状態異常耐性', ''),
+	(401, 4, 1, 0.5, 'hp_auto_recovery_min', 'HP自動回復', ''),
+	(402, 4, 2, 0.5, 'hp_auto_recovery_max', 'HP自動回復', ''),
+	(403, 4, 3, 0.5, 'mp_auto_recovery_min', 'MP自動回復', ''),
+	(404, 4, 4, 0.5, 'mp_auto_recovery_max', 'MP自動回復', ''),
+	(405, 4, 5, 0.5, 'ap_auto_recovery_min', 'AP自動回復', ''),
+	(406, 4, 6, 0.5, 'ap_auto_recovery_max', 'AP自動回復', '');
+/*!40000 ALTER TABLE `master_status` ENABLE KEYS */;
 
 --  テーブル presto_master.master_tutorial_character の構造をダンプしています
 DROP TABLE IF EXISTS `master_tutorial_character`;
@@ -466,21 +760,21 @@ CREATE TABLE IF NOT EXISTS `master_tutorial_character` (
 DELETE FROM `master_tutorial_character`;
 /*!40000 ALTER TABLE `master_tutorial_character` DISABLE KEYS */;
 INSERT INTO `master_tutorial_character` (`id`, `character_type`, `character_id`, `weight`, `created`, `modified`) VALUES
-	(1, 1, 100101001, 1000, NULL, NULL),
-	(2, 1, 100201001, 1000, NULL, NULL),
-	(3, 1, 100301001, 1000, NULL, NULL),
-	(4, 1, 100401001, 1000, NULL, NULL),
-	(5, 1, 100501001, 1000, NULL, NULL),
-	(6, 1, 100601001, 1000, NULL, NULL),
-	(7, 1, 100701001, 1000, NULL, NULL),
-	(8, 1, 100801001, 1000, NULL, NULL),
-	(9, 1, 100901001, 1000, NULL, NULL),
-	(10, 1, 101001001, 1000, NULL, NULL),
-	(11, 1, 100102011, 10, NULL, NULL),
-	(12, 1, 100202011, 10, NULL, NULL),
-	(13, 1, 100302011, 10, NULL, NULL),
-	(14, 1, 100402011, 10, NULL, NULL),
-	(15, 1, 100502011, 10, NULL, NULL);
+	(1, 1, 100101, 1000, NULL, NULL),
+	(2, 1, 100201, 1000, NULL, NULL),
+	(3, 1, 100301, 1000, NULL, NULL),
+	(4, 1, 100401, 1000, NULL, NULL),
+	(5, 1, 100501, 1000, NULL, NULL),
+	(6, 1, 100601, 1000, NULL, NULL),
+	(7, 1, 100701, 1000, NULL, NULL),
+	(8, 1, 100801, 1000, NULL, NULL),
+	(9, 1, 100901, 1000, NULL, NULL),
+	(10, 1, 101001, 1000, NULL, NULL),
+	(11, 1, 100102, 10, NULL, NULL),
+	(12, 1, 100202, 10, NULL, NULL),
+	(13, 1, 100302, 10, NULL, NULL),
+	(14, 1, 100402, 10, NULL, NULL),
+	(15, 1, 100502, 10, NULL, NULL);
 /*!40000 ALTER TABLE `master_tutorial_character` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
