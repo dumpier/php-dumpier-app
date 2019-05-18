@@ -13,12 +13,10 @@
 
 
 -- presto_master のデータベース構造をダンプしています
-DROP DATABASE IF EXISTS `presto_master`;
 CREATE DATABASE IF NOT EXISTS `presto_master` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `presto_master`;
 
 --  テーブル presto_master.master_buff の構造をダンプしています
-DROP TABLE IF EXISTS `master_buff`;
 CREATE TABLE IF NOT EXISTS `master_buff` (
   `buff_id` int(10) unsigned DEFAULT NULL,
   `buff_type` int(10) unsigned DEFAULT NULL COMMENT '状態異常区分',
@@ -108,7 +106,6 @@ INSERT INTO `master_buff` (`buff_id`, `buff_type`, `is_positive`, `timing`, `rat
 /*!40000 ALTER TABLE `master_buff` ENABLE KEYS */;
 
 --  テーブル presto_master.master_character の構造をダンプしています
-DROP TABLE IF EXISTS `master_character`;
 CREATE TABLE IF NOT EXISTS `master_character` (
   `character_id` int(10) unsigned DEFAULT NULL,
   `character_original_id` int(10) unsigned DEFAULT NULL,
@@ -174,7 +171,6 @@ INSERT INTO `master_character` (`character_id`, `character_original_id`, `rank_i
 /*!40000 ALTER TABLE `master_character` ENABLE KEYS */;
 
 --  テーブル presto_master.master_character_level の構造をダンプしています
-DROP TABLE IF EXISTS `master_character_level`;
 CREATE TABLE IF NOT EXISTS `master_character_level` (
   `id` int(10) unsigned NOT NULL,
   `character_id` int(10) unsigned NOT NULL,
@@ -205,7 +201,7 @@ CREATE TABLE IF NOT EXISTS `master_character_level` (
   `mp_auto_recovery_max` int(11) unsigned NOT NULL DEFAULT '0',
   `ap_auto_recovery_min` int(11) unsigned NOT NULL DEFAULT '0',
   `ap_auto_recovery_max` int(11) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='キャラマスター';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='キャラマスター';
 
 -- テーブル presto_master.master_character_level: ~200 rows (約) のデータをダンプしています
 DELETE FROM `master_character_level`;
@@ -414,7 +410,6 @@ INSERT INTO `master_character_level` (`id`, `character_id`, `character_original_
 /*!40000 ALTER TABLE `master_character_level` ENABLE KEYS */;
 
 --  テーブル presto_master.master_character_original の構造をダンプしています
-DROP TABLE IF EXISTS `master_character_original`;
 CREATE TABLE IF NOT EXISTS `master_character_original` (
   `character_original_id` int(10) unsigned NOT NULL DEFAULT '0',
   `serial_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '連番',
@@ -425,9 +420,9 @@ CREATE TABLE IF NOT EXISTS `master_character_original` (
   `position` int(11) NOT NULL DEFAULT '0' COMMENT 'ポジション',
   `rank_min` int(11) NOT NULL,
   `rank_max` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'キャラ名',
-  `caption` varchar(1500) COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='キャラクターオリジナルマスター';
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'キャラ名',
+  `caption` varchar(1500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='キャラクターオリジナルマスター';
 
 -- テーブル presto_master.master_character_original: ~30 rows (約) のデータをダンプしています
 DELETE FROM `master_character_original`;
@@ -466,7 +461,6 @@ INSERT INTO `master_character_original` (`character_original_id`, `serial_id`, `
 /*!40000 ALTER TABLE `master_character_original` ENABLE KEYS */;
 
 --  テーブル presto_master.master_quest_area の構造をダンプしています
-DROP TABLE IF EXISTS `master_quest_area`;
 CREATE TABLE IF NOT EXISTS `master_quest_area` (
   `area_id` int(10) unsigned NOT NULL DEFAULT '0',
   `map_id` int(10) unsigned DEFAULT NULL,
@@ -510,7 +504,6 @@ INSERT INTO `master_quest_area` (`area_id`, `map_id`, `serial_id`, `next_map_id`
 /*!40000 ALTER TABLE `master_quest_area` ENABLE KEYS */;
 
 --  テーブル presto_master.master_quest_map の構造をダンプしています
-DROP TABLE IF EXISTS `master_quest_map`;
 CREATE TABLE IF NOT EXISTS `master_quest_map` (
   `map_id` int(10) unsigned NOT NULL DEFAULT '0',
   `next_map_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -532,7 +525,6 @@ INSERT INTO `master_quest_map` (`map_id`, `next_map_id`, `name`, `caption`) VALU
 /*!40000 ALTER TABLE `master_quest_map` ENABLE KEYS */;
 
 --  テーブル presto_master.master_quest_stage の構造をダンプしています
-DROP TABLE IF EXISTS `master_quest_stage`;
 CREATE TABLE IF NOT EXISTS `master_quest_stage` (
   `stage_id` int(10) unsigned NOT NULL DEFAULT '0',
   `serial_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -615,7 +607,6 @@ INSERT INTO `master_quest_stage` (`stage_id`, `serial_id`, `map_id`, `area_id`, 
 /*!40000 ALTER TABLE `master_quest_stage` ENABLE KEYS */;
 
 --  テーブル presto_master.master_skill の構造をダンプしています
-DROP TABLE IF EXISTS `master_skill`;
 CREATE TABLE IF NOT EXISTS `master_skill` (
   `skill_id` int(11) unsigned NOT NULL,
   `skill_original_id` int(11) unsigned NOT NULL,
@@ -640,7 +631,6 @@ INSERT INTO `master_skill` (`skill_id`, `skill_original_id`, `level`, `level_nex
 /*!40000 ALTER TABLE `master_skill` ENABLE KEYS */;
 
 --  テーブル presto_master.master_skill_effect の構造をダンプしています
-DROP TABLE IF EXISTS `master_skill_effect`;
 CREATE TABLE IF NOT EXISTS `master_skill_effect` (
   `id` int(11) unsigned NOT NULL,
   `skill_id` int(11) unsigned NOT NULL,
@@ -659,7 +649,7 @@ CREATE TABLE IF NOT EXISTS `master_skill_effect` (
   `special_effect_json` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='スキル効果マスター';
 
--- テーブル presto_master.master_skill_effect: ~0 rows (約) のデータをダンプしています
+-- テーブル presto_master.master_skill_effect: ~9 rows (約) のデータをダンプしています
 DELETE FROM `master_skill_effect`;
 /*!40000 ALTER TABLE `master_skill_effect` DISABLE KEYS */;
 INSERT INTO `master_skill_effect` (`id`, `skill_id`, `skill_original_id`, `level`, `serial_id`, `timing`, `target_type`, `target_count`, `action_count`, `status_id`, `status_value`, `buff_id`, `buff_turn`, `buff_value`, `special_effect_json`) VALUES
@@ -675,7 +665,6 @@ INSERT INTO `master_skill_effect` (`id`, `skill_id`, `skill_original_id`, `level
 /*!40000 ALTER TABLE `master_skill_effect` ENABLE KEYS */;
 
 --  テーブル presto_master.master_skill_original の構造をダンプしています
-DROP TABLE IF EXISTS `master_skill_original`;
 CREATE TABLE IF NOT EXISTS `master_skill_original` (
   `skill_original_id` int(10) unsigned NOT NULL,
   `rank_id` int(10) unsigned NOT NULL,
@@ -703,7 +692,6 @@ INSERT INTO `master_skill_original` (`skill_original_id`, `rank_id`, `skill_type
 /*!40000 ALTER TABLE `master_skill_original` ENABLE KEYS */;
 
 --  テーブル presto_master.master_status の構造をダンプしています
-DROP TABLE IF EXISTS `master_status`;
 CREATE TABLE IF NOT EXISTS `master_status` (
   `status_id` int(10) unsigned NOT NULL,
   `status_type` int(10) unsigned NOT NULL,
@@ -746,7 +734,6 @@ INSERT INTO `master_status` (`status_id`, `status_type`, `serial_id`, `evaluatio
 /*!40000 ALTER TABLE `master_status` ENABLE KEYS */;
 
 --  テーブル presto_master.master_tutorial_character の構造をダンプしています
-DROP TABLE IF EXISTS `master_tutorial_character`;
 CREATE TABLE IF NOT EXISTS `master_tutorial_character` (
   `id` int(10) unsigned DEFAULT NULL,
   `character_type` int(10) unsigned DEFAULT NULL,

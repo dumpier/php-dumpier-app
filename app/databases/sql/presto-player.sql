@@ -14,7 +14,7 @@
 
 -- presto_player のデータベース構造をダンプしています
 DROP DATABASE IF EXISTS `presto_player`;
-CREATE DATABASE IF NOT EXISTS `presto_player` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE IF NOT EXISTS `presto_player` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `presto_player`;
 
 --  テーブル presto_player.player_character の構造をダンプしています
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `player_character` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1 COMMENT='プレイヤーキャラクター';
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8 COMMENT='プレイヤーキャラクター';
 
 -- エクスポートするデータが選択されていません
 --  テーブル presto_player.player_deck の構造をダンプしています
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `player_deck` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1 COMMENT='プレイヤーデッキ';
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8 COMMENT='プレイヤーデッキ';
 
 -- エクスポートするデータが選択されていません
 --  テーブル presto_player.player_quest の構造をダンプしています
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `player_quest` (
   `created` timestamp NULL DEFAULT NULL,
   `modified` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='プレイヤークエスト';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='プレイヤークエスト';
 
 -- エクスポートするデータが選択されていません
 --  テーブル presto_player.player_quest_battle の構造をダンプしています
@@ -76,11 +76,11 @@ CREATE TABLE IF NOT EXISTS `player_quest_battle` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player_id` int(10) unsigned NOT NULL,
   `timesecond` int(10) unsigned NOT NULL,
-  `log` text NOT NULL,
+  `log` text CHARACTER SET latin1 NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='プレイヤーバトル';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='プレイヤーバトル';
 
 -- エクスポートするデータが選択されていません
 
