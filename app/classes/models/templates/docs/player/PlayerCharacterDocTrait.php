@@ -27,7 +27,7 @@ trait PlayerCharacterDocTrait
     public $character_id = 0;
 
     /** @var int  */
-    public $level = 0;
+    public $level = 1;
 
     /** @var int 保護フラグ */
     public $is_protected = 0;

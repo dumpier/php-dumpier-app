@@ -3,26 +3,34 @@ namespace App\Models\Templates\Docs\Master;
 
 /**
  */
-trait MasterCharacterDocTrait
+trait MasterStatusDocTrait
 {
     /** 項目一覧 */
     protected $properties = [
-        "character_id",
-        "character_original_id",
-        "rank_id",
+        "status_id",
+        "status_type",
+        "serial_id",
+        "evaluation",
+        "property",
         "name",
         "caption",
     ];
 
 
     /** @var int  */
-    public $character_id = 0;
+    public $status_id = 0;
 
     /** @var int  */
-    public $character_original_id = 0;
+    public $status_type = 0;
 
     /** @var int  */
-    public $rank_id = 0;
+    public $serial_id = 0;
+
+    /** @var float  */
+    public $evaluation = 0;
+
+    /** @var string  */
+    public $property = "";
 
     /** @var string  */
     public $name = "";
