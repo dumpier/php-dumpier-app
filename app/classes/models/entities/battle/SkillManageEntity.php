@@ -12,12 +12,18 @@ class SkillManageEntity
     public $use_skill_count = 0;
 
 
+    public function __construct()
+    {
+        $this->Skills = collection();
+    }
+
     /**
-     * TODO 発動するスキルの取得
+     * 発動するスキルの取得
      * @return \App\Models\Entities\Battle\SkillEntity
      */
     public function getSkill()
     {
+        // TODO
         return new SkillEntity();
     }
 

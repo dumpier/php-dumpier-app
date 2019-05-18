@@ -17,4 +17,11 @@ class BattleLogTurn
     /** @var BattleLogEffectSkill[]|BattleLogEffectBuff[] */
     public $Effects = [];
 
+
+    public function __construct(int $actor_id, int $turn)
+    {
+        $this->actor_id = $actor_id;
+        $this->turn = $turn;
+    }
+
 }

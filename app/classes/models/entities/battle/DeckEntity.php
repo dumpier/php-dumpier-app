@@ -27,7 +27,7 @@ class DeckEntity
      *
      * @param Collection|PlayerCharacterModel[] $Characters
      */
-    public function __construct(Collection $Characters)
+    public function __construct($Characters)
     {
         $this->Actors = collection();
 

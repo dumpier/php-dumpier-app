@@ -1,6 +1,25 @@
 <script>
 const battlelog = <?php echo ($Battle->LogManage->toJson()); ?>;
 
+var el = el || {}
+el.actor = {
+	get: function(actor_id) {
+		return $(`div#game-actor-${actor_id}`);
+	},
+	first: function(actor_id, children) {
+		return $(`div#game-actor-${actor_id}`).find(`${children}`).first();
+	},
+	mask: function(actor_id) {
+		return this.get(actor_id).children("div.mask");
+	},
+	skillEffect: function(actor_id) {
+		return this.get(actor_id).children("div.mask-skill-effect");
+	},
+	damage: function(actor_id) {
+		return this.get(actor_id).children("div.mask-damage");
+	},
+}
+
 // -------------------------------------------------------------------
 // バトル演出
 // -------------------------------------------------------------------
@@ -28,6 +47,7 @@ var battle = battle || {
 
 		await this.rounds(battlelog);
 
+		$("#battle-round").css("color", "#28a745").text(`Game Over!`);
 		$("#mask-opening").hide();
 		this.is_playing = false;
 	},
@@ -36,7 +56,6 @@ var battle = battle || {
 		$("div#mask-opening").css("animation", "opening 1.2s steps(10) forwards");
 		return this.timeout(1400);
 	},
-
 
 	// ラウンド一覧の演出
 	rounds : async function(datas) {
@@ -80,29 +99,29 @@ var battle = battle || {
 		await this.actor(data);
 		await this.target(data);
 
-		battle.el.actor.effect(data.actor_id).html("").hide();
-		battle.el.actor.effect(data.target_id).html("").hide();
-		battle.el.actor.damage(data.actor_id).hide();
-		battle.el.actor.damage(data.target_id).hide();
+		el.actor.skillEffect(data.actor_id).html("").hide();
+		el.actor.skillEffect(data.target_id).html("").hide();
+		el.actor.damage(data.actor_id).hide();
+		el.actor.damage(data.target_id).hide();
 		return this.timeout(500);
 	},
 
 	// 行動者の動き
 	actor : async function(data) {
-		battle.el.actor.effect(data.actor_id).css({"display":"block","background":"#007bff"});
+		el.actor.skillEffect(data.actor_id).css({"display":"block","background":"#007bff"});
 		// TODO とりあえずランダムでエフェクトを選ぶ
 		let effect_id = Math.floor( Math.random() * 5 ) + 1;
-		battle.el.actor.effect(data.actor_id).html(`<img width=100% height=100% src="/res/images/effect/${effect_id}.gif">`);
+		el.actor.skillEffect(data.actor_id).html(`<img width=100% height=100% src="/res/images/effect/${effect_id}.gif">`);
 
-		battle.el.actor.get(data.actor_id).effect("shake", {times:1, distance: 10, direction:"left"}, 400);
+		el.actor.get(data.actor_id).effect("shake", {times:1, distance: 10, direction:"left"}, 400);
 		this.statuses(data.actor_id, data);
 		return this.timeout(600);
 	},
 
 	// ターゲットの動き
 	target : async function(data) {
-		battle.el.actor.effect(data.target_id).css({"display":"block","background":"#e83e8c"});
-		battle.el.actor.get(data.target_id).effect("shake", {times:2, distance: 3, direction:"down"}, 300);
+		el.actor.skillEffect(data.target_id).css({"display":"block","background":"#e83e8c"});
+		el.actor.get(data.target_id).effect("shake", {times:2, distance: 3, direction:"down"}, 300);
 		this.statuses(data.target_id, data);
 		return this.timeout(600);
 	},
@@ -134,7 +153,7 @@ var battle = battle || {
 					break;
 
 				case "damage":
-					battle.el.actor.damage(data.target_id).text(status.value).show();
+					el.actor.damage(data.target_id).text(status.value).show();
 					gauge.damage(data.target_id, -status.value);
 					break;
 
@@ -144,50 +163,36 @@ var battle = battle || {
 		}
 	},
 }
-
-battle.el = {}
-battle.el.actor = {
-	get: function(actor_id) {
-		return $(`div#game-actor-${actor_id}`);
-	},
-	effect: function(actor_id) {
-		return this.get(actor_id).children("div.mask-effect");
-	},
-	mask: function(actor_id) {
-		return this.get(actor_id).children("div.mask");
-	},
-	damage: function(actor_id) {
-		return this.get(actor_id).children("div.mask-damage");
-	},
-	first: function(actor_id, children) {
-		return $(`div#game-actor-${actor_id}`).find(`${children}`).first();
-	},
-}
 //-------------------------------------------------------------------
 
 
 // -------------------------------------------------------------------
 // ゲージ
 // -------------------------------------------------------------------
-var gauge = {
+var gauge = gauge || {
 	damage : function(actor_id, damage){
-		let elBar = battle.el.actor.first(actor_id, ".hp-bar");
-		let elVal = battle.el.actor.first(actor_id, ".hp-text");
-		let elBase = battle.el.actor.first(actor_id, ".hp-base-text");
+		this.common("hp", actor_id, damage);
+	},
 
-		let hp_base = parseInt(elBase.text());
+	common : function(name, actor_id, value_cut){
+		let elBar = el.actor.first(actor_id, `.${name}-bar`);
+		let elVal = el.actor.first(actor_id, `.${name}-text`);
+		let elBase = el.actor.first(actor_id, `.${name}-base-text`);
 
-		let hp = parseInt(elVal.text()) + damage;
-		if(hp <= 0){
-			hp = 0;
-			battle.el.actor.mask(actor_id).css({"display":"block","background":"#000", "opacity":"0.6"});
+		let value_base = parseInt(elBase.text());
+
+		let value = parseInt(elVal.text()) + value_cut;
+		if(value <= 0){
+			value = 0;
+			el.actor.mask(actor_id).css({"display":"block","background":"#000", "opacity":"0.6"});
 		}
 
-		let width = Math.ceil( 100 * hp / hp_base);
-		elVal.text(hp);
+		let width = Math.ceil( 100 * value / value_base);
+		elVal.text(value);
 		elBar.css("width", `${width}px`);
-		console.log(`damage:${damage}, hp:${hp}, hp-base:${hp_base}, width:${width}`);
+		console.log(`damage: ${value_cut}, ${name}: ${value} / ${value_base}, width:${width}`);
 	},
+
 
 }
 

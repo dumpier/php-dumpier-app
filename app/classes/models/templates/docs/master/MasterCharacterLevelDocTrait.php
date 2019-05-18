@@ -10,7 +10,7 @@ trait MasterCharacterLevelDocTrait
         "id",
         "character_id",
         "character_original_id",
-        "rank",
+        "rank_id",
         "level",
         "ap",
         "mp",
@@ -49,7 +49,7 @@ trait MasterCharacterLevelDocTrait
     public $character_original_id = 0;
 
     /** @var int  */
-    public $rank = 0;
+    public $rank_id = 0;
 
     /** @var int  */
     public $level = 0;

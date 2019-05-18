@@ -13,7 +13,14 @@ trait BattleLogTowable
             {
                 foreach ($val as $key=>$sub)
                 {
-                    $array[$property][$key] = $sub->toArray();
+                    if(method_exists($sub, "toArray"))
+                    {
+                        $array[$property][$key] = $sub->toArray();
+                    }
+                    else
+                    {
+                        $array[$property][$key] = $sub;
+                    }
                 }
                 continue;
             }

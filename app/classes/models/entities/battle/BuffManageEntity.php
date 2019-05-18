@@ -98,7 +98,7 @@ class BuffManageEntity
      */
     public function isInactable()
     {
-        if ( $this->Buffs->where("type", BUFF::TYPE_UNACTABLE, 1)->count() )
+        if ( $this->Buffs->where("type", BUFF::TYPE_INACTIVE, 1)->count() )
         {
             return true;
         }
