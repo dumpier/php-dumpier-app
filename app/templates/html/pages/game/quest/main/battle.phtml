@@ -4,7 +4,7 @@
 <style>
 /* ************** animation *************** */
 div#mask-opening {
-    position: absolute; width:100%; height:100%; opacity: 1; z-index:1;
+    position: absolute; width:100%; height:300px; opacity: 1; z-index:1;
     background: url('/res/images/effect/opening.png') no-repeat;background-size: 100% 3000px;
     /* animation: opening 1.2s steps(10) forwards; */
 }
@@ -49,9 +49,9 @@ div#battle-round {
 .game-gauge .bar-base .bar-val { overflow:hidden;background:#28a745; width:100px; height:6px; line-height:6px; font-size:4pt; color:#f9f9f9; }
 .game-gauge .bar-base .bar-val span { height:6px; line-height:6px; font-size:4pt; color:#f9f9f9;}
 
-#game-battle-log { position:fixed; bottom:0px; padding:5px; width:100vw; height: 400px; background:#f9f9f9; border: solid 5px #ccc; overflow-y: scroll; opacity:0.8; }
-/* scroll barを非表示 */
-#game-battle-log::-webkit-scrollbar{ display:none; }
+div.battle-log-wrap { box-sizing: content-box; position: absolute; left:0px; bottom:0px; width: 100%; height: 400px; opacity:0.8; }
+#game-battle-log { padding:5px; background:#f9f9f9; border: solid 5px #ccc; margin: 0px 5px; height:100%; overflow-y: scroll; }
+#game-battle-log::-webkit-scrollbar{ display:none; } /* scroll barを非表示 */
 #game-battle-log span.log-line { display: block; margin-bottom:2px; background:#6c757d; color:#f9f9f9; }
 #game-battle-log span.round { background:#fd7e14; }
 #game-battle-log span.turn { background:#ffc107; padding-left:5px; }
@@ -107,7 +107,8 @@ div#battle-round {
 </div>
 
 <div class="text-right" style="position:absolute; z-index: 2;width:100%;"><a href="javascript:void(0);" class="btn btn-success" onclick="battle.play();">バトル演出</a></div>
-<div id="game-battle-log"></div>
+<div class="battle-log-wrap"><div id="game-battle-log"></div></div>
+
 
 <!--
 <?php echo ($Battle->LogManage->toJson()); ?>

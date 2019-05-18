@@ -24,8 +24,8 @@
 	</div>
 </div>
 
-@if ($extension=="csv")
 <div class='table-responsive' style="max-height:60vh; overflow: scroll; margin:10px 0px;">
+@if ($extension=="csv")
 	<table class='table table-counter table-striped table-bordered table-hover'>
 		<thead class="thead-light">
 			<tr>@foreach ($fields as $col=>$field) <th>{{ $field }}</th> @endforeach</tr>
@@ -37,10 +37,18 @@
 		@endforeach
 		</tbody>
 	</table>
-</div>
+
 @elseif ($extension=="json")
+	<table class='table table-counter table-striped table-bordered table-hover'>
+		<tbody>
+		@foreach ($rows as $line=>$row)
+			<tr>@foreach ($row as $key=>$val) <td>{@ var_dump($val) }</td> @endforeach</tr>
+		@endforeach
+		</tbody>
+	</table>
 
 @endif
+</div>
 
 
 <div>{@ html()->pager()->css("presto-get")->target("div.modal-body")->render($count) }</div>

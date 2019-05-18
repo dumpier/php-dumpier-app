@@ -13,7 +13,7 @@ class DamageService extends \Service
     public function damage(BattleEntity $BattleEntity)
     {
         // TODO
-        $damage = mt_rand(15,40);
+        $damage = mt_rand(25,60);
 
         return $damage;
     }

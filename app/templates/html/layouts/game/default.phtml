@@ -6,7 +6,7 @@
 	@include('html/partials/presto.css')
 @endif
 
-<div class="game-content">@content</div>
+@content
 
 @if (! presto()->http()->isAjax())
 	</body>

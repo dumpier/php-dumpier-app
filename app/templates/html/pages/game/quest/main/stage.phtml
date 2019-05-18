@@ -1,28 +1,28 @@
 <style>
-div.game-block { background: #f9f9f9; opacity: 0.9; border: solid 1px #fd7e14; border-radius:5px;  padding:2px 1px; margin-bottom: 10px; }
-div.game-block .game-left { float: left; margin: 0px 2px; }
-div.game-block .game-right { float:right; margin: 0px 2px; }
+div.game-block { background: #f9f9f9; opacity: 0.9; border: solid 1px #fd7e14; border-radius:5px;  padding:2px 1px; margin-bottom: 5px; }
+div.game-block .game-actor { background: #fd7e14; margin: 2px 2px; }
+div.game-block .game-left { float: left; }
+div.game-block .game-right { float:right; }
 </style>
 
 
-<div style="margin: 5px;">
+<div>
     <div class="game-block">
-        <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(1,150), 50, 1) }</div>
-        <div class="game-right"><a class="btn btn-sm btn-success presto-get" href="/game/quest/main/battle?area_id={{$stage['stage_id']}}"><span class="fa fa-area"></span><span>バトル</span></a></div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(1,100), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(1,100), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(1,100), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(1,100), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(1,100), 50, 1) }</div>
+        <div class="game-actor game-right"><a class="btn btn-sm btn-success presto-get" href="/game/quest/main/battle?area_id={{$stage['stage_id']}}"><span class="fa fa-area"></span><span>バトル</span></a></div>
         <br style="clear: both;">
     </div>
 
     <div class="game-block">
-        <div class="game-left">{@ echo character()->size(mt_rand(151,250), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(151,250), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(151,250), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(151,250), 50, 1) }</div>
-        <div class="game-left">{@ echo character()->size(mt_rand(151,250), 50, 1) }</div>
-        <div class="game-right"><a class="btn btn-sm btn-danger presto-get" href="/game/quest/main/battle?area_id={{$stage['stage_id']}}&is_boss=1"><span class="fa fa-area"></span><span>ボスバトル</span></a></div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(101,150), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(101,150), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(101,150), 50, 1) }</div>
+        <div class="game-actor game-left">{@ echo character()->size(mt_rand(101,150), 50, 1) }</div>
+        <div class="game-actor game-right"><a class="btn btn-sm btn-danger presto-get" href="/game/quest/main/battle?area_id={{$stage['stage_id']}}&is_boss=1"><span class="fa fa-area"></span><span>ボスバトル</span></a></div>
         <br style="clear: both;">
     </div>
 </div>

@@ -7,13 +7,16 @@ class CharacterHelper
 {
     use Singletonable;
 
-    public function image(int $character_id=0, int $size=50, int $border_size=0)
+    public function image($character_id=0, int $size=50, int $border_size=0)
     {
+        $character_id = $this->getCharacterId($character_id);
         return $this->size($character_id, $size, $border_size);
     }
 
-    public function size(int $character_id=0, int $size=50, int $border_size=2)
+    public function size($character_id=0, int $size=50, int $border_size=2)
     {
+        $character_id = $this->getCharacterId($character_id);
+
         $real_size = $size - $border_size * 2;
         $background_size_x = $real_size * 4;
         $background_size_y = $real_size * 2;
@@ -21,8 +24,8 @@ class CharacterHelper
         $url = $this->url($character_id);
 
         return <<<EOF
-<div class="character-icon" style="width: {$size}px; height:{$size}px; border: solid {$border_size}px #fd7e14; border-radius:5px;  box-shadow:2px 2px 2px 2px rgba(0,0,0,0.2); ">
-  <div style="width:{$real_size}px; height:{$real_size}px;
+<div class="character-icon" style="box-sizing: content-box; width: {$size}px; height:{$size}px; border: solid {$border_size}px #fd7e14; border-radius:5px;  box-shadow:2px 2px 2px 2px rgba(0,0,0,0.2); ">
+  <div style="box-sizing: border-box; width:{$real_size}px; height:{$real_size}px;
     background-image :url('{$url}');
     background-repeat: no-repeat;
     background-size: {$background_size_x}px {$background_size_y}px;
@@ -30,6 +33,24 @@ class CharacterHelper
   </div>
 </div>
 EOF;
+    }
+
+    public function body($character_id, int $size)
+    {
+        $character_id = $this->getCharacterId($character_id);
+        return <<<EOF
+
+EOF;
+    }
+
+    private function getCharacterId($character_id)
+    {
+        if(strlen($character_id) <= 3)
+        {
+            return (int)$character_id;
+        }
+
+        return (int)(substr($character_id, 0, 1) . substr($character_id, 2, 2)) - 100;
     }
 
 
