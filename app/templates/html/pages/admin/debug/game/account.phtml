@@ -1,6 +1,16 @@
+<script>
+$(function(){
+	$("body").on("click", "a.select-dummy-account", function(){
+		let refrence = JSON.parse($(this).attr("refrence"));
+		$("#loginid").val(refrence.login_id);
+		$("#loginpw").val(refrence.login_pw);
+	});
+});
+</script>
+
 <div class=" thrones-box thrones-padding">
 	<span class="d-block p-2 rounded text-white bg-info"><span class="fa fa-info-circle"></span>DUMMYアカウント一覧</span>
 
-	{@ html()->table()->height(500)->render($playerPaginate->toArray()) }
+	{@ html()->table()->link("public_id","","class='select-dummy-account'")->height(500)->render($playerPaginate->toArray()) }
 	{@ html()->pager()->target("#admin-dummy-list")->css("presto-get")->render($playerPaginate->count()) }
 </div>
