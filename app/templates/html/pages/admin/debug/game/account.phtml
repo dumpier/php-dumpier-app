@@ -4,6 +4,8 @@ $(function(){
 		let refrence = JSON.parse($(this).attr("refrence"));
 		$("#loginid").val(refrence.login_id);
 		$("#loginpw").val(refrence.login_pw);
+
+		$("#loginid").addClass("text-change");
 	});
 });
 </script>
