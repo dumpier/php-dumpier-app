@@ -5,6 +5,7 @@ use Presto\Core\Databases\Model\Repository;
 use App\Models\Daos\Player\PlayerCharacterModel;
 use Presto\Core\Databases\Model\Model;
 use App\Models\Repositories\Master\MasterCharacterLevelRepository;
+use App\Models\Repositories\Master\MasterSkillRepository;
 
 class PlayerCharacterRepository extends Repository
 {
@@ -20,6 +21,15 @@ class PlayerCharacterRepository extends Repository
                     "character_id"=>"character_id",
                     "level"=>"level",
                 ],
+            ],
+        ],
+
+        // TODO
+        MasterSkillRepository::class=>[
+            "type"=>Model::HAS_MANY,
+            "repository"=>MasterSkillRepository::class,
+            "join"=>[
+                "MasterSkill"=>[],
             ],
         ],
     ];

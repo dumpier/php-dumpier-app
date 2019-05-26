@@ -32,7 +32,6 @@ class BattleLogManage
     }
 
 
-
     // 開幕処理
     public function opening()
     {

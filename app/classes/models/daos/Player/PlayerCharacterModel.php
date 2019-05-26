@@ -4,6 +4,10 @@ namespace App\Models\Daos\Player;
 use App\Models\Daos\BasePlayerModel;
 use App\Models\Templates\Docs\Player\PlayerCharacterDocTrait;
 
+/**
+ * @property \App\Models\Daos\Master\MasterSkillModel[] $MasterSkill
+ * @property \App\Models\Daos\Master\MasterCharacterLevelModel $MasterCharacterLevel
+ */
 class PlayerCharacterModel extends BasePlayerModel
 {
     use PlayerCharacterDocTrait;
@@ -38,13 +42,14 @@ class PlayerCharacterModel extends BasePlayerModel
     // TODO
     public function getStatus()
     {
-        return $this->relations["MasterCharacterLevel"]->toArray();
+        return $this->MasterCharacterLevel->toArray();
     }
 
     // TODO
     public function getSkillList()
     {
-        return [];
+        // return [];
+        return $this->MasterSkill->toArray();
     }
 
     // TODO

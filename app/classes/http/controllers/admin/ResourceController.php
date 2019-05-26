@@ -39,23 +39,25 @@ class ResourceController extends \App\Http\Controllers\Admin\Controller
 
         $this->addPathBreadcrumb($root, $path);
 
-        $full_path = path()->switching($root, $path);
+        $fields = [];
+        $fullpath = path()->switching($root, $path);
 
         if(!empty($parameters["type"]) && $parameters["type"]=="reset")
         {
             $parameters = [];
         }
 
-        $extension = FileLoader::instance()->extension($full_path);
+        $extension = FileLoader::instance()->extension($fullpath);
 
         switch ($extension)
         {
             case "csv":
-                list($rows, $count, $fields) = CsvLoader::instance()->paging($full_path, $page, $parameters);
+                list($rows, $count, $fields) = CsvLoader::instance()->paging($fullpath, $page, $parameters);
                 break;
 
             case "json":
-                list($rows, $count, $fields) = JsonLoader::instance()->paging($full_path, $page, $parameters);
+                // list($rows, $count) = FileLoader::instance()->paging($fullpath, $page);
+                list($rows, $count, $fields) = JsonLoader::instance()->paging($fullpath, $page, $parameters);
                 break;
 
             default:
