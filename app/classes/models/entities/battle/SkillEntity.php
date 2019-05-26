@@ -9,14 +9,8 @@ class SkillEntity
     /** @var int スキルレベル */
     public $level = 0;
 
-    /** @var int スキル強化レベル */
-    public $strength_level = 0;
-
     /** @var int 消費MP */
     public $use_mp = 0;
-
-    /** @var int ターゲッティング回数 */
-    public $targeting_count = 1;
 
     /** @var int ターゲット数 */
     public $target_count = 1;
@@ -24,9 +18,17 @@ class SkillEntity
     /** @var int 行動回数 */
     public $action_count = 1;
 
-    public $status;
+    public $Statuses;
 
-    public $buffs;
+    public $Buffs;
+
+
+    public function __construct(array $skill)
+    {
+        $this->skill_id = $skill["skill_id"];
+        $this->level = $skill["level"];
+        $this->use_mp = $skill["use_mp"];
+    }
 
 
     /**

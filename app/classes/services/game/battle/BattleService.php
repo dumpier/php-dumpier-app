@@ -138,7 +138,7 @@ class BattleService extends \Service
 
         $BattleEntity->setSkill($Skill);
 
-        // TODO スキル発動時の効果
+        // スキル効果一覧の抽出
 
         $targeting_count = $Skill->getTargetingCount();
 

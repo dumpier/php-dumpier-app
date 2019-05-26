@@ -12,10 +12,16 @@ class SkillManageEntity
     public $use_skill_count = 0;
 
 
-    public function __construct()
+    public function __construct(array $skills)
     {
         $this->Skills = collection();
+
+        foreach ($skills as $skill)
+        {
+            $this->Skills->put(new SkillEntity($skill));
+        }
     }
+
 
     /**
      * 発動するスキルの取得
@@ -24,7 +30,7 @@ class SkillManageEntity
     public function getSkill()
     {
         // TODO
-        return new SkillEntity();
+        return $this->Skills->shuffle()->first();
     }
 
 

@@ -141,4 +141,27 @@ presto.directive.bind = {}
 presto.directive.model = {}
 
 
+//----------------------------------------
+// debugbar
+//----------------------------------------
+var debugbar = debugbar || {
+	append : function(target, html){
+		$(target).append(html);
+	},
+	html : function(logs){
+		console.log(logs);
+		let html = "";
+		logs.forEach(function(row){ html += this.log(row); }, this);
+		return html;
+	},
+
+	log : function(row){
+		let html = "";
+		html += ``;
+
+		return html;
+	},
+}
+
+
 </script>

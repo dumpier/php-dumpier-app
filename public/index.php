@@ -26,4 +26,8 @@ try{
 
 debugbar()->timelines("completed all !");
 
-debugbar()->logging();
+if(preg_match("/^\/game\//", $_SERVER["REQUEST_URI"])){
+    debugbar()->logging();
+}else{
+    debugbar()->render();
+}
