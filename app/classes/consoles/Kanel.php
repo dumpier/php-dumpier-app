@@ -26,7 +26,6 @@ class Kanel
     /** コマンドへの引数 */
     protected $arguments;
 
-
     public function __construct(array $args)
     {
         $this->shell = array_shift($args);
@@ -54,7 +53,7 @@ class Kanel
 
         /* @var \Command $command */
         $command = app($this->commands[$signature]);
-        $command->handler($arguments);
+        $command->bootup($arguments);
     }
 
 
