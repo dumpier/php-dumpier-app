@@ -1,2 +1,4 @@
-{@ html()->table()->render($rows->all()) }
+<div class="table-responsive" style="max-height:60vh; overflow: scroll; margin:10px 0px;">
+	{@ html()->table()->render($rows->all()) }
+</div>
 {@ html()->pager()->css("presto-get")->target("div.modal-body")->render($rows->count()) }

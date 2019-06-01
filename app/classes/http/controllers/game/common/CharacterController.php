@@ -17,5 +17,4 @@ class CharacterController extends \App\Http\Controllers\Game\Controller
         $this->content("count", $Characters->count());
         return $this->response();
     }
-
 }
