@@ -116,7 +116,7 @@ class PlayerQuestService extends \Service
      * クエスト情報の取得
      * @param int $player_id
      * @param number $stage_id
-     * @return \App\Models\Daos\Player\PlayerQuestModel|array|mixed
+     * @return PlayerQuestModel|array|mixed
      */
     public function getPlayerQuest(int $player_id, int $stage_id)
     {
@@ -128,7 +128,7 @@ class PlayerQuestService extends \Service
     /**
      * 次のクエストの解放
      * @param int $player_id
-     * @return NULL|\App\Models\Daos\Player\PlayerQuestModel
+     * @return NULL|PlayerQuestModel
      */
     public function openNextStage(int $player_id)
     {
@@ -150,11 +150,11 @@ class PlayerQuestService extends \Service
     }
 
 
-    public function result(int $player_id, int $area_id=0, int $is_boss=0, BattleEntity $BattleEntity)
+    public function result(int $player_id, int $stage_id=0, int $is_boss=0, BattleEntity $BattleEntity)
     {
 
 
-        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $area_id);
+        $Quest = $this->PlayerQuest->getPlayerQuest($player_id, $stage_id);
         $Quest->battle(TRUE);
 
         return $Quest;
